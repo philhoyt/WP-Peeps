@@ -16,6 +16,7 @@ function NameFieldsPanel() {
         if (!meta) return;
 
         const firstName = meta?.first_name?.trim() || '';
+        const middleName = meta?.middle_name?.trim() || '';
         const lastName = meta?.last_name?.trim() || '';
         
         if (!firstName || !lastName) {
@@ -25,12 +26,14 @@ function NameFieldsPanel() {
 
         unlockPostSaving('requiredNameFields');
 
-        // Create the full name
-        const fullName = `${firstName} ${lastName}`;
+        // Create the full name with middle name if present
+        const fullName = middleName 
+            ? `${firstName} ${middleName} ${lastName}`
+            : `${firstName} ${lastName}`;
         
         // Update both title and slug
         setTitle(fullName);
-        editPost({ title: fullName }); // This ensures the title is updated in the editor state
+        editPost({ title: fullName });
         
         // Update slug
         const newSlug = fullName
@@ -39,7 +42,7 @@ function NameFieldsPanel() {
             .replace(/^-+|-+$/g, '');
         setSlug(newSlug);
 
-    }, [meta?.first_name, meta?.last_name]);
+    }, [meta?.first_name, meta?.middle_name, meta?.last_name]);
 
     return (
         <PluginDocumentSettingPanel
@@ -79,6 +82,16 @@ function NameFieldsPanel() {
                     } )
                 }
                 help={ !meta?.last_name?.trim() ? __('Last name is required', 'wp-peeps') : '' }
+            />
+            <TextControl
+                label={ __('Job Title', 'wp-peeps') }
+                value={ meta?.job_title || '' }
+                onChange={ ( newValue ) =>
+                    setMeta( {
+                        ...meta,
+                        job_title: newValue,
+                    } )
+                }
             />
         </PluginDocumentSettingPanel>
     );
