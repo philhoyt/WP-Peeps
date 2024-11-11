@@ -1,16 +1,32 @@
 <?php
 /**
- * Enqueue editor assets
+ * Editor functionality
+ *
+ * @package WP_Peeps
  */
-function wp_peeps_enqueue_editor_assets() {
-	$asset_file = include plugin_dir_path( dirname( __DIR__ ) ) . '/wp-peeps/build/editor/index.asset.php';
+
+namespace WP_Peeps\Inc;
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Enqueue editor assets
+ *
+ * @return void
+ */
+function enqueue_editor_assets() {
+	$base_path = dirname( dirname( __FILE__ ) );
+	$asset_file = include $base_path . '/build/editor/index.asset.php';
 
 	wp_enqueue_script(
 		'wp-peeps-editor',
-		plugins_url( 'wp-peeps/build/editor/index.js', dirname( __DIR__ ) ),
+		plugins_url( 'wp-peeps/build/editor/index.js', $base_path ),
 		$asset_file['dependencies'],
 		$asset_file['version'],
 		true
 	);
 }
-add_action( 'enqueue_block_editor_assets', 'wp_peeps_enqueue_editor_assets' );
+add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\enqueue_editor_assets' );
