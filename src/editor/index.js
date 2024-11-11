@@ -8,8 +8,9 @@ import { dispatch } from '@wordpress/data';
 
 function NameFieldsPanel() {
     const [ meta, setMeta ] = useEntityProp('postType', 'people', 'meta');
+    const [ , setTitle ] = useEntityProp('postType', 'people', 'title');
     const [ , setSlug ] = useEntityProp('postType', 'people', 'slug');
-    const { lockPostSaving, unlockPostSaving } = dispatch('core/editor');
+    const { lockPostSaving, unlockPostSaving, editPost } = dispatch('core/editor');
 
     useEffect(() => {
         if (!meta) return;
@@ -24,12 +25,20 @@ function NameFieldsPanel() {
 
         unlockPostSaving('requiredNameFields');
 
-        // Update slug only
-        const newSlug = `${firstName} ${lastName}`
+        // Create the full name
+        const fullName = `${firstName} ${lastName}`;
+        
+        // Update both title and slug
+        setTitle(fullName);
+        editPost({ title: fullName }); // This ensures the title is updated in the editor state
+        
+        // Update slug
+        const newSlug = fullName
             .toLowerCase()
             .replace(/[^a-z0-9]+/g, '-')
             .replace(/^-+|-+$/g, '');
         setSlug(newSlug);
+
     }, [meta?.first_name, meta?.last_name]);
 
     return (
