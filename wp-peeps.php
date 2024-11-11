@@ -30,3 +30,9 @@ require_once plugin_dir_path( __FILE__ ) . 'inc/meta.php';
 
 // Include editor registration.
 require_once plugin_dir_path( __FILE__ ) . 'inc/editor.php';
+
+// Include admin registration.
+require_once plugin_dir_path( __FILE__ ) . 'inc/admin.php';
+
+// Include settings registration.
+require_once plugin_dir_path( __FILE__ ) . 'inc/settings.php';
