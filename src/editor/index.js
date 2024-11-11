@@ -5,12 +5,51 @@ import { useEntityProp } from '@wordpress/core-data';
 import { TextControl } from '@wordpress/components';
 import { useEffect } from '@wordpress/element';
 import { dispatch } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
 function NameFieldsPanel() {
     const [ meta, setMeta ] = useEntityProp('postType', 'people', 'meta');
     const [ , setTitle ] = useEntityProp('postType', 'people', 'title');
     const [ , setSlug ] = useEntityProp('postType', 'people', 'slug');
     const { lockPostSaving, unlockPostSaving, editPost } = dispatch('core/editor');
+
+    // Get phone format from settings
+    const phoneFormat = useSelect(select => 
+        select(coreStore).getEntityRecord(
+            'root',
+            'site'
+        )?.wp_peeps_phone_format || '(###) ###-####'
+    );
+
+    const formatPhoneNumber = (value) => {
+        // Strip all non-digits
+        const digits = value.replace(/\D/g, '');
+        
+        if (!digits) return '';
+
+        // Get the format template
+        let format = phoneFormat;
+        
+        // Replace each # with a digit
+        let formatted = format;
+        for (let i = 0; i < digits.length && i < 10; i++) {
+            formatted = formatted.replace('#', digits[i]);
+        }
+        
+        // Remove any remaining # placeholders
+        formatted = formatted.replace(/#/g, '');
+        
+        return formatted;
+    };
+
+    const handlePhoneChange = (value) => {
+        const formatted = formatPhoneNumber(value);
+        setMeta({
+            ...meta,
+            phone: formatted,
+        });
+    };
 
     useEffect(() => {
         if (!meta) return;
@@ -96,12 +135,7 @@ function NameFieldsPanel() {
             <TextControl
                 label={ __('Phone', 'wp-peeps') }
                 value={ meta?.phone || '' }
-                onChange={ ( newValue ) =>
-                    setMeta( {
-                        ...meta,
-                        phone: newValue,
-                    } )
-                }
+                onChange={ handlePhoneChange }
                 help={ __('Enter 10 digit phone number', 'wp-peeps') }
             />
             <TextControl
