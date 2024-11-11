@@ -19,6 +19,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return string|WP_Error
  */
 function validate_phone( $phone ) {
+	// Allow empty values
+	if ( empty( $phone ) ) {
+		return '';
+	}
+
 	// Remove everything except digits
 	$digits = preg_replace( '/[^0-9]/', '', $phone );
 	
@@ -26,7 +31,7 @@ function validate_phone( $phone ) {
 	if ( strlen( $digits ) !== 10 ) {
 		return new \WP_Error(
 			'invalid_phone',
-			__( 'Phone number must contain exactly 10 digits.', 'wp-peeps' )
+			__( 'Phone number must be empty or contain exactly 10 digits.', 'wp-peeps' )
 		);
 	}
 
@@ -49,10 +54,15 @@ function validate_phone( $phone ) {
  * @return string|WP_Error
  */
 function validate_email( $email ) {
+	// Allow empty values
+	if ( empty( $email ) ) {
+		return '';
+	}
+
 	if ( ! is_email( $email ) ) {
 		return new \WP_Error(
 			'invalid_email',
-			__( 'Please enter a valid email address.', 'wp-peeps' )
+			__( 'Please enter a valid email address or leave empty.', 'wp-peeps' )
 		);
 	}
 	return sanitize_email( $email );
