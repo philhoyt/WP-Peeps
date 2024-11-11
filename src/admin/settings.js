@@ -35,6 +35,7 @@ function SettingsPage() {
             
             <div className="wp-peeps-settings">
                 <ToggleControl
+                    __nextHasNoMarginBottom
                     label={ __('Make People Directory Public', 'wp-peeps') }
                     help={ __('When enabled, the people directory will be visible to the public.', 'wp-peeps') }
                     checked={ isPublic }

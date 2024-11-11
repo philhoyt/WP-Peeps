@@ -18,7 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return void
  */
 function register_people_post_type() {
-	$is_public = get_option('wp_peeps_public_cpt', true);
+	$is_public = get_option( 'wp_peeps_public_cpt', false );
+	$is_public = filter_var( $is_public, FILTER_VALIDATE_BOOLEAN );
 
 	$labels = array(
 		'name'                  => _x( 'People', 'Post type general name', 'wp-peeps' ),
@@ -42,7 +43,7 @@ function register_people_post_type() {
 	$args = array(
 		'labels'             => $labels,
 		'public'             => $is_public,
-		'publicly_queryable' => true,
+		'publicly_queryable' => $is_public,
 		'show_ui'            => true,
 		'show_in_menu'       => true,
 		'query_var'          => true,
