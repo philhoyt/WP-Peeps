@@ -102,10 +102,11 @@ function NameFieldsPanel() {
                         phone: newValue,
                     } )
                 }
+                help={ __('Enter 10 digit phone number', 'wp-peeps') }
             />
             <TextControl
-                label={ __('Email', 'wp-peeps') }
                 type="email"
+                label={ __('Email', 'wp-peeps') }
                 value={ meta?.email || '' }
                 onChange={ ( newValue ) =>
                     setMeta( {
@@ -113,6 +114,7 @@ function NameFieldsPanel() {
                         email: newValue,
                     } )
                 }
+                help={ __('Enter valid email address', 'wp-peeps') }
             />
         </PluginDocumentSettingPanel>
     );

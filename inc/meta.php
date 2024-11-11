@@ -13,6 +13,52 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Validate and format phone number
+ *
+ * @param string $phone Phone number to validate.
+ * @return string|WP_Error
+ */
+function validate_phone( $phone ) {
+	// Remove everything except digits
+	$digits = preg_replace( '/[^0-9]/', '', $phone );
+	
+	// Check if we have 10 digits
+	if ( strlen( $digits ) !== 10 ) {
+		return new \WP_Error(
+			'invalid_phone',
+			__( 'Phone number must contain exactly 10 digits.', 'wp-peeps' )
+		);
+	}
+
+	// Get format from settings
+	$format = get_option( 'wp_peeps_phone_format', '(###) ###-####' );
+	
+	// Replace # with digits
+	$formatted = $format;
+	for ( $i = 0; $i < strlen( $digits ); $i++ ) {
+		$formatted = preg_replace( '/#/', $digits[$i], $formatted, 1 );
+	}
+	
+	return $formatted;
+}
+
+/**
+ * Validate email address
+ *
+ * @param string $email Email to validate.
+ * @return string|WP_Error
+ */
+function validate_email( $email ) {
+	if ( ! is_email( $email ) ) {
+		return new \WP_Error(
+			'invalid_email',
+			__( 'Please enter a valid email address.', 'wp-peeps' )
+		);
+	}
+	return sanitize_email( $email );
+}
+
+/**
  * Register meta fields for the people post type
  *
  * @return void
@@ -81,7 +127,7 @@ function register_people_meta() {
 			'show_in_rest'      => true,
 			'single'            => true,
 			'type'              => 'string',
-			'sanitize_callback' => 'sanitize_text_field',
+			'sanitize_callback' => __NAMESPACE__ . '\validate_phone',
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
 			},
@@ -95,7 +141,7 @@ function register_people_meta() {
 			'show_in_rest'      => true,
 			'single'            => true,
 			'type'              => 'string',
-			'sanitize_callback' => 'sanitize_email',
+			'sanitize_callback' => __NAMESPACE__ . '\validate_email',
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
 			},
