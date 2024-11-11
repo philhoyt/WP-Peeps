@@ -73,6 +73,34 @@ function register_people_meta() {
 			},
 		)
 	);
+
+	register_post_meta(
+		'people',
+		'phone',
+		array(
+			'show_in_rest'      => true,
+			'single'            => true,
+			'type'              => 'string',
+			'sanitize_callback' => 'sanitize_text_field',
+			'auth_callback'     => function () {
+				return current_user_can( 'edit_posts' );
+			},
+		)
+	);
+
+	register_post_meta(
+		'people',
+		'email',
+		array(
+			'show_in_rest'      => true,
+			'single'            => true,
+			'type'              => 'string',
+			'sanitize_callback' => 'sanitize_email',
+			'auth_callback'     => function () {
+				return current_user_can( 'edit_posts' );
+			},
+		)
+	);
 }
 add_action( 'init', __NAMESPACE__ . '\register_people_meta' );
 

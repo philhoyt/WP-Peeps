@@ -93,6 +93,27 @@ function NameFieldsPanel() {
                     } )
                 }
             />
+            <TextControl
+                label={ __('Phone', 'wp-peeps') }
+                value={ meta?.phone || '' }
+                onChange={ ( newValue ) =>
+                    setMeta( {
+                        ...meta,
+                        phone: newValue,
+                    } )
+                }
+            />
+            <TextControl
+                label={ __('Email', 'wp-peeps') }
+                type="email"
+                value={ meta?.email || '' }
+                onChange={ ( newValue ) =>
+                    setMeta( {
+                        ...meta,
+                        email: newValue,
+                    } )
+                }
+            />
         </PluginDocumentSettingPanel>
     );
 }
