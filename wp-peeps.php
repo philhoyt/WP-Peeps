@@ -41,3 +41,27 @@ require_once plugin_dir_path( __FILE__ ) . 'inc/admin.php';
 
 // Include settings registration.
 require_once plugin_dir_path( __FILE__ ) . 'inc/settings.php';
+
+/**
+ * Add activation hook to set a transient
+ */
+register_activation_hook( __FILE__, 'wp_peeps_activation' );
+function wp_peeps_activation() {
+	set_transient( 'wp_peeps_show_permalink_notice', true, 5 * MINUTE_IN_SECONDS );
+}
+
+/**
+ * Display admin notice if transient is set
+ */
+add_action( 'admin_notices', 'wp_peeps_admin_notices' );
+function wp_peeps_admin_notices() {
+	if ( get_transient( 'wp_peeps_show_permalink_notice' ) ) {
+		?>
+		<div class="notice notice-warning is-dismissible">
+			<p><?php _e( 'Please visit the Permalinks page and click "Save Changes" to update your URLs.', 'wp-peeps' ); ?></p>
+			<p><a href="<?php echo admin_url( 'options-permalink.php' ); ?>" class="button button-secondary"><?php _e( 'Visit Permalinks Page', 'wp-peeps' ); ?></a></p>
+		</div>
+		<?php
+		delete_transient( 'wp_peeps_show_permalink_notice' );
+	}
+}

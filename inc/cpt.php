@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return void
  */
 function register_people_post_type() {
-	$is_public = get_option( 'wp_peeps_public_cpt', false );
+	$is_public = get_option( 'wp_peeps_public_cpt', true );
 	$is_public = filter_var( $is_public, FILTER_VALIDATE_BOOLEAN );
 	$slug      = get_option( 'wp_peeps_cpt_slug', 'people' );
 
