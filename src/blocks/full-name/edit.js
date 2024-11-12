@@ -7,7 +7,7 @@ export default function Edit({ attributes, setAttributes }) {
 	const blockProps = useBlockProps();
 	const { showFirst, showMiddle, showLast, tagName, makeLink, openInNewTab, linkRel } = attributes;
 	
-	const [meta] = useEntityProp('postType', 'wp_peeps', 'meta');
+	const [meta] = useEntityProp('postType', 'people', 'meta');
 	const firstName = meta?.wp_peeps_first_name || 'First';
 	const middleName = meta?.wp_peeps_middle_name || 'Middle';
 	const lastName = meta?.wp_peeps_last_name || 'Last';
