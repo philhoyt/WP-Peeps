@@ -18,7 +18,8 @@
 		"build",
 		"inc",
 		"index.php",
-		"wp-peeps.php"
+		"wp-peeps.php",
+		"src"
 	],
 	"devDependencies": {
 		"@wordpress/scripts": "^30.4.0",
