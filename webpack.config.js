@@ -5,13 +5,14 @@ const path = require( 'path' );
 module.exports = {
 	...defaultConfig,
 	entry: {
-		editor: path.resolve( process.cwd(), 'src/editor/index.js' ),
-		admin: path.resolve( process.cwd(), 'src/admin/index.js' ),
+		'blocks/full-name/index': path.resolve( process.cwd(), 'src/blocks/full-name/index.js' ),
+		'admin/index': path.resolve( process.cwd(), 'src/admin/index.js' ),
+		'editor/index': path.resolve( process.cwd(), 'src/editor/index.js' ),
 	},
 	output: {
 		...defaultConfig.output,
 		path: path.resolve( process.cwd(), 'build' ),
-		filename: '[name]/index.js',
+		filename: '[name].js',
 	},
 	plugins: [
 		...defaultConfig.plugins,

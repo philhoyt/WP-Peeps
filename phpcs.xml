@@ -11,8 +11,6 @@
     <exclude-pattern>/build/*</exclude-pattern>
     <exclude-pattern>*.js</exclude-pattern>
     <exclude-pattern>*.css</exclude-pattern>
-    <exclude-pattern>cpp-ghost-text-preview-widget*</exclude-pattern>
-    <exclude-pattern>*://*</exclude-pattern>
 
     <!-- How to scan -->
     <arg value="sp"/> <!-- Show sniff and progress -->

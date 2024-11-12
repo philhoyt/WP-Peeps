@@ -25,6 +25,8 @@
 		"webpack-remove-empty-scripts": "^1.0.4"
 	},
 	"dependencies": {
+		"@wordpress/block-editor": "^14.6.0",
+		"@wordpress/blocks": "^14.0.0",
 		"@wordpress/components": "^25.0.0",
 		"@wordpress/core-data": "^6.0.0",
 		"@wordpress/data": "^9.0.0",

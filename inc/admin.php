@@ -53,7 +53,7 @@ function enqueue_admin_scripts( $hook ) {
 
 	wp_enqueue_style(
 		'wp-peeps-admin',
-		plugins_url( 'build/style-admin.css', dirname( __FILE__ ) ),
+		plugins_url( 'build/admin/style-index.css', dirname( __FILE__ ) ),
 		[ 'wp-components' ],
 		$asset_file['version']
 	);
