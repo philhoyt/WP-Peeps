@@ -26,7 +26,7 @@ function validate_phone( $phone ) {
 
 	// Remove everything except digits.
 	$digits = preg_replace( '/[^0-9]/', '', $phone );
-	
+
 	// Check if we have 10 digits.
 	if ( strlen( $digits ) !== 10 ) {
 		return new \WP_Error(
@@ -37,13 +37,13 @@ function validate_phone( $phone ) {
 
 	// Get format from settings.
 	$format = get_option( 'wp_peeps_phone_format', '(###) ###-####' );
-	
+
 	// Replace # with digits.
 	$formatted = $format;
 	for ( $i = 0; $i < strlen( $digits ); $i++ ) {
 		$formatted = preg_replace( '/#/', $digits[$i], $formatted, 1 );
 	}
-	
+
 	return $formatted;
 }
 

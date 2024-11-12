@@ -57,11 +57,7 @@ function SettingsPage() {
 	};
 
 	return (
-		<div className="wrap wp-peeps-admin">
-			<div className="wp-peeps-header">
-				<h1>{ __('WP Peeps Settings', 'wp-peeps') }</h1>
-			</div>
-			
+		<div>
 			{showRewriteNotice && (
 				<Notice
 					status="warning"
@@ -77,60 +73,65 @@ function SettingsPage() {
 					</p>
 				</Notice>
 			)}
+			<div className="wrap wp-peeps-admin">
+				<div className="wp-peeps-header">
+					<h1>{ __('WP Peeps Settings', 'wp-peeps') }</h1>
+				</div>
 
-			<Card className="wp-peeps-card">
-				<CardHeader>
-					<h2 className="wp-peeps-card__title">{ __('Directory Settings', 'wp-peeps') }</h2>
-				</CardHeader>
-				<CardBody>
-					<div className="wp-peeps-settings">
-						<div className="wp-peeps-setting-row">
-							<ToggleControl
-								__nextHasNoMarginBottom
-								label={ __('Make People Directory Public', 'wp-peeps') }
-								help={ __('When enabled, the people directory will be visible to the public.', 'wp-peeps') }
-								checked={ localSettings.wp_peeps_public_cpt ?? isPublic }
-								onChange={ (value) => updateLocalSetting(value, 'wp_peeps_public_cpt') }
-								disabled={ isSaving }
-							/>
-						</div>
-
-						<div className="wp-peeps-setting-row">
-							<TextControl
-								__nextHasNoMarginBottom
-								label={ __('Directory Slug', 'wp-peeps') }
-								help={ __('The URL slug for the people directory (e.g., "staff" would make URLs like /staff/john-doe)', 'wp-peeps') }
-								value={ localSettings.wp_peeps_cpt_slug ?? cptSlug }
-								onChange={ (value) => updateLocalSetting(value, 'wp_peeps_cpt_slug') }
-								disabled={ isSaving }
-							/>
-						</div>
-
-						<div className="wp-peeps-setting-row">
-							<TextControl
-								__nextHasNoMarginBottom
-								label={ __('Phone Number Format', 'wp-peeps') }
-								help={ __('Use # for digits. Example: (###) ###-####', 'wp-peeps') }
-								value={ localSettings.wp_peeps_phone_format ?? phoneFormat }
-								onChange={ (value) => updateLocalSetting(value, 'wp_peeps_phone_format') }
-								disabled={ isSaving }
-							/>
-						</div>
-
-						{hasChanges && (
-							<div className="wp-peeps-settings__footer">
-								<Button
-									variant="primary"
-									onClick={ saveSettings }
+				<Card className="wp-peeps-card">
+					<CardHeader>
+						<h2 className="wp-peeps-card__title">{ __('Directory Settings', 'wp-peeps') }</h2>
+					</CardHeader>
+					<CardBody>
+						<div className="wp-peeps-settings">
+							<div className="wp-peeps-setting-row">
+								<ToggleControl
+									__nextHasNoMarginBottom
+									label={ __('Make People Directory Public', 'wp-peeps') }
+									help={ __('When enabled, the people directory will be visible to the public.', 'wp-peeps') }
+									checked={ localSettings.wp_peeps_public_cpt ?? isPublic }
+									onChange={ (value) => updateLocalSetting(value, 'wp_peeps_public_cpt') }
 									disabled={ isSaving }
-								>
-									{ isSaving ? __('Saving...', 'wp-peeps') : __('Save Changes', 'wp-peeps') }
-								</Button>
+								/>
 							</div>
-						)}
-					</div>
-				</CardBody>
-			</Card>
+
+							<div className="wp-peeps-setting-row">
+								<TextControl
+									__nextHasNoMarginBottom
+									label={ __('Directory Slug', 'wp-peeps') }
+									help={ __('The URL slug for the people directory (e.g., "staff" would make URLs like /staff/john-doe). Defaults to "people".', 'wp-peeps') }
+									value={ localSettings.wp_peeps_cpt_slug ?? cptSlug }
+									onChange={ (value) => updateLocalSetting(value, 'wp_peeps_cpt_slug') }
+									disabled={ isSaving }
+								/>
+							</div>
+
+							<div className="wp-peeps-setting-row">
+								<TextControl
+									__nextHasNoMarginBottom
+									label={ __('Phone Number Format', 'wp-peeps') }
+									help={ __('Use # for digits. Example: (###) ###-####', 'wp-peeps') }
+									value={ localSettings.wp_peeps_phone_format ?? phoneFormat }
+									onChange={ (value) => updateLocalSetting(value, 'wp_peeps_phone_format') }
+									disabled={ isSaving }
+								/>
+							</div>
+
+							{hasChanges && (
+								<div className="wp-peeps-settings__footer">
+									<Button
+										variant="primary"
+										onClick={ saveSettings }
+										disabled={ isSaving }
+									>
+										{ isSaving ? __('Saving...', 'wp-peeps') : __('Save Changes', 'wp-peeps') }
+									</Button>
+								</div>
+							)}
+						</div>
+					</CardBody>
+				</Card>
+			</div>
 		</div>
 	);
 }
