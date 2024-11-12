@@ -2,7 +2,6 @@ import { __ } from '@wordpress/i18n';
 
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, ToggleControl, SelectControl, TextControl } from '@wordpress/components';
-import { useEntityProp } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 
@@ -10,11 +9,25 @@ export default function Edit({ attributes, setAttributes }) {
 	const blockProps = useBlockProps();
 	const { tagName, makeLink, prefix } = attributes;
 	
-	const [meta] = useEntityProp('postType', 'wp_peeps', 'meta');
 	const format = useSelect(select => 
 		select(coreStore).getEntityRecord('root', 'site')?.wp_peeps_phone_format
 	) || '(###) ###-####';
-	const phone = meta?.wp_peeps_phone || format;
+	
+	const phoneNumber = useSelect(select => 
+		select('core/editor').getEditedPostAttribute('meta')?.wp_peeps_phone
+	);
+
+	const formatPhoneNumber = (phoneNumber, format) => {
+		let formattedPhone = format;
+		for (let i = 0; i < phoneNumber.length; i++) {
+			formattedPhone = formattedPhone.replace('#', phoneNumber[i]);
+		}
+		return formattedPhone;
+	};
+
+	const formattedPhone = formatPhoneNumber(phoneNumber, format);
+
+	const phone = formattedPhone || format;
 
 	const TagName = tagName;
 	const displayNumber = prefix ? `${prefix} ${phone}` : phone;
