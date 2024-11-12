@@ -84,34 +84,16 @@ function wp_peeps_add_settings_link( $links ) {
  *
  * @return void
  */
-add_action( 'init', function() {
-	register_block_type( __DIR__ . '/build/blocks/full-name', array(
-		'render_callback' => function( $attributes, $content ) {
-			$post_id = get_the_ID();
-			
-			$first_name = get_post_meta( $post_id, 'wp_peeps_first_name', true );
-			$middle_name = get_post_meta( $post_id, 'wp_peeps_middle_name', true );
-			$last_name = get_post_meta( $post_id, 'wp_peeps_last_name', true );
-			
-			$name_parts = array();
-			if ( ! empty( $attributes['showFirst'] ) && $first_name ) {
-				$name_parts[] = $first_name;
-			}
-			if ( ! empty( $attributes['showMiddle'] ) && $middle_name ) {
-				$name_parts[] = $middle_name;
-			}
-			if ( ! empty( $attributes['showLast'] ) && $last_name ) {
-				$name_parts[] = $last_name;
-			}
+add_action(
+	'init',
+	function () {
+		register_block_type(
+			__DIR__ . '/build/blocks/full-name',
+			array(
+				'render_callback' => 'wp_peeps_render_full_name_block',
+			)
+		);
+	}
+);
 
-			$tag_name = $attributes['tagName'] ?? 'h2';
-			$full_name = implode( ' ', $name_parts );
-
-			return sprintf(
-				'<%1$s class="wp-block-wp-peeps-full-name">%2$s</%1$s>',
-				esc_attr( $tag_name ),
-				esc_html( $full_name )
-			);
-		}
-	) );
-});
+require_once __DIR__ . '/inc/blocks/full-name.php';

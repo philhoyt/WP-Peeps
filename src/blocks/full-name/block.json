@@ -23,14 +23,41 @@
 		"tagName": {
 			"type": "string",
 			"default": "h2"
+		},
+		"makeLink": {
+			"type": "boolean",
+			"default": false
+		},
+		"openInNewTab": {
+			"type": "boolean",
+			"default": false
+		},
+		"linkRel": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"supports": {
-		"html": false
+		"html": false,
+		"color": {
+			"text": true,
+			"background": true,
+			"link": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"fontWeight": true,
+			"fontStyle": true,
+			"letterSpacing": true,
+			"textTransform": true,
+			"textDecoration": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
 	},
 	"textdomain": "wp-peeps",
-	"editorScript": "file:./index.js",
-	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css",
-	"viewScript": "file:./view.js"
+	"editorScript": "file:./index.js"
 }

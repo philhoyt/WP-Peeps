@@ -1,13 +1,13 @@
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, ToggleControl, SelectControl } from '@wordpress/components';
+import { PanelBody, ToggleControl, SelectControl, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useEntityProp } from '@wordpress/core-data';
 
-import './editor.scss';
-
 export default function Edit({ attributes, setAttributes }) {
-	const blockProps = useBlockProps();
-	const { showFirst, showMiddle, showLast, tagName } = attributes;
+	const blockProps = useBlockProps({
+		className: 'wp-block-wp-peeps-full-name',
+	});
+	const { showFirst, showMiddle, showLast, tagName, makeLink, openInNewTab, linkRel } = attributes;
 	
 	const [meta] = useEntityProp('postType', 'wp_peeps', 'meta');
 	const firstName = meta?.wp_peeps_first_name || '';
@@ -56,6 +56,27 @@ export default function Edit({ attributes, setAttributes }) {
 						]}
 						onChange={(value) => setAttributes({ tagName: value })}
 					/>
+				</PanelBody>
+				<PanelBody title={__('Link Settings', 'wp-peeps')}>
+					<ToggleControl
+						label={__('Make a Link', 'wp-peeps')}
+						checked={makeLink}
+						onChange={() => setAttributes({ makeLink: !makeLink })}
+					/>
+					{makeLink && (
+						<>
+							<ToggleControl
+								label={__('Open in New Tab', 'wp-peeps')}
+								checked={openInNewTab}
+								onChange={() => setAttributes({ openInNewTab: !openInNewTab })}
+							/>
+							<TextControl
+								label={__('Link Rel', 'wp-peeps')}
+								value={linkRel}
+								onChange={(value) => setAttributes({ linkRel: value })}
+							/>
+						</>
+					)}
 				</PanelBody>
 			</InspectorControls>
 			<TagName {...blockProps}>
