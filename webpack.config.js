@@ -5,8 +5,8 @@ const path = require( 'path' );
 module.exports = {
 	...defaultConfig,
 	entry: {
-		'editor': path.resolve( process.cwd(), 'src/editor/index.js' ),
-		'admin': path.resolve( process.cwd(), 'src/admin/index.js' ),
+		editor: path.resolve( process.cwd(), 'src/editor/index.js' ),
+		admin: path.resolve( process.cwd(), 'src/admin/index.js' ),
 	},
 	output: {
 		...defaultConfig.output,
@@ -16,7 +16,7 @@ module.exports = {
 	plugins: [
 		...defaultConfig.plugins,
 		new RemoveEmptyScriptsPlugin( {
-			stage: RemoveEmptyScriptsPlugin.STAGE_AFTER_PROCESS_PLUGINS
-		} )
-	]
+			stage: RemoveEmptyScriptsPlugin.STAGE_AFTER_PROCESS_PLUGINS,
+		} ),
+	],
 };

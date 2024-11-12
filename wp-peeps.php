@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       WP Peeps
- * Description:       Example block scaffolded with Create Block tool.
+ * Description:       A directory of people for your WordPress site.
  * Requires at least: 6.6
  * Requires PHP:      7.2
  * Version:           0.1.0
@@ -17,6 +17,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+/**
+ * Registers the WP Peeps block type.
+ *
+ * @return void
+ */
 function create_block_wp_peeps_block_init() {
 	register_block_type( __DIR__ . '/build' );
 }
