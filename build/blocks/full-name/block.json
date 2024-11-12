@@ -4,14 +4,31 @@
   "name": "wp-peeps/full-name",
   "version": "0.1.0",
   "title": "Full Name",
-  "category": "widgets",
-  "icon": "smiley",
-  "description": "Example block scaffolded with Create Block tool.",
-  "example": {},
+  "category": "wp-peeps",
+  "icon": "id",
+  "description": "Display a person's full name with configurable parts",
+  "attributes": {
+    "showFirst": {
+      "type": "boolean",
+      "default": true
+    },
+    "showMiddle": {
+      "type": "boolean",
+      "default": true
+    },
+    "showLast": {
+      "type": "boolean",
+      "default": true
+    },
+    "tagName": {
+      "type": "string",
+      "default": "h2"
+    }
+  },
   "supports": {
     "html": false
   },
-  "textdomain": "full-name",
+  "textdomain": "wp-peeps",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",
