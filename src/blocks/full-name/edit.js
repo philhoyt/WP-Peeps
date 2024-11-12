@@ -4,23 +4,25 @@ import { __ } from '@wordpress/i18n';
 import { useEntityProp } from '@wordpress/core-data';
 
 export default function Edit({ attributes, setAttributes }) {
-	const blockProps = useBlockProps({
-		className: 'wp-block-wp-peeps-full-name',
-	});
+	const blockProps = useBlockProps();
 	const { showFirst, showMiddle, showLast, tagName, makeLink, openInNewTab, linkRel } = attributes;
 	
 	const [meta] = useEntityProp('postType', 'wp_peeps', 'meta');
-	const firstName = meta?.wp_peeps_first_name || '';
-	const middleName = meta?.wp_peeps_middle_name || '';
-	const lastName = meta?.wp_peeps_last_name || '';
+	const firstName = meta?.wp_peeps_first_name || 'First';
+	const middleName = meta?.wp_peeps_middle_name || 'Middle';
+	const lastName = meta?.wp_peeps_last_name || 'Last';
 
 	const TagName = tagName;
 
-	const fullName = [
+	// Build the preview text based on toggle settings
+	const nameParts = [
 		showFirst ? firstName : '',
 		showMiddle ? middleName : '',
 		showLast ? lastName : '',
-	].filter(Boolean).join(' ');
+	].filter(Boolean);
+
+	// If no parts are selected, show a placeholder
+	const fullName = nameParts.length > 0 ? nameParts.join(' ') : __('Select name parts to display', 'wp-peeps');
 
 	return (
 		<>
@@ -80,7 +82,7 @@ export default function Edit({ attributes, setAttributes }) {
 				</PanelBody>
 			</InspectorControls>
 			<TagName {...blockProps}>
-				{fullName || __('Full Name', 'wp-peeps')}
+				{fullName}
 			</TagName>
 		</>
 	);

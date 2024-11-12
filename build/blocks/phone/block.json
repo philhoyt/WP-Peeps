@@ -1,0 +1,45 @@
+{
+  "apiVersion": 3,
+  "name": "wp-peeps/phone",
+  "title": "Phone Number",
+  "category": "wp-peeps",
+  "icon": "phone",
+  "description": "Display a person's phone number",
+  "attributes": {
+    "tagName": {
+      "type": "string",
+      "default": "p"
+    },
+    "makeLink": {
+      "type": "boolean",
+      "default": false
+    },
+    "prefix": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "color": {
+      "text": true,
+      "background": true,
+      "link": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true,
+      "fontWeight": true,
+      "fontStyle": true,
+      "letterSpacing": true,
+      "textTransform": true,
+      "textDecoration": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "textdomain": "wp-peeps",
+  "editorScript": "file:./index.js"
+}

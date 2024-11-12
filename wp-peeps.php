@@ -17,16 +17,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-/**
- * Registers the WP Peeps block type.
- *
- * @return void
- */
-// function create_block_wp_peeps_block_init() {
-// register_block_type( __DIR__ . '/build' );
-// }
-// add_action( 'init', 'create_block_wp_peeps_block_init' );
-
 // Include custom post type registration.
 require_once plugin_dir_path( __FILE__ ) . 'inc/cpt.php';
 
@@ -79,21 +69,27 @@ function wp_peeps_add_settings_link( $links ) {
 	return $links;
 }
 
-/**
- * Registers the full name block type.
- *
- * @return void
- */
-add_action(
-	'init',
-	function () {
-		register_block_type(
-			__DIR__ . '/build/blocks/full-name',
-			array(
-				'render_callback' => 'wp_peeps_render_full_name_block',
-			)
-		);
-	}
-);
+function wp_peeps_init() {
+	// Register the full name block
+	register_block_type(
+		__DIR__ . '/build/blocks/full-name',
+		array(
+			'render_callback' => 'wp_peeps_render_full_name_block',
+		)
+	);
 
-require_once __DIR__ . '/inc/blocks/full-name.php';
+	// Register the phone block
+	register_block_type(
+		__DIR__ . '/build/blocks/phone',
+		array(
+			'render_callback' => 'wp_peeps_render_phone_block',
+		)
+	);
+}
+
+// Use init hook to register blocks
+add_action('init', 'wp_peeps_init');
+
+// Include render callbacks
+require_once __DIR__ . '/src/blocks/full-name/render.php';
+require_once __DIR__ . '/src/blocks/phone/render.php';
