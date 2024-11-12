@@ -35,8 +35,6 @@ node_modules/
 # VS Code settings
 .vscode
 .editorconfig
-/build
 composer.lock
 package-lock.json
 .DS_Store
-false
