@@ -43,18 +43,26 @@ function Edit({
   } = attributes;
   const [meta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.useEntityProp)('postType', 'people', 'meta');
   const format = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.store).getEntityRecord('root', 'site')?.wp_peeps_phone_format) || '(###) ###-####';
-  const phoneNumber = meta?.wp_peeps_phone;
   const formatPhoneNumber = (phoneNumber, format) => {
+    // Return format if no phone number
+    if (!phoneNumber || typeof phoneNumber !== 'string') {
+      return format;
+    }
+
+    // Only use digits from the phone number
+    const digits = phoneNumber.replace(/\D/g, '');
+    if (!digits) {
+      return format;
+    }
     let formattedPhone = format;
-    for (let i = 0; i < phoneNumber.length; i++) {
-      formattedPhone = formattedPhone.replace('#', phoneNumber[i]);
+    for (let i = 0; i < digits.length && i < 10; i++) {
+      formattedPhone = formattedPhone.replace('#', digits[i]);
     }
     return formattedPhone;
   };
-  const formattedPhoneNumber = formatPhoneNumber(phoneNumber, format);
-  const phone = formattedPhoneNumber || format;
-  const TagName = tagName;
+  const phone = formatPhoneNumber(meta?.wp_peeps_phone, format);
   const displayNumber = prefix ? `${prefix} ${phone}` : phone;
+  const TagName = tagName;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
