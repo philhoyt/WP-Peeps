@@ -182,7 +182,7 @@ function SettingsPage() {
 										disabled={ isSaving }
 									>
 										{ isSaving
-											? __( 'Saving...', 'wp-peeps' )
+											? __( 'Saving…', 'wp-peeps' )
 											: __( 'Save Changes', 'wp-peeps' ) }
 									</Button>
 								</div>

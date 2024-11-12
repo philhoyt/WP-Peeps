@@ -1,55 +1,50 @@
-=== Wp Peeps ===
-Contributors:      The WordPress Contributors
-Tags:              block
+=== WP Peeps ===
+Contributors:      Phil Hoyt
+Tags:              directory, people, staff, team, employees
 Tested up to:      6.6
 Stable tag:        0.1.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
-Example block scaffolded with Create Block tool.
+A customizable directory of people for your WordPress site.
 
 == Description ==
 
-This is the long description. No limit, and you can use Markdown (as well as in the following sections).
+WP Peeps is a WordPress plugin that helps you create and manage a directory of people on your website. Perfect for displaying staff members, team rosters, or employee directories.
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+Features:
+
+* Custom post type for managing people profiles
+* Configurable phone number formatting
+* Custom URL structure for people profiles
+* Public/private directory option
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
-
-e.g.
-
-1. Upload the plugin files to the `/wp-content/plugins/wp-peeps` directory, or install the plugin through the WordPress plugins screen directly.
-1. Activate the plugin through the 'Plugins' screen in WordPress
-
+1. Upload the plugin files to the `/wp-content/plugins/wp-peeps` directory
+2. Activate the plugin through the 'Plugins' screen in WordPress
+3. Go to People → Settings to configure the plugin options
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
+= How do I change the URL structure for people profiles? =
 
-An answer to that question.
+Go to People → Settings and update the "Directory Slug" field. After saving, visit the WordPress Permalinks page and click "Save Changes" to update your URLs.
 
-= What about foo bar? =
+= Can I make the directory private? =
 
-Answer to foo bar dilemma.
+Yes, in People → Settings you can disable the "Make People Directory Public" option to make the directory visible only to logged-in users.
 
-== Screenshots ==
+= How do I format phone numbers? =
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+Go to People → Settings and update the "Phone Number Format" field. Use # symbols where you want digits to appear. For example: (###) ###-####
 
 == Changelog ==
 
 = 0.1.0 =
-* Release
-
-== Arbitrary section ==
-
-You may provide arbitrary sections, in the same format as the ones above. This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation." Arbitrary sections will be shown below the built-in sections outlined above.
+* Initial release
+* People directory custom post type
+* Admin settings page
+* Phone number formatting
+* Required name fields
+* Contact information fields

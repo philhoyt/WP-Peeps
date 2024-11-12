@@ -1,12 +1,11 @@
 import { __ } from '@wordpress/i18n';
 import { registerPlugin } from '@wordpress/plugins';
 import { PluginDocumentSettingPanel } from '@wordpress/editor';
-import { useEntityProp } from '@wordpress/core-data';
 import { TextControl } from '@wordpress/components';
 import { useEffect } from '@wordpress/element';
 import { dispatch } from '@wordpress/data';
 import { useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
+import { store as coreStore, useEntityProp } from '@wordpress/core-data';
 
 function NameFieldsPanel() {
 	const [ meta, setMeta ] = useEntityProp( 'postType', 'people', 'meta' );
