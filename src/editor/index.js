@@ -46,16 +46,16 @@ function NameFieldsPanel() {
 		const formatted = formatPhoneNumber( value );
 		setMeta( {
 			...meta,
-			phone: formatted,
+			wp_peeps_phone: formatted,
 		} );
 	};
 
 	useEffect( () => {
 		if ( ! meta ) return;
 
-		const firstName = meta?.first_name?.trim() || '';
-		const middleName = meta?.middle_name?.trim() || '';
-		const lastName = meta?.last_name?.trim() || '';
+		const firstName = meta?.wp_peeps_first_name?.trim() || '';
+		const middleName = meta?.wp_peeps_middle_name?.trim() || '';
+		const lastName = meta?.wp_peeps_last_name?.trim() || '';
 
 		if ( ! firstName || ! lastName ) {
 			lockPostSaving( 'requiredNameFields' );
@@ -79,7 +79,7 @@ function NameFieldsPanel() {
 			.replace( /[^a-z0-9]+/g, '-' )
 			.replace( /^-+|-+$/g, '' );
 		setSlug( newSlug );
-	}, [ meta?.first_name, meta?.middle_name, meta?.last_name ] );
+	}, [ meta?.wp_peeps_first_name, meta?.wp_peeps_middle_name, meta?.wp_peeps_last_name ] );
 
 	return (
 		<PluginDocumentSettingPanel
@@ -90,68 +90,68 @@ function NameFieldsPanel() {
 		>
 			<TextControl
 				label={ __( 'First Name', 'wp-peeps' ) + ' *' }
-				value={ meta?.first_name || '' }
+				value={ meta?.wp_peeps_first_name || '' }
 				onChange={ ( newValue ) =>
 					setMeta( {
 						...meta,
-						first_name: newValue,
+						wp_peeps_first_name: newValue,
 					} )
 				}
 				help={
-					! meta?.first_name?.trim()
+					! meta?.wp_peeps_first_name?.trim()
 						? __( 'First name is required', 'wp-peeps' )
 						: ''
 				}
 			/>
 			<TextControl
 				label={ __( 'Middle Name', 'wp-peeps' ) }
-				value={ meta?.middle_name || '' }
+				value={ meta?.wp_peeps_middle_name || '' }
 				onChange={ ( newValue ) =>
 					setMeta( {
 						...meta,
-						middle_name: newValue,
+						wp_peeps_middle_name: newValue,
 					} )
 				}
 			/>
 			<TextControl
 				label={ __( 'Last Name', 'wp-peeps' ) + ' *' }
-				value={ meta?.last_name || '' }
+				value={ meta?.wp_peeps_last_name || '' }
 				onChange={ ( newValue ) =>
 					setMeta( {
 						...meta,
-						last_name: newValue,
+						wp_peeps_last_name: newValue,
 					} )
 				}
 				help={
-					! meta?.last_name?.trim()
+					! meta?.wp_peeps_last_name?.trim()
 						? __( 'Last name is required', 'wp-peeps' )
 						: ''
 				}
 			/>
 			<TextControl
 				label={ __( 'Job Title', 'wp-peeps' ) }
-				value={ meta?.job_title || '' }
+				value={ meta?.wp_peeps_job_title || '' }
 				onChange={ ( newValue ) =>
 					setMeta( {
 						...meta,
-						job_title: newValue,
+						wp_peeps_job_title: newValue,
 					} )
 				}
 			/>
 			<TextControl
 				label={ __( 'Phone', 'wp-peeps' ) }
-				value={ meta?.phone || '' }
+				value={ meta?.wp_peeps_phone || '' }
 				onChange={ handlePhoneChange }
 				help={ __( 'Enter 10 digit phone number', 'wp-peeps' ) }
 			/>
 			<TextControl
 				type="email"
 				label={ __( 'Email', 'wp-peeps' ) }
-				value={ meta?.email || '' }
+				value={ meta?.wp_peeps_email || '' }
 				onChange={ ( newValue ) =>
 					setMeta( {
 						...meta,
-						email: newValue,
+						wp_peeps_email: newValue,
 					} )
 				}
 				help={ __( 'Enter valid email address', 'wp-peeps' ) }

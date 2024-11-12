@@ -89,9 +89,9 @@ add_action( 'init', function() {
 		'render_callback' => function( $attributes, $content ) {
 			$post_id = get_the_ID();
 			
-			$first_name = get_post_meta( $post_id, 'first_name', true );
-			$middle_name = get_post_meta( $post_id, 'middle_name', true );
-			$last_name = get_post_meta( $post_id, 'last_name', true );
+			$first_name = get_post_meta( $post_id, 'wp_peeps_first_name', true );
+			$middle_name = get_post_meta( $post_id, 'wp_peeps_middle_name', true );
+			$last_name = get_post_meta( $post_id, 'wp_peeps_last_name', true );
 			
 			$name_parts = array();
 			if ( ! empty( $attributes['showFirst'] ) && $first_name ) {

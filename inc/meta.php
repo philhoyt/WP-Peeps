@@ -76,7 +76,7 @@ function validate_email( $email ) {
 function register_people_meta() {
 	register_post_meta(
 		'people',
-		'first_name',
+		'wp_peeps_first_name',
 		array(
 			'show_in_rest'      => true,
 			'single'            => true,
@@ -90,7 +90,7 @@ function register_people_meta() {
 
 	register_post_meta(
 		'people',
-		'middle_name',
+		'wp_peeps_middle_name',
 		array(
 			'show_in_rest'      => true,
 			'single'            => true,
@@ -104,7 +104,7 @@ function register_people_meta() {
 
 	register_post_meta(
 		'people',
-		'last_name',
+		'wp_peeps_last_name',
 		array(
 			'show_in_rest'      => true,
 			'single'            => true,
@@ -118,7 +118,7 @@ function register_people_meta() {
 
 	register_post_meta(
 		'people',
-		'job_title',
+		'wp_peeps_job_title',
 		array(
 			'show_in_rest'      => true,
 			'single'            => true,
@@ -132,7 +132,7 @@ function register_people_meta() {
 
 	register_post_meta(
 		'people',
-		'phone',
+		'wp_peeps_phone',
 		array(
 			'show_in_rest'      => true,
 			'single'            => true,
@@ -146,7 +146,7 @@ function register_people_meta() {
 
 	register_post_meta(
 		'people',
-		'email',
+		'wp_peeps_email',
 		array(
 			'show_in_rest'      => true,
 			'single'            => true,
@@ -170,7 +170,7 @@ add_action( 'init', __NAMESPACE__ . '\register_people_meta' );
  */
 function update_title_from_name( $meta_id, $post_id, $meta_key, $meta_value ) {
 	// Only proceed for our meta keys.
-	if ( ! in_array( $meta_key, array( 'first_name', 'middle_name', 'last_name' ), true ) ) {
+	if ( ! in_array( $meta_key, array( 'wp_peeps_first_name', 'wp_peeps_middle_name', 'wp_peeps_last_name' ), true ) ) {
 		return;
 	}
 
@@ -180,9 +180,9 @@ function update_title_from_name( $meta_id, $post_id, $meta_key, $meta_value ) {
 	}
 
 	// Get all name values.
-	$first_name  = get_post_meta( $post_id, 'first_name', true );
-	$middle_name = get_post_meta( $post_id, 'middle_name', true );
-	$last_name   = get_post_meta( $post_id, 'last_name', true );
+	$first_name  = get_post_meta( $post_id, 'wp_peeps_first_name', true );
+	$middle_name = get_post_meta( $post_id, 'wp_peeps_middle_name', true );
+	$last_name   = get_post_meta( $post_id, 'wp_peeps_last_name', true );
 
 	// Only proceed if we have required names.
 	if ( empty( $first_name ) || empty( $last_name ) ) {

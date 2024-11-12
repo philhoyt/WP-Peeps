@@ -216,14 +216,14 @@ function NameFieldsPanel() {
     const formatted = formatPhoneNumber(value);
     setMeta({
       ...meta,
-      phone: formatted
+      wp_peeps_phone: formatted
     });
   };
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useEffect)(() => {
     if (!meta) return;
-    const firstName = meta?.first_name?.trim() || '';
-    const middleName = meta?.middle_name?.trim() || '';
-    const lastName = meta?.last_name?.trim() || '';
+    const firstName = meta?.wp_peeps_first_name?.trim() || '';
+    const middleName = meta?.wp_peeps_middle_name?.trim() || '';
+    const lastName = meta?.wp_peeps_last_name?.trim() || '';
     if (!firstName || !lastName) {
       lockPostSaving('requiredNameFields');
       return;
@@ -242,7 +242,7 @@ function NameFieldsPanel() {
     // Update slug
     const newSlug = fullName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
     setSlug(newSlug);
-  }, [meta?.first_name, meta?.middle_name, meta?.last_name]);
+  }, [meta?.wp_peeps_first_name, meta?.wp_peeps_middle_name, meta?.wp_peeps_last_name]);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_wordpress_editor__WEBPACK_IMPORTED_MODULE_2__.PluginDocumentSettingPanel, {
     name: "wp-peeps-name-fields",
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Name Details', 'wp-peeps'),
@@ -250,46 +250,46 @@ function NameFieldsPanel() {
     initialOpen: true,
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('First Name', 'wp-peeps') + ' *',
-      value: meta?.first_name || '',
+      value: meta?.wp_peeps_first_name || '',
       onChange: newValue => setMeta({
         ...meta,
-        first_name: newValue
+        wp_peeps_first_name: newValue
       }),
-      help: !meta?.first_name?.trim() ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('First name is required', 'wp-peeps') : ''
+      help: !meta?.wp_peeps_first_name?.trim() ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('First name is required', 'wp-peeps') : ''
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Middle Name', 'wp-peeps'),
-      value: meta?.middle_name || '',
+      value: meta?.wp_peeps_middle_name || '',
       onChange: newValue => setMeta({
         ...meta,
-        middle_name: newValue
+        wp_peeps_middle_name: newValue
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Last Name', 'wp-peeps') + ' *',
-      value: meta?.last_name || '',
+      value: meta?.wp_peeps_last_name || '',
       onChange: newValue => setMeta({
         ...meta,
-        last_name: newValue
+        wp_peeps_last_name: newValue
       }),
-      help: !meta?.last_name?.trim() ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Last name is required', 'wp-peeps') : ''
+      help: !meta?.wp_peeps_last_name?.trim() ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Last name is required', 'wp-peeps') : ''
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Job Title', 'wp-peeps'),
-      value: meta?.job_title || '',
+      value: meta?.wp_peeps_job_title || '',
       onChange: newValue => setMeta({
         ...meta,
-        job_title: newValue
+        wp_peeps_job_title: newValue
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Phone', 'wp-peeps'),
-      value: meta?.phone || '',
+      value: meta?.wp_peeps_phone || '',
       onChange: handlePhoneChange,
       help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Enter 10 digit phone number', 'wp-peeps')
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
       type: "email",
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Email', 'wp-peeps'),
-      value: meta?.email || '',
+      value: meta?.wp_peeps_email || '',
       onChange: newValue => setMeta({
         ...meta,
-        email: newValue
+        wp_peeps_email: newValue
       }),
       help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Enter valid email address', 'wp-peeps')
     })]
