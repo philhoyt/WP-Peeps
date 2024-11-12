@@ -39,5 +39,25 @@ function register_plugin_settings() {
 			'description' => __( 'Phone number format (use # for digits)', 'wp-peeps' ),
 		)
 	);
+
+	register_setting(
+		'wp_peeps',
+		'wp_peeps_cpt_slug',
+		array(
+			'type'         => 'string',
+			'default'      => 'people',
+			'show_in_rest' => array(
+				'name' => 'wp_peeps_cpt_slug',
+				'schema' => array(
+					'type'    => 'string',
+					'default' => 'people',
+				),
+			),
+			'description' => __( 'Custom post type slug for People directory', 'wp-peeps' ),
+			'sanitize_callback' => function( $slug ) {
+				return sanitize_title( $slug );
+			},
+		)
+	);
 }
 add_action( 'init', __NAMESPACE__ . '\register_plugin_settings' );

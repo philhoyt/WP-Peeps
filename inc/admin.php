@@ -51,7 +51,12 @@ function enqueue_admin_scripts( $hook ) {
 
 	$asset_file = include plugin_dir_path( dirname( __FILE__ ) ) . 'build/admin/index.asset.php';
 
-	wp_enqueue_style( 'wp-components' );
+	wp_enqueue_style(
+		'wp-peeps-admin',
+		plugins_url( 'build/style-admin.css', dirname( __FILE__ ) ),
+		[ 'wp-components' ],
+		$asset_file['version']
+	);
 
 	wp_enqueue_script(
 		'wp-peeps-admin',

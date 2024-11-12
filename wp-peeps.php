@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       WP-Peeps
+ * Plugin Name:       WP Peeps
  * Description:       Example block scaffolded with Create Block tool.
  * Requires at least: 6.6
  * Requires PHP:      7.2

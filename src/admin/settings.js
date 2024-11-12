@@ -1,8 +1,9 @@
 import { __ } from '@wordpress/i18n';
-import { ToggleControl, TextControl, Button } from '@wordpress/components';
+import { ToggleControl, TextControl, Button, Notice, Card, CardHeader, CardBody } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
+import './style.scss';
 
 function SettingsPage() {
 	const { saveEntityRecord } = useDispatch(coreStore);
@@ -10,8 +11,9 @@ function SettingsPage() {
 	// Local state for tracking changes
 	const [localSettings, setLocalSettings] = useState({});
 	const [hasChanges, setHasChanges] = useState(false);
-	
-	const { isPublic, phoneFormat, isSaving } = useSelect((select) => ({
+	const [showRewriteNotice, setShowRewriteNotice] = useState(false);
+
+	const { isPublic, phoneFormat, cptSlug, isSaving } = useSelect((select) => ({
 		isPublic: select(coreStore).getEditedEntityRecord(
 			'root',
 			'site',
@@ -21,7 +23,12 @@ function SettingsPage() {
 			'root',
 			'site',
 			undefined
-		).wp_peeps_phone_format,
+			).wp_peeps_phone_format,
+		cptSlug: select(coreStore).getEditedEntityRecord(
+			'root',
+			'site',
+				undefined
+		).wp_peeps_cpt_slug,
 		isSaving: select(coreStore).isSavingEntityRecord(
 			'root',
 			'site'
@@ -40,47 +47,90 @@ function SettingsPage() {
 		try {
 			await saveEntityRecord('root', 'site', localSettings);
 			setHasChanges(false);
-			window.location.reload();
+			// Show notice if slug was changed
+			if (localSettings.wp_peeps_cpt_slug) {
+				setShowRewriteNotice(true);
+			}
 		} catch (error) {
 			console.error('Failed to save settings:', error);
 		}
 	};
 
 	return (
-		<div className="wrap">
-			<h1>{ __('WP Peeps Settings', 'wp-peeps') }</h1>
-			
-			<div className="wp-peeps-settings">
-				<ToggleControl
-					__nextHasNoMarginBottom
-					label={ __('Make People Directory Public', 'wp-peeps') }
-					help={ __('When enabled, the people directory will be visible to the public.', 'wp-peeps') }
-					checked={ localSettings.wp_peeps_public_cpt ?? isPublic }
-					onChange={ (value) => updateLocalSetting(value, 'wp_peeps_public_cpt') }
-					disabled={ isSaving }
-				/>
-
-				<TextControl
-					__nextHasNoMarginBottom
-					label={ __('Phone Number Format', 'wp-peeps') }
-						help={ __('Use # for digits. Example: (###) ###-####', 'wp-peeps') }
-					value={ localSettings.wp_peeps_phone_format ?? phoneFormat }
-					onChange={ (value) => updateLocalSetting(value, 'wp_peeps_phone_format') }
-					disabled={ isSaving }
-				/>
-
-				{hasChanges && (
-					<div className="wp-peeps-settings__footer" style={{ marginTop: '20px' }}>
-						<Button
-							variant="primary"
-							onClick={ saveSettings }
-							disabled={ isSaving }
-						>
-							{ isSaving ? __('Saving...', 'wp-peeps') : __('Save Changes', 'wp-peeps') }
-						</Button>
-					</div>
-				)}
+		<div className="wrap wp-peeps-admin">
+			<div className="wp-peeps-header">
+				<h1>{ __('WP Peeps Settings', 'wp-peeps') }</h1>
 			</div>
+			
+			{showRewriteNotice && (
+				<Notice
+					status="warning"
+					isDismissible={true}
+					onDismiss={() => setShowRewriteNotice(false)}
+					className="wp-peeps-notice"
+				>
+					{ __('You changed the directory slug. Please visit the Permalinks page and click "Save Changes" to update your URLs.', 'wp-peeps') }
+					<p>
+						<a href="options-permalink.php" className="button button-secondary">
+							{ __('Visit Permalinks Page', 'wp-peeps') }
+						</a>
+					</p>
+				</Notice>
+			)}
+
+			<Card className="wp-peeps-card">
+				<CardHeader>
+					<h2 className="wp-peeps-card__title">{ __('Directory Settings', 'wp-peeps') }</h2>
+				</CardHeader>
+				<CardBody>
+					<div className="wp-peeps-settings">
+						<div className="wp-peeps-setting-row">
+							<ToggleControl
+								__nextHasNoMarginBottom
+								label={ __('Make People Directory Public', 'wp-peeps') }
+								help={ __('When enabled, the people directory will be visible to the public.', 'wp-peeps') }
+								checked={ localSettings.wp_peeps_public_cpt ?? isPublic }
+								onChange={ (value) => updateLocalSetting(value, 'wp_peeps_public_cpt') }
+								disabled={ isSaving }
+							/>
+						</div>
+
+						<div className="wp-peeps-setting-row">
+							<TextControl
+								__nextHasNoMarginBottom
+								label={ __('Directory Slug', 'wp-peeps') }
+								help={ __('The URL slug for the people directory (e.g., "staff" would make URLs like /staff/john-doe)', 'wp-peeps') }
+								value={ localSettings.wp_peeps_cpt_slug ?? cptSlug }
+								onChange={ (value) => updateLocalSetting(value, 'wp_peeps_cpt_slug') }
+								disabled={ isSaving }
+							/>
+						</div>
+
+						<div className="wp-peeps-setting-row">
+							<TextControl
+								__nextHasNoMarginBottom
+								label={ __('Phone Number Format', 'wp-peeps') }
+								help={ __('Use # for digits. Example: (###) ###-####', 'wp-peeps') }
+								value={ localSettings.wp_peeps_phone_format ?? phoneFormat }
+								onChange={ (value) => updateLocalSetting(value, 'wp_peeps_phone_format') }
+								disabled={ isSaving }
+							/>
+						</div>
+
+						{hasChanges && (
+							<div className="wp-peeps-settings__footer">
+								<Button
+									variant="primary"
+									onClick={ saveSettings }
+									disabled={ isSaving }
+								>
+									{ isSaving ? __('Saving...', 'wp-peeps') : __('Save Changes', 'wp-peeps') }
+								</Button>
+							</div>
+						)}
+					</div>
+				</CardBody>
+			</Card>
 		</div>
 	);
 }
