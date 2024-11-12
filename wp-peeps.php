@@ -65,3 +65,16 @@ function wp_peeps_admin_notices() {
 		delete_transient( 'wp_peeps_show_permalink_notice' );
 	}
 }
+
+/**
+ * Add settings link to plugins page
+ *
+ * @param array $links Plugin action links
+ * @return array Modified plugin action links
+ */
+add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'wp_peeps_add_settings_link' );
+function wp_peeps_add_settings_link( $links ) {
+	$settings_link = '<a href="' . admin_url( 'edit.php?post_type=people&page=wp-peeps-settings' ) . '">' . __( 'Settings', 'wp-peeps' ) . '</a>';
+	array_unshift( $links, $settings_link );
+	return $links;
+}
