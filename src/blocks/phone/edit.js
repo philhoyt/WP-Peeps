@@ -1,34 +1,20 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
- */
 import { __ } from '@wordpress/i18n';
 
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, ToggleControl, SelectControl, TextControl } from '@wordpress/components';
 import { useEntityProp } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
- *
- * @return {Element} Element to render.
- */
 export default function Edit({ attributes, setAttributes }) {
 	const blockProps = useBlockProps();
 	const { tagName, makeLink, prefix } = attributes;
 	
 	const [meta] = useEntityProp('postType', 'wp_peeps', 'meta');
-	const phone = meta?.wp_peeps_phone || __('Phone Number', 'wp-peeps');
+	const format = useSelect(select => 
+		select(coreStore).getEntityRecord('root', 'site')?.wp_peeps_phone_format
+	) || '(###) ###-####';
+	const phone = meta?.wp_peeps_phone || format;
 
 	const TagName = tagName;
 	const displayNumber = prefix ? `${prefix} ${phone}` : phone;

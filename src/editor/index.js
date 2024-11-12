@@ -43,10 +43,11 @@ function NameFieldsPanel() {
 	};
 
 	const handlePhoneChange = ( value ) => {
-		const formatted = formatPhoneNumber( value );
+		// Strip all non-digits and limit to 10
+		const digits = value.replace( /\D/g, '' ).slice( 0, 10 );
 		setMeta( {
 			...meta,
-			wp_peeps_phone: formatted,
+			wp_peeps_phone: digits,
 		} );
 	};
 
@@ -140,9 +141,10 @@ function NameFieldsPanel() {
 			/>
 			<TextControl
 				label={ __( 'Phone', 'wp-peeps' ) }
-				value={ meta?.wp_peeps_phone || '' }
+				value={ meta?.wp_peeps_phone ? formatPhoneNumber(meta.wp_peeps_phone) : '' }
 				onChange={ handlePhoneChange }
 				help={ __( 'Enter 10 digit phone number', 'wp-peeps' ) }
+				type="tel"
 			/>
 			<TextControl
 				type="email"

@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Validate and format phone number
+ * Validate phone number
  *
  * @param string $phone Phone number to validate.
  * @return string|WP_Error
@@ -24,10 +24,10 @@ function validate_phone( $phone ) {
 		return '';
 	}
 
-	// Remove everything except digits.
+	// Should already be digits only, but sanitize just in case.
 	$digits = preg_replace( '/[^0-9]/', '', $phone );
 
-	// Check if we have 10 digits.
+	// Check if we have exactly 10 digits.
 	if ( strlen( $digits ) !== 10 ) {
 		return new \WP_Error(
 			'invalid_phone',
@@ -35,16 +35,7 @@ function validate_phone( $phone ) {
 		);
 	}
 
-	// Get format from settings.
-	$format = get_option( 'wp_peeps_phone_format', '(###) ###-####' );
-
-	// Replace # with digits.
-	$formatted = $format;
-	for ( $i = 0; $i < strlen( $digits ); $i++ ) {
-		$formatted = preg_replace( '/#/', $digits[$i], $formatted, 1 );
-	}
-
-	return $formatted;
+	return $digits;
 }
 
 /**

@@ -10,11 +10,13 @@ import {
 } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
 import { useState } from '@wordpress/element';
 import './style.scss';
 
 function SettingsPage() {
 	const { saveEntityRecord } = useDispatch( coreStore );
+	const { createNotice } = useDispatch(noticesStore);
 
 	// Local state for tracking changes
 	const [ localSettings, setLocalSettings ] = useState( {} );
@@ -76,7 +78,7 @@ function SettingsPage() {
 					className="wp-peeps-notice"
 				>
 					{ __(
-						'You changed the directory slug. Please visit the Permalinks page and click "Save Changes" to update your URLs.',
+						'You changed the directory slug or public status. Please visit the Permalinks page and click "Save Changes" to update your URLs.',
 						'wp-peeps'
 					) }
 					<p>
@@ -156,20 +158,28 @@ function SettingsPage() {
 										'Phone Number Format',
 										'wp-peeps'
 									) }
-									help={ __(
-										'Use # for digits. Example: (###) ###-####',
-										'wp-peeps'
-									) }
+									help={
+										<>
+											{ __( 'Use # for digits. Example: ', 'wp-peeps' ) }
+											<button
+												type="button"
+												className="button-link"
+												onClick={ () => updateLocalSetting( '(###) ###-####', 'wp_peeps_phone_format' ) }
+											>
+												(###) ###-####
+											</button>
+										</>
+									}
 									value={
 										localSettings.wp_peeps_phone_format ??
 										phoneFormat
 									}
-									onChange={ ( value ) =>
-										updateLocalSetting(
-											value,
-											'wp_peeps_phone_format'
-										)
-									}
+									onChange={(value) => {
+										const digitCount = (value.match(/#/g) || []).length;
+										if (digitCount >= 10) {
+											updateLocalSetting(value, 'wp_peeps_phone_format');
+										}
+									}}
 									disabled={ isSaving }
 								/>
 							</div>
