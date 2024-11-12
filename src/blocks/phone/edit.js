@@ -15,22 +15,28 @@ export default function Edit({ attributes, setAttributes }) {
 		select(coreStore).getEntityRecord('root', 'site')?.wp_peeps_phone_format
 	) || '(###) ###-####';
 
-	const phoneNumber = meta?.wp_peeps_phone;
-		
 	const formatPhoneNumber = (phoneNumber, format) => {
+		// Return format if no phone number
+		if (!phoneNumber || typeof phoneNumber !== 'string') {
+			return format;
+		}
+
+		// Only use digits from the phone number
+		const digits = phoneNumber.replace(/\D/g, '');
+		if (!digits) {
+			return format;
+		}
+
 		let formattedPhone = format;
-		for (let i = 0; i < phoneNumber.length; i++) {
-			formattedPhone = formattedPhone.replace('#', phoneNumber[i]);
+		for (let i = 0; i < digits.length && i < 10; i++) {
+			formattedPhone = formattedPhone.replace('#', digits[i]);
 		}
 		return formattedPhone;
 	};
 
-	const formattedPhoneNumber = formatPhoneNumber(phoneNumber, format);
-
-	const phone = formattedPhoneNumber || format;
-
-	const TagName = tagName;
+	const phone = formatPhoneNumber(meta?.wp_peeps_phone, format);
 	const displayNumber = prefix ? `${prefix} ${phone}` : phone;
+	const TagName = tagName;
 
 	return (
 		<>
