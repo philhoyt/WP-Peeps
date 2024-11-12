@@ -57,8 +57,8 @@ function SettingsPage() {
 		try {
 			await saveEntityRecord( 'root', 'site', localSettings );
 			setHasChanges( false );
-			// Show notice if slug was changed
-			if ( localSettings.wp_peeps_cpt_slug ) {
+			// Show notice if slug or public status was changed
+			if ( localSettings.wp_peeps_cpt_slug || localSettings.wp_peeps_public_cpt !== undefined ) {
 				setShowRewriteNotice( true );
 			}
 		} catch ( error ) {
