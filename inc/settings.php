@@ -1,10 +1,20 @@
 <?php
 /**
  * Register plugin settings
+ *
+ * @package WP_Peeps
  */
 
 namespace WP_Peeps\Inc;
 
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Register plugin settings
+ */
 function register_plugin_settings() {
 	register_setting(
 		'wp_peeps',
@@ -30,7 +40,7 @@ function register_plugin_settings() {
 			'type'         => 'string',
 			'default'      => '(###) ###-####',
 			'show_in_rest' => array(
-				'name' => 'wp_peeps_phone_format',
+				'name'   => 'wp_peeps_phone_format',
 				'schema' => array(
 					'type'    => 'string',
 					'default' => '(###) ###-####',
@@ -44,17 +54,17 @@ function register_plugin_settings() {
 		'wp_peeps',
 		'wp_peeps_cpt_slug',
 		array(
-			'type'         => 'string',
-			'default'      => 'people',
-			'show_in_rest' => array(
-				'name' => 'wp_peeps_cpt_slug',
+			'type'              => 'string',
+			'default'           => 'people',
+			'show_in_rest'      => array(
+				'name'   => 'wp_peeps_cpt_slug',
 				'schema' => array(
 					'type'    => 'string',
 					'default' => 'people',
 				),
 			),
 			'description' => __( 'Custom post type slug for People directory', 'wp-peeps' ),
-			'sanitize_callback' => function( $slug ) {
+			'sanitize_callback' => function ( $slug ) {
 				return sanitize_title( $slug );
 			},
 		)

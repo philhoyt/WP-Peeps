@@ -19,15 +19,15 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return string|WP_Error
  */
 function validate_phone( $phone ) {
-	// Allow empty values
+	// Allow empty values.
 	if ( empty( $phone ) ) {
 		return '';
 	}
 
-	// Remove everything except digits
+	// Remove everything except digits.
 	$digits = preg_replace( '/[^0-9]/', '', $phone );
 	
-	// Check if we have 10 digits
+	// Check if we have 10 digits.
 	if ( strlen( $digits ) !== 10 ) {
 		return new \WP_Error(
 			'invalid_phone',
@@ -35,10 +35,10 @@ function validate_phone( $phone ) {
 		);
 	}
 
-	// Get format from settings
+	// Get format from settings.
 	$format = get_option( 'wp_peeps_phone_format', '(###) ###-####' );
 	
-	// Replace # with digits
+	// Replace # with digits.
 	$formatted = $format;
 	for ( $i = 0; $i < strlen( $digits ); $i++ ) {
 		$formatted = preg_replace( '/#/', $digits[$i], $formatted, 1 );
@@ -54,7 +54,7 @@ function validate_phone( $phone ) {
  * @return string|WP_Error
  */
 function validate_email( $email ) {
-	// Allow empty values
+	// Allow empty values.
 	if ( empty( $email ) ) {
 		return '';
 	}

@@ -69,4 +69,4 @@ function enqueue_admin_scripts( $hook ) {
 		true
 	);
 }
-add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\enqueue_admin_scripts' ); 
+add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\enqueue_admin_scripts' );
