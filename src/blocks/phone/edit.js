@@ -18,6 +18,11 @@ export default function Edit({ attributes, setAttributes }) {
 	const phoneNumber = meta?.wp_peeps_phone;
 		
 	const formatPhoneNumber = (phoneNumber, format) => {
+		// If phone number is undefined or empty, return the format
+		if (!phoneNumber) {
+			return format;
+		}
+		
 		let formattedPhone = format;
 		for (let i = 0; i < phoneNumber.length; i++) {
 			formattedPhone = formattedPhone.replace('#', phoneNumber[i]);
@@ -25,9 +30,7 @@ export default function Edit({ attributes, setAttributes }) {
 		return formattedPhone;
 	};
 
-	const formattedPhoneNumber = formatPhoneNumber(phoneNumber, format);
-
-	const phone = formattedPhoneNumber || format;
+	const phone = formatPhoneNumber(phoneNumber, format);
 
 	const TagName = tagName;
 	const displayNumber = prefix ? `${prefix} ${phone}` : phone;
