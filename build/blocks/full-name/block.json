@@ -1,0 +1,63 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "wp-peeps/full-name",
+  "version": "0.1.0",
+  "title": "Full Name",
+  "category": "wp-peeps",
+  "icon": "id",
+  "description": "Display a person's full name with configurable parts",
+  "attributes": {
+    "showFirst": {
+      "type": "boolean",
+      "default": true
+    },
+    "showMiddle": {
+      "type": "boolean",
+      "default": true
+    },
+    "showLast": {
+      "type": "boolean",
+      "default": true
+    },
+    "tagName": {
+      "type": "string",
+      "default": "h2"
+    },
+    "makeLink": {
+      "type": "boolean",
+      "default": false
+    },
+    "openInNewTab": {
+      "type": "boolean",
+      "default": false
+    },
+    "linkRel": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "color": {
+      "text": true,
+      "background": true,
+      "link": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true,
+      "fontWeight": true,
+      "fontStyle": true,
+      "letterSpacing": true,
+      "textTransform": true,
+      "textDecoration": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "textdomain": "wp-peeps",
+  "editorScript": "file:./index.js"
+}
