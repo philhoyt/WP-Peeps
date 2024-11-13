@@ -63,6 +63,6 @@ function register_people_post_type() {
 		'show_in_rest'       => true,
 	);
 
-	register_post_type( 'people', $args );
+	register_post_type( 'wp_peeps_people', $args );
 }
 add_action( 'init', __NAMESPACE__ . '\register_people_post_type' );

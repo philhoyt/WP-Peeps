@@ -10,7 +10,7 @@ export default function Edit({ attributes, setAttributes }) {
 	const blockProps = useBlockProps();
 	const { tagName, makeLink, prefix } = attributes;
 	
-	const [meta] = useEntityProp('postType', 'people', 'meta');
+	const [meta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
 	const format = useSelect(select => 
 		select(coreStore).getEntityRecord('root', 'site')?.wp_peeps_phone_format
 	) || '(###) ###-####';

@@ -41,7 +41,7 @@ function Edit({
     makeLink,
     prefix
   } = attributes;
-  const [meta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.useEntityProp)('postType', 'people', 'meta');
+  const [meta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.useEntityProp)('postType', 'wp_peeps_people', 'meta');
   const format = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.store).getEntityRecord('root', 'site')?.wp_peeps_phone_format) || '(###) ###-####';
   const phoneNumber = meta?.wp_peeps_phone;
   const formatPhoneNumber = (phoneNumber, format) => {

@@ -41,7 +41,7 @@ function Edit({
     openInNewTab,
     linkRel
   } = attributes;
-  const [meta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.useEntityProp)('postType', 'people', 'meta');
+  const [meta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.useEntityProp)('postType', 'wp_peeps_people', 'meta');
   const firstName = meta?.wp_peeps_first_name || 'First';
   const middleName = meta?.wp_peeps_middle_name || 'Middle';
   const lastName = meta?.wp_peeps_last_name || 'Last';

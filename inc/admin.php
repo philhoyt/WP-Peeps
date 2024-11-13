@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function register_admin_page() {
 	add_submenu_page(
-		'edit.php?post_type=people',
+		'edit.php?post_type=wp_peeps_people',
 		__( 'WP Peeps Settings', 'wp-peeps' ),
 		__( 'Settings', 'wp-peeps' ),
 		'manage_options',
@@ -45,25 +45,25 @@ function render_admin_page() {
  * @return void
  */
 function enqueue_admin_scripts( $hook ) {
-	if ( 'people_page_wp-peeps-settings' !== $hook ) {
+	if ( 'wp_peeps_people_page_wp-peeps-settings' !== $hook ) {
 		return;
 	}
 
-	$asset_file = include plugin_dir_path( dirname( __FILE__ ) ) . 'build/admin/index.asset.php';
+	$asset_file = include plugin_dir_path( __DIR__ ) . 'build/admin/index.asset.php';
 
 	wp_enqueue_style(
 		'wp-peeps-admin',
-		plugins_url( 'build/admin/style-index.css', dirname( __FILE__ ) ),
-		[ 'wp-components' ],
+		plugins_url( 'build/admin/style-index.css', __DIR__ ),
+		array( 'wp-components' ),
 		$asset_file['version']
 	);
 
 	wp_enqueue_script(
 		'wp-peeps-admin',
-		plugins_url( 'build/admin/index.js', dirname( __FILE__ ) ),
+		plugins_url( 'build/admin/index.js', __DIR__ ),
 		array_merge(
 			$asset_file['dependencies'],
-			[ 'wp-components', 'wp-element', 'wp-data', 'wp-core-data', 'wp-api-fetch' ]
+			array( 'wp-components', 'wp-element', 'wp-data', 'wp-core-data', 'wp-api-fetch' )
 		),
 		$asset_file['version'],
 		true
