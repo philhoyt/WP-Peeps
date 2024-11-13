@@ -10,33 +10,30 @@ export default function Edit({ attributes, setAttributes }) {
 	const blockProps = useBlockProps();
 	const { tagName, makeLink, prefix } = attributes;
 	
-	const [meta] = useEntityProp('postType', 'people', 'meta');
+	const [meta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
 	const format = useSelect(select => 
 		select(coreStore).getEntityRecord('root', 'site')?.wp_peeps_phone_format
 	) || '(###) ###-####';
 
+	const phoneNumber = meta?.wp_peeps_phone;
+		
 	const formatPhoneNumber = (phoneNumber, format) => {
-		// Return format if no phone number
-		if (!phoneNumber || typeof phoneNumber !== 'string') {
+		// If phone number is undefined or empty, return the format
+		if (!phoneNumber) {
 			return format;
 		}
-
-		// Only use digits from the phone number
-		const digits = phoneNumber.replace(/\D/g, '');
-		if (!digits) {
-			return format;
-		}
-
+		
 		let formattedPhone = format;
-		for (let i = 0; i < digits.length && i < 10; i++) {
-			formattedPhone = formattedPhone.replace('#', digits[i]);
+		for (let i = 0; i < phoneNumber.length; i++) {
+			formattedPhone = formattedPhone.replace('#', phoneNumber[i]);
 		}
 		return formattedPhone;
 	};
 
-	const phone = formatPhoneNumber(meta?.wp_peeps_phone, format);
-	const displayNumber = prefix ? `${prefix} ${phone}` : phone;
+	const phone = formatPhoneNumber(phoneNumber, format);
+
 	const TagName = tagName;
+	const displayNumber = prefix ? `${prefix} ${phone}` : phone;
 
 	return (
 		<>

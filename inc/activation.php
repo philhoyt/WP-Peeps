@@ -12,7 +12,7 @@ function wp_peeps_activation() {
 // Use plugin_basename with the main plugin file
 add_filter( 'plugin_action_links_' . plugin_basename( WP_PEEPS_PLUGIN_FILE ), 'wp_peeps_add_settings_link' );
 function wp_peeps_add_settings_link( $links ) {
-	$settings_link = '<a href="' . admin_url( 'edit.php?post_type=people&page=wp-peeps-settings' ) . '">' . __( 'Settings', 'wp-peeps' ) . '</a>';
+	$settings_link = '<a href="' . admin_url( 'edit.php?post_type=wp_peeps_people&page=wp-peeps-settings' ) . '">' . __( 'Settings', 'wp-peeps' ) . '</a>';
 	array_unshift( $links, $settings_link );
 	return $links;
-} 
+}

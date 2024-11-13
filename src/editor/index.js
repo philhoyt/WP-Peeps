@@ -8,9 +8,9 @@ import { useSelect } from '@wordpress/data';
 import { store as coreStore, useEntityProp } from '@wordpress/core-data';
 
 function NameFieldsPanel() {
-	const [ meta, setMeta ] = useEntityProp( 'postType', 'people', 'meta' );
-	const [ , setTitle ] = useEntityProp( 'postType', 'people', 'title' );
-	const [ , setSlug ] = useEntityProp( 'postType', 'people', 'slug' );
+	const [ meta, setMeta ] = useEntityProp( 'postType', 'wp_peeps_people', 'meta' );
+	const [ , setTitle ] = useEntityProp( 'postType', 'wp_peeps_people', 'title' );
+	const [ , setSlug ] = useEntityProp( 'postType', 'wp_peeps_people', 'slug' );
 	const { lockPostSaving, unlockPostSaving, editPost } =
 		dispatch( 'core/editor' );
 

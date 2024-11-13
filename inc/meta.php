@@ -66,7 +66,7 @@ function validate_email( $email ) {
  */
 function register_people_meta() {
 	register_post_meta(
-		'people',
+		'wp_peeps_people',
 		'wp_peeps_first_name',
 		array(
 			'show_in_rest'      => true,
@@ -80,7 +80,7 @@ function register_people_meta() {
 	);
 
 	register_post_meta(
-		'people',
+		'wp_peeps_people',
 		'wp_peeps_middle_name',
 		array(
 			'show_in_rest'      => true,
@@ -94,7 +94,7 @@ function register_people_meta() {
 	);
 
 	register_post_meta(
-		'people',
+		'wp_peeps_people',
 		'wp_peeps_last_name',
 		array(
 			'show_in_rest'      => true,
@@ -108,7 +108,7 @@ function register_people_meta() {
 	);
 
 	register_post_meta(
-		'people',
+		'wp_peeps_people',
 		'wp_peeps_job_title',
 		array(
 			'show_in_rest'      => true,
@@ -122,7 +122,7 @@ function register_people_meta() {
 	);
 
 	register_post_meta(
-		'people',
+		'wp_peeps_people',
 		'wp_peeps_phone',
 		array(
 			'show_in_rest'      => true,
@@ -136,7 +136,7 @@ function register_people_meta() {
 	);
 
 	register_post_meta(
-		'people',
+		'wp_peeps_people',
 		'wp_peeps_email',
 		array(
 			'show_in_rest'      => true,
@@ -166,7 +166,7 @@ function update_title_from_name( $meta_id, $post_id, $meta_key, $meta_value ) {
 	}
 
 	// Only proceed for our post type.
-	if ( 'people' !== get_post_type( $post_id ) ) {
+	if ( 'wp_peeps_people' !== get_post_type( $post_id ) ) {
 		return;
 	}
 
