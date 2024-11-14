@@ -1,0 +1,1 @@
+{"version":3,"file":"editor/index.css","mappings":";;;AACC;EACC;EACA;AAAF,C","sources":["webpack://wp-peeps/./src/blocks/social-links/editor.scss"],"sourcesContent":[" .wp-peeps-social-links {\n\ta {\n\t\tcursor: not-allowed;\n\t\tpointer-events: none;\n\t}\n}"],"names":[],"sourceRoot":""}

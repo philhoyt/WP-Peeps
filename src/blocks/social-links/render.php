@@ -16,6 +16,7 @@ function wp_peeps_render_social_links_block( $attributes ) {
 		$icon_bg_color = $attributes['iconBackgroundColor'] ?? null;
 		$orientation   = $attributes['layout']['orientation'] ?? 'horizontal';
 		$justify       = $attributes['layout']['justifyContent'] ?? null;
+		$gap           = $attributes['style']['spacing']['blockGap'] ?? null;
 
 		// Build class list
 		$classes = array(
@@ -56,6 +57,19 @@ function wp_peeps_render_social_links_block( $attributes ) {
 					break;
 			}
 		}
+
+		// Add gap if set
+		if ($gap) {
+			$gap_value = $gap;
+			// Handle preset spacing format
+			if (strpos($gap, 'var:preset|spacing|') === 0) {
+				$preset = str_replace('var:preset|spacing|', '', $gap);
+				$gap_value = "var(--wp--preset--spacing--{$preset})";
+			}
+			$gap_property = $orientation === 'vertical' ? 'row-gap' : 'column-gap';
+			$styles[] = "$gap_property: $gap_value";
+		}
+
 		$style_attr = ! empty( $styles ) ? ' style="' . esc_attr( implode( '; ', $styles ) ) . '"' : '';
 
 		// Start building the social links block

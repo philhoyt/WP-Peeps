@@ -38,7 +38,7 @@
 		},
 		"size": {
 			"type": "string",
-			"default": "normal"
+			"default": "has-normal-icon-size"
 		},
 		"layout": {
 			"type": "object",
@@ -47,6 +47,9 @@
 				"orientation": "horizontal",
 				"justifyContent": "left"
 			}
+		},
+		"style": {
+			"type": "object"
 		}
 	},
 	"textdomain": "social-links",
