@@ -566,7 +566,9 @@ function Edit({
   const {
     iconColor,
     iconBackgroundColor,
-    size = 'has-normal-icon-size'
+    size = 'has-normal-icon-size',
+    openInNewTab,
+    showLabels
   } = attributes;
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)();
 
@@ -610,9 +612,24 @@ function Edit({
         allowedControls: ['left', 'center', 'right', 'space-between']
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+        title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Settings'),
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Show labels'),
+          checked: showLabels,
+          onChange: () => setAttributes({
+            showLabels: !showLabels
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Open links in new tab'),
+          checked: openInNewTab,
+          onChange: () => setAttributes({
+            openInNewTab: !openInNewTab
+          })
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
         title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Styles'),
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
           label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Size'),
           value: size,
           options: SIZES.map(({
@@ -625,7 +642,13 @@ function Edit({
           onChange: newSize => setAttributes({
             size: newSize
           })
-        })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Open links in new tab'),
+          checked: openInNewTab,
+          onChange: () => setAttributes({
+            openInNewTab: !openInNewTab
+          })
+        })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.PanelColorSettings, {
         __experimentalHasMultipleOrigins: true,
         __experimentalIsRenderedInSidebar: true,
@@ -1256,7 +1279,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"apiVersion":3,"name":"wp-peeps/phone
   \********************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"wp-peeps/social-links","version":"0.1.0","title":"Social Links - WP Peeps","category":"widgets","icon":"smiley","description":"Display social media links.","supports":{"html":false,"align":true,"spacing":{"margin":true,"padding":true,"blockGap":true},"color":{"gradients":true,"background":true,"text":true},"layout":{"allowSwitching":false,"allowInheriting":false,"default":{"type":"flex"}},"__experimentalSelector":".wp-block-wp-peeps-social-links"},"attributes":{"iconColor":{"type":"string"},"iconBackgroundColor":{"type":"string"},"size":{"type":"string","default":"has-normal-icon-size"},"layout":{"type":"object","default":{"type":"flex","orientation":"horizontal","justifyContent":"left"}},"style":{"type":"object"},"className":{"type":"string"}},"textdomain":"social-links","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"wp-peeps/social-links","version":"0.1.0","title":"Social Links - WP Peeps","category":"widgets","icon":"smiley","description":"Display social media links.","supports":{"html":false,"align":true,"spacing":{"margin":true,"padding":true,"blockGap":true},"color":{"gradients":true,"background":true,"text":true},"layout":{"allowSwitching":false,"allowInheriting":false,"allowJustification":true,"allowVerticalAlignment":true,"default":{"type":"flex","orientation":"horizontal"}},"__experimentalSelector":".wp-block-wp-peeps-social-links"},"attributes":{"iconColor":{"type":"string"},"iconBackgroundColor":{"type":"string"},"size":{"type":"string","default":"has-normal-icon-size"},"layout":{"type":"object","default":{"type":"flex","orientation":"horizontal","justifyContent":"left"}},"style":{"type":"object"},"className":{"type":"string"},"openInNewTab":{"type":"boolean","default":false},"showLabels":{"type":"boolean","default":false}},"textdomain":"social-links","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
 
 /***/ })
 

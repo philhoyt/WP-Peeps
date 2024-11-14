@@ -12,6 +12,7 @@ import {
 import {
     PanelBody,
     SelectControl,
+    ToggleControl,
     ToolbarGroup,
     ToolbarButton,
     Placeholder,
@@ -59,6 +60,8 @@ export default function Edit({ attributes, setAttributes }) {
         iconColor,
         iconBackgroundColor,
         size = 'has-normal-icon-size',
+        openInNewTab,
+        showLabels,
     } = attributes;
 
     const blockProps = useBlockProps();
@@ -99,19 +102,31 @@ export default function Edit({ attributes, setAttributes }) {
                     />
                 </ToolbarGroup>
                 <JustifyContentControl
-                    value={ attributes.layout?.justifyContent }
-                    onChange={ value =>
-                        setAttributes( {
+                    value={attributes.layout?.justifyContent}
+                    onChange={(value) =>
+                        setAttributes({
                             layout: {
                                 ...attributes.layout,
                                 justifyContent: value,
                             },
-                        } )
+                        })
                     }
-                    allowedControls={ [ 'left', 'center', 'right', 'space-between' ] }
+                    allowedControls={['left', 'center', 'right', 'space-between']}
                 />
             </BlockControls>
             <InspectorControls>
+                <PanelBody title={__('Settings')}>
+                    <ToggleControl
+                        label={__('Show labels')}
+                        checked={showLabels}
+                        onChange={() => setAttributes({ showLabels: !showLabels })}
+                    />
+                    <ToggleControl
+                        label={__('Open links in new tab')}
+                        checked={openInNewTab}
+                        onChange={() => setAttributes({ openInNewTab: !openInNewTab })}
+                    />
+                </PanelBody>
                 <PanelBody title={__('Styles')}>
                     <SelectControl
                         label={__('Size')}
@@ -121,6 +136,11 @@ export default function Edit({ attributes, setAttributes }) {
                             value,
                         }))}
                         onChange={(newSize) => setAttributes({ size: newSize })}
+                    />
+                    <ToggleControl
+                        label={__('Open links in new tab')}
+                        checked={openInNewTab}
+                        onChange={() => setAttributes({ openInNewTab: !openInNewTab })}
                     />
                 </PanelBody>
                 <PanelColorSettings

@@ -33,6 +33,7 @@ function wp_peeps_render_social_links_block( $attributes ) {
 	$icon_bg_color = $attributes['iconBackgroundColor'] ?? null;
 	$orientation   = $attributes['layout']['orientation'] ?? 'horizontal';
 	$justify       = $attributes['layout']['justifyContent'] ?? null;
+	$vertical_align = $attributes['layout']['verticalAlignment'] ?? null;
 	$gap           = $attributes['style']['spacing']['blockGap'] ?? null;
 	$class_name    = $attributes['className'] ?? '';
 
@@ -48,6 +49,10 @@ function wp_peeps_render_social_links_block( $attributes ) {
 		$classes[] = 'is-vertical';
 	}
 
+	if ( ! empty( $attributes['showLabels'] ) ) {
+		$classes[] = 'has-visible-labels';
+	}
+
 	// Add color classes
 	if ( $icon_color ) {
 		$classes[] = 'has-icon-color';
@@ -59,21 +64,60 @@ function wp_peeps_render_social_links_block( $attributes ) {
 
 	// Build style attribute
 	$styles = array();
-	if ($justify) {
-		$property = $orientation === 'vertical' ? 'align-items' : 'justify-content';
-		switch ($justify) {
-			case 'left':
-				$styles[] = "$property: flex-start";
-				break;
-			case 'center':
-				$styles[] = "$property: center";
-				break;
-			case 'right':
-				$styles[] = "$property: flex-end";
-				break;
-			case 'space-between':
-				$styles[] = 'justify-content: space-between';
-				break;
+	
+	// Handle alignment based on orientation
+	if ($orientation === 'vertical') {
+		// Vertical alignment (top, middle, bottom, space-between)
+		if ($vertical_align) {
+			switch ($vertical_align) {
+				case 'top':
+					$styles[] = 'justify-content: flex-start';
+					break;
+				case 'middle':
+					$styles[] = 'justify-content: center';
+					break;
+				case 'bottom':
+					$styles[] = 'justify-content: flex-end';
+					break;
+				case 'space-between':
+					$styles[] = 'justify-content: space-between';
+					break;
+			}
+		}
+		// Item justification (left, center, right, stretch)
+		if ($justify) {
+			switch ($justify) {
+				case 'left':
+					$styles[] = 'align-items: flex-start';
+					break;
+				case 'center':
+					$styles[] = 'align-items: center';
+					break;
+				case 'right':
+					$styles[] = 'align-items: flex-end';
+					break;
+				case 'stretch':
+					$styles[] = 'align-items: stretch';
+					break;
+			}
+		}
+	} else {
+		// Horizontal layout uses justify-content
+		if ($justify) {
+			switch ($justify) {
+				case 'left':
+					$styles[] = 'justify-content: flex-start';
+					break;
+				case 'center':
+					$styles[] = 'justify-content: center';
+					break;
+				case 'right':
+					$styles[] = 'justify-content: flex-end';
+					break;
+				case 'space-between':
+					$styles[] = 'justify-content: space-between';
+					break;
+			}
 		}
 	}
 
@@ -85,26 +129,33 @@ function wp_peeps_render_social_links_block( $attributes ) {
 			$preset = str_replace('var:preset|spacing|', '', $gap);
 			$gap_value = "var(--wp--preset--spacing--{$preset})";
 		}
-		$gap_property = $orientation === 'vertical' ? 'row-gap' : 'column-gap';
-		$styles[] = "$gap_property: $gap_value";
+		$styles[] = "gap: $gap_value";
 	}
 
-	$style_attr = ! empty( $styles ) ? ' style="' . esc_attr( implode( '; ', $styles ) ) . '"' : '';
+	// Get block wrapper attributes with styles
+	$wrapper_attributes = get_block_wrapper_attributes(
+		array(
+			'class' => implode(' ', array_filter($classes)),
+			'style' => implode('; ', $styles),
+		)
+	);
 
 	// Start building the social links block
 	$block_content = sprintf(
-		'<!-- wp:social-links {"className":"%s","iconColor":"%s","iconBackgroundColor":"%s","layout":{"type":"flex","orientation":"%s","justifyContent":"%s"}} -->',
-		implode( ' ', array_filter( $classes ) ),
-		esc_attr( $icon_color ),
-		esc_attr( $icon_bg_color ),
-		esc_attr( $orientation ),
-		esc_attr( $justify )
+		'<!-- wp:social-links {"openInNewTab":%s,"showLabels":%s,"className":"%s","iconColor":"%s","iconBackgroundColor":"%s","layout":{"type":"flex","orientation":"%s","justifyContent":"%s","verticalAlignment":"%s"}} -->',
+		! empty( $attributes['openInNewTab'] ) ? 'true' : 'false',
+		! empty( $attributes['showLabels'] ) ? 'true' : 'false',
+		implode(' ', array_filter($classes)),
+		esc_attr($icon_color),
+		esc_attr($icon_bg_color),
+		esc_attr($orientation),
+		esc_attr($justify),
+		esc_attr($vertical_align)
 	) . "\n";
 
 	$block_content .= sprintf(
-		'<ul class="%s"%s>',
-		implode( ' ', array_filter( $classes ) ),
-		$style_attr
+		'<ul %s>',
+		$wrapper_attributes
 	);
 
 	// Add each social link

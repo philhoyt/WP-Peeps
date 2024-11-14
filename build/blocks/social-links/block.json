@@ -23,8 +23,11 @@
     "layout": {
       "allowSwitching": false,
       "allowInheriting": false,
+      "allowJustification": true,
+      "allowVerticalAlignment": true,
       "default": {
-        "type": "flex"
+        "type": "flex",
+        "orientation": "horizontal"
       }
     },
     "__experimentalSelector": ".wp-block-wp-peeps-social-links"
@@ -53,6 +56,14 @@
     },
     "className": {
       "type": "string"
+    },
+    "openInNewTab": {
+      "type": "boolean",
+      "default": false
+    },
+    "showLabels": {
+      "type": "boolean",
+      "default": false
     }
   },
   "textdomain": "social-links",
