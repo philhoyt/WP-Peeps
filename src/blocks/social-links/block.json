@@ -6,19 +6,52 @@
 	"title": "Social Links - WP Peeps",
 	"category": "widgets",
 	"icon": "smiley",
-	"description": "Example block scaffolded with Create Block tool.",
-	"example": {},
+	"description": "Display social media links.",
 	"supports": {
-		"html": false
+		"html": false,
+		"align": true,
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"blockGap": true
+		},
+		"color": {
+			"gradients": true,
+			"background": true,
+			"text": true
+		},
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "flex"
+			}
+		},
+		"__experimentalSelector": ".wp-block-wp-peeps-social-links"
+	},
+	"attributes": {
+		"iconColor": {
+			"type": "string"
+		},
+		"iconBackgroundColor": {
+			"type": "string"
+		},
+		"size": {
+			"type": "string",
+			"default": "normal"
+		},
+		"layout": {
+			"type": "object",
+			"default": {
+				"type": "flex",
+				"orientation": "horizontal"
+			}
+		}
 	},
 	"textdomain": "social-links",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
 	"render": "file:./render.php",
-	"viewScript": "file:./view.js",
-	"dependencies": [
-		"core/social-links",
-		"core/social-link"
-	]
+	"viewScript": "file:./view.js"
 }
