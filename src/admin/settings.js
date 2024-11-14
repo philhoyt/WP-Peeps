@@ -133,10 +133,27 @@ function SettingsPage() {
 								<TextControl
 									__nextHasNoMarginBottom
 									label={ __( 'Directory Slug', 'wp-peeps' ) }
-									help={ __(
-										'The URL slug for the people directory (e.g., "staff" would make URLs like /staff/john-doe). Defaults to "people".',
-										'wp-peeps'
-									) }
+									help={
+										<>
+											{ __(
+												'The URL slug for the people directory (e.g., "staff" would make URLs like /staff/john-doe). Defaults to "',
+												'wp-peeps'
+											) }
+											<button
+												type="button"
+												className="button-link"
+												onClick={ () =>
+													updateLocalSetting(
+														'people',
+														'wp_peeps_cpt_slug'
+													)
+												}
+											>
+												people
+											</button>"
+											.
+										</>
+									}
 									value={
 										localSettings.wp_peeps_cpt_slug ??
 										cptSlug
