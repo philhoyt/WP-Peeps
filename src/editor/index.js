@@ -165,24 +165,73 @@ function NameFieldsPanel() {
 	);
 }
 
+const PLATFORM_PATTERNS = {
+    '500px': /500px\.com/i,
+    amazon: /amazon\./i,
+    bandcamp: /bandcamp\.com/i,
+    behance: /behance\.net/i,
+    bluesky: /(?:bsky\.app|bsky\.social)/i,
+    codepen: /codepen\.io/i,
+    deviantart: /deviantart\.com/i,
+    dribbble: /dribbble\.com/i,
+    dropbox: /dropbox\.com/i,
+    etsy: /etsy\.com/i,
+    facebook: /(?:facebook\.com|fb\.com|fb\.me)/i,
+    flickr: /flickr\.com/i,
+    foursquare: /foursquare\.com/i,
+    github: /github\.com/i,
+    goodreads: /goodreads\.com/i,
+    google: /(?:google\.com|plus\.google\.com)/i,
+    instagram: /(?:instagram\.com|instagr\.am)/i,
+    lastfm: /last\.fm/i,
+    linkedin: /linkedin\.com/i,
+    mastodon: /@.*@.*\.[a-z]+/i,
+    medium: /medium\.com/i,
+    meetup: /meetup\.com/i,
+    pinterest: /pinterest\./i,
+    pocket: /getpocket\.com/i,
+    reddit: /reddit\.com/i,
+    skype: /skype\.com/i,
+    snapchat: /snapchat\.com/i,
+    soundcloud: /soundcloud\.com/i,
+    spotify: /spotify\.com/i,
+    telegram: /t\.me/i,
+    tumblr: /tumblr\.com/i,
+    twitch: /twitch\.tv/i,
+    twitter: /(?:twitter\.com|x\.com)/i,
+    vimeo: /vimeo\.com/i,
+    whatsapp: /(?:whatsapp\.com|wa\.me)/i,
+    wordpress: /(?:wordpress\.org|wordpress\.com)/i,
+    yelp: /yelp\./i,
+    youtube: /(?:youtube\.com|youtu\.be)/i
+};
+
 const detectPlatform = (url) => {
-    const patterns = {
-        facebook: /(?:facebook\.com|fb\.me)/i,
-        twitter: /(?:twitter\.com|x\.com)/i,
-        linkedin: /linkedin\.com/i,
-        instagram: /instagram\.com/i,
-        youtube: /(?:youtube\.com|youtu\.be)/i,
-        github: /github\.com/i,
-    };
-
-    // Try to match the URL against each pattern
-    for (const [platform, pattern] of Object.entries(patterns)) {
-        if (pattern.test(url)) {
-            return platform;
+    try {
+        const urlObj = new URL(url);
+        
+        // Check against known patterns
+        for (const [platform, pattern] of Object.entries(PLATFORM_PATTERNS)) {
+            if (pattern.test(urlObj.hostname) || pattern.test(url)) {
+                return platform;
+            }
         }
-    }
 
-    return ''; // No match found
+        // Return chain as fallback
+        return 'chain';
+    } catch (e) {
+        // If URL is invalid, return chain
+        return 'chain';
+    }
+};
+
+const isValidUrl = (url) => {
+    try {
+        const urlObj = new URL(url);
+        return urlObj.protocol === 'http:' || urlObj.protocol === 'https:';
+    } catch (e) {
+        return false;
+    }
 };
 
 function SocialLinksPanel() {
@@ -203,6 +252,12 @@ function SocialLinksPanel() {
 
     const handleAddLink = () => {
         if (!newUrl) return;
+
+        // Validate URL first
+        if (!isValidUrl(newUrl)) {
+            // Could add a notice here if you want to show an error message
+            return;
+        }
 
         const platform = detectPlatform(newUrl);
         if (!platform) return; // Don't add if we can't determine the platform
