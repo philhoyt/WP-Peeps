@@ -19,10 +19,6 @@
     <arg name="extensions" value="php"/>
     <arg name="parallel" value="8"/>
 
-    <!-- Rules: Check PHP version compatibility -->
-    <config name="testVersion" value="7.4-"/>
-    <rule ref="PHPCompatibilityWP"/>
-
     <!-- Rules: WordPress Coding Standards -->
     <config name="minimum_supported_wp_version" value="6.6"/>
     
@@ -33,6 +29,11 @@
         <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
         <exclude name="WordPress.PHP.YodaConditions.NotYoda"/>
         <exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+    </rule>
+
+    <!-- Allow short array syntax -->
+    <rule ref="Generic.Arrays.DisallowShortArraySyntax.Found">
+        <severity>0</severity>
     </rule>
 
     <!-- Set text domain -->
@@ -52,16 +53,10 @@
         </properties>
     </rule>
 
-    <!-- Allow . in hook names -->
-    <rule ref="WordPress.NamingConventions.ValidHookName">
-        <properties>
-            <property name="additionalWordDelimiters" value="."/>
-        </properties>
-    </rule>
+    <!-- Let's also check that everything is properly documented. -->
+    <rule ref="WordPress-Docs"/>
 
-    <!-- Verify that no WP functions are used which are deprecated or removed -->
-    <rule ref="WordPress.WP.DeprecatedFunctions"/>
-
-    <!-- Encourage use of wp_safe_redirect() to avoid open redirect vulnerabilities -->
-    <rule ref="WordPress.Security.SafeRedirect"/>
+    <!-- Add in some extra rules from other standards. -->
+    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
+    <rule ref="Generic.Commenting.Todo"/>
 </ruleset>

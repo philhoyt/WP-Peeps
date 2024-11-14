@@ -1,8 +1,17 @@
 <?php
 /**
- * Block registration functionality
+ * Block registration and related functionality
+ *
+ * @package WP_Peeps
  */
 
+/**
+ * Initialize blocks
+ *
+ * Register block types and any related functionality.
+ *
+ * @return void
+ */
 add_action( 'init', 'wp_peeps_init' );
 function wp_peeps_init() {
 	// Register the full name block.

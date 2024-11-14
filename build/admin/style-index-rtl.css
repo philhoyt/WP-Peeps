@@ -1,1 +1,65 @@
-.wp-peeps-admin{box-sizing:border-box;margin:20px 0;max-width:800px;padding:0 10px 0 20px;width:100%}.wp-peeps-header{margin-bottom:20px}.wp-peeps-notice{margin:20px 0}.wp-peeps-card{background:#fff;border:1px solid #e2e4e7}.wp-peeps-card__title{font-size:1.2em;margin:0}.wp-peeps-setting-row{border-bottom:1px solid #f0f0f0;padding:16px 0}.wp-peeps-setting-row:last-child{border-bottom:none}.wp-peeps-settings__footer{border-top:1px solid #f0f0f0;margin-top:24px;padding-top:16px}.wp-peeps-admin .components-base-control{margin-bottom:0}.wp-peeps-admin .components-base-control__help{color:#757575;margin-top:4px}
+/*!*****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/@wordpress/scripts/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/admin/style.scss ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************/
+.wp-peeps-admin {
+  max-width: 800px;
+  width: 100%;
+  margin: 20px 0;
+  padding: 0 10px 0 20px;
+  box-sizing: border-box;
+}
+
+.wp-peeps-header {
+  margin-bottom: 20px;
+}
+
+.wp-peeps-notice {
+  margin: 20px 0;
+}
+
+.wp-peeps-card {
+  background: #fff;
+  border: 1px solid #e2e4e7;
+}
+
+.wp-peeps-card__title {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.wp-peeps-setting-row {
+  padding: 16px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.wp-peeps-setting-row:last-child {
+  border-bottom: none;
+}
+
+.wp-peeps-settings__footer {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.wp-peeps-admin .components-base-control {
+  margin-bottom: 0;
+}
+
+.wp-peeps-admin .components-base-control__help {
+  margin-top: 4px;
+  color: #757575;
+}
+
+.wp-peeps-admin .button-link {
+  color: #2271b1;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: inherit;
+}
+.wp-peeps-admin .button-link:hover {
+  color: #135e96;
+}

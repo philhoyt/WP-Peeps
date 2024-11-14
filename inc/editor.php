@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return void
  */
 function enqueue_editor_assets() {
-	$base_path  = dirname( dirname( __FILE__ ) );
+	$base_path  = dirname( __DIR__ );
 	$asset_file = include $base_path . '/build/editor/index.asset.php';
 
 	wp_enqueue_script(

@@ -46,7 +46,7 @@ function register_plugin_settings() {
 					'default' => '(###) ###-####',
 				),
 			),
-			'description' => __( 'Phone number format (use # for digits)', 'wp-peeps' ),
+			'description'  => __( 'Phone number format (use # for digits)', 'wp-peeps' ),
 		)
 	);
 
@@ -54,16 +54,16 @@ function register_plugin_settings() {
 		'wp_peeps',
 		'wp_peeps_cpt_slug',
 		array(
-			'type'         => 'string',
-			'default'      => 'people',
-			'show_in_rest' => array(
-				'name' => 'wp_peeps_cpt_slug',
+			'type'              => 'string',
+			'default'           => 'people',
+			'show_in_rest'      => array(
+				'name'   => 'wp_peeps_cpt_slug',
 				'schema' => array(
 					'type'    => 'string',
 					'default' => 'people',
 				),
 			),
-			'description' => __( 'Custom post type slug for People directory', 'wp-peeps' ),
+			'description'       => __( 'Custom post type slug for People directory', 'wp-peeps' ),
 			'sanitize_callback' => function ( $slug ) {
 				return empty( $slug ) ? 'people' : sanitize_title( $slug );
 			},

@@ -3,9 +3,9 @@ function wp_peeps_render_full_name_block( $attributes, $content ) {
 	$post_id = get_the_ID();
 
 	// Get name parts.
-	$first_name = get_post_meta( $post_id, 'wp_peeps_first_name', true );
+	$first_name  = get_post_meta( $post_id, 'wp_peeps_first_name', true );
 	$middle_name = get_post_meta( $post_id, 'wp_peeps_middle_name', true );
-	$last_name = get_post_meta( $post_id, 'wp_peeps_last_name', true );
+	$last_name   = get_post_meta( $post_id, 'wp_peeps_last_name', true );
 
 	$name_parts = array();
 	if ( ! empty( $attributes['showFirst'] ) && $first_name ) {
@@ -18,7 +18,7 @@ function wp_peeps_render_full_name_block( $attributes, $content ) {
 		$name_parts[] = $last_name;
 	}
 
-	$tag_name = $attributes['tagName'] ?? 'h2';
+	$tag_name  = $attributes['tagName'] ?? 'h2';
 	$full_name = implode( ' ', $name_parts );
 
 	// Get the classes.

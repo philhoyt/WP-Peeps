@@ -8,27 +8,31 @@
 /**
  * Format a phone number according to the plugin settings
  *
- * @param string $phone Raw phone number (digits only).
+ * @param string $phone_number Raw phone number (digits only).
+ * @param string $format Phone number format.
  * @return string Formatted phone number.
  */
-function wp_peeps_format_phone_number( $phone ) {
-	// If empty or not a string, return as is
-	if ( empty( $phone ) || ! is_string( $phone ) ) {
-		return $phone;
+function wp_peeps_format_phone_number( $phone_number, $format ) {
+	// If phone number is empty, return empty string.
+	if ( empty( $phone_number ) ) {
+		return '';
 	}
 
-	// Get format from settings
-	$format = get_option( 'wp_peeps_phone_format', '(###) ###-####' );
+	// Remove any non-numeric characters.
+	$phone_number = preg_replace( '/[^0-9]/', '', $phone_number );
 
-	// If we don't have 10 digits, return original
-	if ( strlen( $phone ) !== 10 ) {
-		return $phone;
+	// If format is empty, return raw phone number.
+	if ( empty( $format ) ) {
+		return $phone_number;
 	}
 
-	$formatted = $format;
-	for ( $i = 0; $i < strlen( $phone ); $i++ ) {
-		$formatted = preg_replace( '/#/', $phone[$i], $formatted, 1 );
+	$formatted_phone = $format;
+	$phone_length    = strlen( $phone_number );
+
+	// Replace each # in format with corresponding digit.
+	for ( $i = 0; $i < $phone_length; $i++ ) {
+		$formatted_phone = preg_replace( '/#/', $phone_number[ $i ], $formatted_phone, 1 );
 	}
 
-	return $formatted;
+	return $formatted_phone;
 }

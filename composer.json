@@ -2,12 +2,14 @@
 	"require-dev": {
 		"squizlabs/php_codesniffer": "^3.10",
 		"wp-coding-standards/wpcs": "^3.1",
-		"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
-		"phpcompatibility/phpcompatibility-wp": "^2.1"
+		"dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+		"phpcompatibility/phpcompatibility-wp": "*"
 	},
 	"scripts": {
 		"lint": "phpcs",
-		"lint-fix": "phpcbf"
+		"lint-fix": "phpcbf",
+		"lint-all": "phpcs --standard=WordPress --extensions=php --ignore=*/vendor/*,*/node_modules/*,*/build/* .",
+		"lint-fix-all": "phpcbf --standard=WordPress --extensions=php --ignore=*/vendor/*,*/node_modules/*,*/build/* ."
 	},
 	"config": {
 		"allow-plugins": {

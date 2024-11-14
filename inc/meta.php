@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Register custom meta fields for the plugin
  *
