@@ -23,8 +23,8 @@ import Edit from './edit';
 import metadata from './block.json';
 
 registerBlockStyle('wp-peeps/social-links', {
-    name: 'logos-only',
-    label: __('Logos Only'),
+	name: 'logos-only',
+	label: __('Logos Only'),
 });
 
 /**

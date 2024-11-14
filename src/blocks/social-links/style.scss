@@ -1,35 +1,35 @@
 .wp-block-wp-peeps-social-links,
 .wp-peeps-social-links {
-    &.has-icon-color {
-        .wp-block-social-link {
-            color: var(--wp--social-links--icon-color);
-        }
-    }
+	&.has-icon-color {
+		.wp-block-social-link {
+			color: var(--wp--social-links--icon-color);
+		}
+	}
 
-    &.has-icon-background-color {
-        .wp-block-social-link {
-            background-color: var(--wp--social-links--icon-background-color);
-        }
-    }
+	&.has-icon-background-color {
+		.wp-block-social-link {
+			background-color: var(--wp--social-links--icon-background-color);
+		}
+	}
 
-    &.has-small-icon-size {
-        --wp--social-links--icon-size: 16px;
-    }
+	&.has-small-icon-size {
+		--wp--social-links--icon-size: 16px;
+	}
 
-    &.has-normal-icon-size {
-        --wp--social-links--icon-size: 24px;
-    }
+	&.has-normal-icon-size {
+		--wp--social-links--icon-size: 24px;
+	}
 
-    &.has-large-icon-size {
-        --wp--social-links--icon-size: 36px;
-    }
+	&.has-large-icon-size {
+		--wp--social-links--icon-size: 36px;
+	}
 
-    &.has-huge-icon-size {
-        --wp--social-links--icon-size: 48px;
-    }
+	&.has-huge-icon-size {
+		--wp--social-links--icon-size: 48px;
+	}
 
-    &.is-vertical,
-    &.is-style-vertical {
-        flex-direction: column;
-    }
+	&.is-vertical,
+	&.is-style-vertical {
+		flex-direction: column;
+	}
 }

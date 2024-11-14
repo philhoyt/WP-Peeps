@@ -1,46 +1,46 @@
  .wp-peeps-social-links-panel {
-    .wp-peeps-social-links-list {
-        margin-bottom: 16px;
-    }
+	.wp-peeps-social-links-list {
+		margin-bottom: 16px;
+	}
 
-    .wp-peeps-social-link-item {
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        background: #fff;
-        margin-bottom: 8px;
-        cursor: grab;
+	.wp-peeps-social-link-item {
+		padding: 8px;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		background: #fff;
+		margin-bottom: 8px;
+		cursor: grab;
 
-        &:hover {
-            background: #f0f0f0;
-        }
+		&:hover {
+			background: #f0f0f0;
+		}
 
-        &[draggable="true"]:active {
-            cursor: grabbing;
-        }
+		&[draggable="true"]:active {
+			cursor: grabbing;
+		}
 
-        svg {
-            color: #999;
-            margin-right: 8px;
-        }
+		svg {
+			color: #999;
+			margin-right: 8px;
+		}
 
-        .components-flex-item {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            min-width: 0; // Required for text-overflow to work in a flex container
-        }
-    }
+		.components-flex-item {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			min-width: 0; // Required for text-overflow to work in a flex container
+		}
+	}
 
-    .components-button.has-icon {
-        min-width: auto;
-        padding: 0;
-    }
+	.components-button.has-icon {
+		min-width: auto;
+		padding: 0;
+	}
 }
 
 .wp-peeps-social-links {
-    a {
-        cursor: not-allowed;
-        pointer-events: none;
-    }
+	a {
+		cursor: not-allowed;
+		pointer-events: none;
+	}
 }
