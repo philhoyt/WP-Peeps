@@ -44,7 +44,8 @@
 			"type": "object",
 			"default": {
 				"type": "flex",
-				"orientation": "horizontal"
+				"orientation": "horizontal",
+				"justifyContent": "left"
 			}
 		}
 	},

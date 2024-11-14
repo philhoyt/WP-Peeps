@@ -15,6 +15,7 @@ function wp_peeps_render_social_links_block( $attributes ) {
 		$icon_color    = $attributes['iconColor'] ?? null;
 		$icon_bg_color = $attributes['iconBackgroundColor'] ?? null;
 		$orientation   = $attributes['layout']['orientation'] ?? 'horizontal';
+		$justify       = $attributes['layout']['justifyContent'] ?? null;
 
 		// Build class list
 		$classes = array(
@@ -24,7 +25,7 @@ function wp_peeps_render_social_links_block( $attributes ) {
 		);
 
 		if ( $orientation === 'vertical' ) {
-			$classes[] = 'is-style-vertical';
+			$classes[] = 'is-vertical';
 		}
 
 		// Add color classes
@@ -37,18 +38,34 @@ function wp_peeps_render_social_links_block( $attributes ) {
 		}
 
 		// Build style attribute
-		$styles     = array();
-		$style_attr = ! empty( $styles ) ? ' style="' . esc_attr( implode( ';', $styles ) ) . '"' : '';
+		$styles = array();
+		if ($justify) {
+			$property = $orientation === 'vertical' ? 'align-items' : 'justify-content';
+			switch ($justify) {
+				case 'left':
+					$styles[] = "$property: flex-start";
+					break;
+				case 'center':
+					$styles[] = "$property: center";
+					break;
+				case 'right':
+					$styles[] = "$property: flex-end";
+					break;
+				case 'space-between':
+					$styles[] = 'justify-content: space-between';
+					break;
+			}
+		}
+		$style_attr = ! empty( $styles ) ? ' style="' . esc_attr( implode( '; ', $styles ) ) . '"' : '';
 
 		// Start building the social links block
 		$block_content = sprintf(
-			'<!-- wp:social-links {"className":"%s","iconColor":"%s","iconColorValue":"%s","iconBackgroundColor":"%s","iconBackgroundColorValue":"%s","layout":{"type":"flex","orientation":"%s"}} -->',
+			'<!-- wp:social-links {"className":"%s","iconColor":"%s","iconBackgroundColor":"%s","layout":{"type":"flex","orientation":"%s","justifyContent":"%s"}} -->',
 			implode( ' ', array_filter( $classes ) ),
 			esc_attr( $icon_color ),
-			esc_attr( $icon_color ),
 			esc_attr( $icon_bg_color ),
-			esc_attr( $icon_bg_color ),
-			esc_attr( $orientation )
+			esc_attr( $orientation ),
+			esc_attr( $justify )
 		) . "\n";
 
 		$block_content .= sprintf(
@@ -80,4 +97,6 @@ function wp_peeps_render_social_links_block( $attributes ) {
 			return render_block( $parsed_blocks[0] );
 		}
 	}
+
+	return '';
 }
