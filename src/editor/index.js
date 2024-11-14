@@ -1,11 +1,14 @@
 import { __ } from '@wordpress/i18n';
 import { registerPlugin } from '@wordpress/plugins';
 import { PluginDocumentSettingPanel } from '@wordpress/editor';
-import { TextControl } from '@wordpress/components';
-import { useEffect } from '@wordpress/element';
+import { TextControl, Button, Flex, FlexItem, SelectControl } from '@wordpress/components';
+import { useEffect, useState } from '@wordpress/element';
 import { dispatch } from '@wordpress/data';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore, useEntityProp } from '@wordpress/core-data';
+
+// Import and register blocks
+import '../blocks';
 
 function NameFieldsPanel() {
 	const [ meta, setMeta ] = useEntityProp( 'postType', 'wp_peeps_people', 'meta' );
@@ -162,4 +165,94 @@ function NameFieldsPanel() {
 	);
 }
 
-registerPlugin( 'wp-peeps-name-fields-panel', { render: NameFieldsPanel } );
+const detectPlatform = (url) => {
+    const patterns = {
+        facebook: /(?:facebook\.com|fb\.me)/i,
+        twitter: /(?:twitter\.com|x\.com)/i,
+        linkedin: /linkedin\.com/i,
+        instagram: /instagram\.com/i,
+        youtube: /(?:youtube\.com|youtu\.be)/i,
+        github: /github\.com/i,
+    };
+
+    // Try to match the URL against each pattern
+    for (const [platform, pattern] of Object.entries(patterns)) {
+        if (pattern.test(url)) {
+            return platform;
+        }
+    }
+
+    return ''; // No match found
+};
+
+function SocialLinksPanel() {
+    const [meta, setMeta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
+    const [newUrl, setNewUrl] = useState('');
+
+    const socialLinks = meta.wp_peeps_social_links || [];
+
+    const handleAddLink = () => {
+        if (!newUrl) return;
+
+        const platform = detectPlatform(newUrl);
+        if (!platform) return; // Don't add if we can't determine the platform
+
+        const updatedLinks = [...socialLinks, { platform, url: newUrl }];
+        setMeta({
+            ...meta,
+            wp_peeps_social_links: updatedLinks,
+        });
+        setNewUrl('');
+    };
+
+    const handleRemoveLink = (index) => {
+        const updatedLinks = socialLinks.filter((_, i) => i !== index);
+        setMeta({
+            ...meta,
+            wp_peeps_social_links: updatedLinks,
+        });
+    };
+
+    return (
+        <PluginDocumentSettingPanel
+            name="wp-peeps-social-links-panel"
+            title={__('Social Links', 'wp-peeps')}
+        >
+            {socialLinks.map((link, index) => (
+                <Flex key={index} gap={2} align="center" style={{ marginBottom: '8px' }}>
+                    <FlexItem>
+                        <strong>{link.platform}: </strong>
+                        {link.url}
+                    </FlexItem>
+                    <FlexItem>
+                        <Button
+                            isDestructive
+                            onClick={() => handleRemoveLink(index)}
+                            variant="tertiary"
+                            icon="trash"
+                        />
+                    </FlexItem>
+                </Flex>
+            ))}
+
+            <div style={{ marginTop: '16px' }}>
+                <TextControl
+                    value={newUrl}
+                    onChange={setNewUrl}
+                    placeholder={__('Enter social media URL', 'wp-peeps')}
+                />
+                <Button
+                    variant="secondary"
+                    onClick={handleAddLink}
+                    disabled={!newUrl || !detectPlatform(newUrl)}
+                    style={{ marginTop: '8px' }}
+                >
+                    {__('Add Social Link', 'wp-peeps')}
+                </Button>
+            </div>
+        </PluginDocumentSettingPanel>
+    );
+}
+
+registerPlugin('wp-peeps-name-fields-panel', { render: NameFieldsPanel });
+registerPlugin('wp-peeps-social-links-panel', { render: SocialLinksPanel });
