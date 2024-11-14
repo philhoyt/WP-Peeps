@@ -7,6 +7,7 @@ import {
     PanelColorSettings,
     useBlockProps,
     BlockControls,
+    JustifyContentControl,
 } from '@wordpress/block-editor';
 import {
     PanelBody,
@@ -58,9 +59,7 @@ export default function Edit({ attributes, setAttributes }) {
         size = 'has-normal-icon-size',
     } = attributes;
 
-    const blockProps = useBlockProps({
-        className: size,
-    });
+    const blockProps = useBlockProps();
 
     return (
         <>
@@ -83,6 +82,18 @@ export default function Edit({ attributes, setAttributes }) {
                         }}
                     />
                 </ToolbarGroup>
+                <JustifyContentControl
+                    value={ attributes.layout?.justifyContent }
+                    onChange={ value =>
+                        setAttributes( {
+                            layout: {
+                                ...attributes.layout,
+                                justifyContent: value,
+                            },
+                        } )
+                    }
+                    allowedControls={ [ 'left', 'center', 'right', 'space-between' ] }
+                />
             </BlockControls>
             <InspectorControls>
                 <PanelBody title={__('Styles')}>
