@@ -159,43 +159,44 @@ add_action( 'init', __NAMESPACE__ . '\register_people_meta' );
  * @param int    $post_id    Post ID.
  * @param string $meta_key   Metadata key.
  * @param mixed  $meta_value Metadata value.
+ * @return void
  */
 function update_title_from_name( $meta_id, $post_id, $meta_key, $meta_value ) {
-	// Only proceed for our meta keys.
-	if ( ! in_array( $meta_key, array( 'wp_peeps_first_name', 'wp_peeps_middle_name', 'wp_peeps_last_name' ), true ) ) {
+	// Only proceed if we're updating first or last name.
+	if ( ! in_array( $meta_key, array( 'wp_peeps_first_name', 'wp_peeps_last_name' ), true ) ) {
 		return;
 	}
 
-	// Only proceed for our post type.
-	if ( 'wp_peeps_people' !== get_post_type( $post_id ) ) {
+	// Get the post.
+	$post = get_post( $post_id );
+
+	if ( ! $post || 'wp_peeps_people' !== $post->post_type ) {
 		return;
 	}
 
-	// Get all name values.
-	$first_name  = get_post_meta( $post_id, 'wp_peeps_first_name', true );
-	$middle_name = get_post_meta( $post_id, 'wp_peeps_middle_name', true );
-	$last_name   = get_post_meta( $post_id, 'wp_peeps_last_name', true );
+	try {
+		// Get both names.
+		$first_name = get_post_meta( $post_id, 'wp_peeps_first_name', true );
+		$last_name  = get_post_meta( $post_id, 'wp_peeps_last_name', true );
 
-	// Only proceed if we have required names.
-	if ( empty( $first_name ) || empty( $last_name ) ) {
-		return;
+		// Build the full name.
+		$full_name = trim( sprintf( '%s %s', $first_name, $last_name ) );
+
+		if ( empty( $full_name ) ) {
+			error_log( sprintf( 'WP Peeps: Empty full name for post %d', $post_id ) );
+			return;
+		}
+
+		// Update the post title.
+		wp_update_post(
+			array(
+				'ID'         => $post_id,
+				'post_title' => $full_name,
+			)
+		);
+	} catch ( \Exception $e ) {
+		error_log( sprintf( 'WP Peeps: Error updating title for post %d: %s', $post_id, $e->getMessage() ) );
 	}
-
-	// Create the full name.
-	$full_name = trim( $first_name );
-	if ( ! empty( $middle_name ) ) {
-		$full_name .= ' ' . trim( $middle_name );
-	}
-	$full_name .= ' ' . trim( $last_name );
-
-	// Update the post.
-	wp_update_post(
-		array(
-			'ID'         => $post_id,
-			'post_title' => $full_name,
-			'post_name'  => sanitize_title( $full_name ),
-		)
-	);
 }
 add_action( 'updated_post_meta', __NAMESPACE__ . '\update_title_from_name', 10, 4 );
 add_action( 'added_post_meta', __NAMESPACE__ . '\update_title_from_name', 10, 4 );
