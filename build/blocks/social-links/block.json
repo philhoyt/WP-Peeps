@@ -23,6 +23,8 @@
     "layout": {
       "allowSwitching": false,
       "allowInheriting": false,
+      "allowJustification": true,
+      "allowOrientation": true,
       "default": {
         "type": "flex"
       }
@@ -38,13 +40,14 @@
     },
     "size": {
       "type": "string",
-      "default": "normal"
+      "default": "has-normal-icon-size"
     },
     "layout": {
       "type": "object",
       "default": {
         "type": "flex",
-        "orientation": "horizontal"
+        "orientation": "horizontal",
+        "justifyContent": "left"
       }
     }
   },
