@@ -186,10 +186,20 @@ const detectPlatform = (url) => {
 };
 
 function SocialLinksPanel() {
+    // Check if we're in the post editor
+    const { isPostEditor } = useSelect(select => ({
+        isPostEditor: !!select('core/editor'),
+    }), []);
+
+    // Only render in post editor
+    if (!isPostEditor) {
+        return null;
+    }
+
     const [meta, setMeta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
     const [newUrl, setNewUrl] = useState('');
 
-    const socialLinks = meta.wp_peeps_social_links || [];
+    const socialLinks = meta?.wp_peeps_social_links || [];
 
     const handleAddLink = () => {
         if (!newUrl) return;
