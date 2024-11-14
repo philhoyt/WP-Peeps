@@ -1,11 +1,12 @@
 import { __ } from '@wordpress/i18n';
 import { registerPlugin } from '@wordpress/plugins';
 import { PluginDocumentSettingPanel } from '@wordpress/editor';
-import { TextControl, Button, Flex, FlexItem, SelectControl } from '@wordpress/components';
+import { TextControl, Button, Flex, FlexItem, SelectControl, Icon } from '@wordpress/components';
 import { useEffect, useState } from '@wordpress/element';
 import { dispatch } from '@wordpress/data';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore, useEntityProp } from '@wordpress/core-data';
+import { dragHandle } from '@wordpress/icons';
 
 // Import and register blocks
 import '../blocks';
@@ -250,6 +251,31 @@ function SocialLinksPanel() {
 
     const socialLinks = meta?.wp_peeps_social_links || [];
 
+    const [draggedIndex, setDraggedIndex] = useState(null);
+
+    const handleDragStart = (index) => {
+        setDraggedIndex(index);
+    };
+
+    const handleDragOver = (e, index) => {
+        e.preventDefault();
+        if (draggedIndex === null || draggedIndex === index) return;
+
+        const updatedLinks = [...socialLinks];
+        const [draggedItem] = updatedLinks.splice(draggedIndex, 1);
+        updatedLinks.splice(index, 0, draggedItem);
+        
+        setMeta({
+            ...meta,
+            wp_peeps_social_links: updatedLinks,
+        });
+        setDraggedIndex(index);
+    };
+
+    const handleDragEnd = () => {
+        setDraggedIndex(null);
+    };
+
     const handleAddLink = () => {
         if (!newUrl) return;
 
@@ -281,40 +307,59 @@ function SocialLinksPanel() {
     return (
         <PluginDocumentSettingPanel
             name="wp-peeps-social-links-panel"
-            title={__('Social Links', 'wp-peeps')}
+            title={__('Social Links')}
+            className="wp-peeps-social-links-panel"
         >
-            {socialLinks.map((link, index) => (
-                <Flex key={index} gap={2} align="center" style={{ marginBottom: '8px' }}>
-                    <FlexItem>
-                        <strong>{link.platform}: </strong>
-                        {link.url}
-                    </FlexItem>
-                    <FlexItem>
+            <div className="wp-peeps-social-links-list">
+                {socialLinks.map((link, index) => (
+                    <Flex
+                        key={index}
+                        className="wp-peeps-social-link-item"
+                        align="center"
+                        style={{ marginBottom: '8px' }}
+                        draggable
+                        onDragStart={() => handleDragStart(index)}
+                        onDragOver={(e) => handleDragOver(e, index)}
+                        onDragEnd={handleDragEnd}
+                    >
+                        <Icon icon={dragHandle} />
+                        <FlexItem>
+                            {link.platform} - {link.url}
+                        </FlexItem>
                         <Button
                             isDestructive
                             onClick={() => handleRemoveLink(index)}
-                            variant="tertiary"
-                            icon="trash"
+                            icon="no-alt"
+                            label={__('Remove link')}
                         />
-                    </FlexItem>
-                </Flex>
-            ))}
-
-            <div style={{ marginTop: '16px' }}>
-                <TextControl
-                    value={newUrl}
-                    onChange={setNewUrl}
-                    placeholder={__('Enter social media URL', 'wp-peeps')}
-                />
-                <Button
-                    variant="secondary"
-                    onClick={handleAddLink}
-                    disabled={!newUrl || !detectPlatform(newUrl)}
-                    style={{ marginTop: '8px' }}
-                >
-                    {__('Add Social Link', 'wp-peeps')}
-                </Button>
+                    </Flex>
+                ))}
             </div>
+
+            <Flex align="flex-start" style={{ marginTop: '16px' }}>
+                <FlexItem>
+                    <TextControl
+                        label={__('Add social link')}
+                        value={newUrl}
+                        onChange={setNewUrl}
+                        onKeyDown={(event) => {
+                            if (event.key === 'Enter') {
+                                event.preventDefault();
+                                handleAddLink();
+                            }
+                        }}
+                    />
+                </FlexItem>
+                <FlexItem>
+                    <Button
+                        variant="secondary"
+                        onClick={handleAddLink}
+                        style={{ marginTop: '24px' }}
+                    >
+                        {__('Add')}
+                    </Button>
+                </FlexItem>
+            </Flex>
         </PluginDocumentSettingPanel>
     );
 }

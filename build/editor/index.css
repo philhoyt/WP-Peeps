@@ -1,6 +1,38 @@
 /*!********************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/@wordpress/scripts/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/blocks/social-links/editor.scss ***!
   \********************************************************************************************************************************************************************************************************************************************************************************************/
+.wp-peeps-social-links-panel .wp-peeps-social-links-list {
+  margin-bottom: 16px;
+}
+.wp-peeps-social-links-panel .wp-peeps-social-link-item {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  margin-bottom: 8px;
+  cursor: grab;
+}
+.wp-peeps-social-links-panel .wp-peeps-social-link-item:hover {
+  background: #f0f0f0;
+}
+.wp-peeps-social-links-panel .wp-peeps-social-link-item[draggable=true]:active {
+  cursor: grabbing;
+}
+.wp-peeps-social-links-panel .wp-peeps-social-link-item svg {
+  color: #999;
+  margin-right: 8px;
+}
+.wp-peeps-social-links-panel .wp-peeps-social-link-item .components-flex-item {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.wp-peeps-social-links-panel .components-button.has-icon {
+  min-width: auto;
+  padding: 0;
+}
+
 .wp-peeps-social-links a {
   cursor: not-allowed;
   pointer-events: none;
