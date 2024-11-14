@@ -227,14 +227,18 @@ function Edit({
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/blocks/social-links/style.scss");
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./src/blocks/social-links/edit.js");
-/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./block.json */ "./src/blocks/social-links/block.json");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.scss */ "./src/blocks/social-links/style.scss");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./edit */ "./src/blocks/social-links/edit.js");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./block.json */ "./src/blocks/social-links/block.json");
 /**
  * Registers a new block provided a unique name and an object defining its behavior.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
+
+
 
 
 /**
@@ -251,17 +255,21 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockStyle)('wp-peeps/social-links', {
+  name: 'logos-only',
+  label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Logos Only')
+});
 
 /**
  * Every block starts by registering a new block type definition.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_3__.name, {
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_4__.name, {
   /**
    * @see ./edit.js
    */
-  edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"]
+  edit: _edit__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 
 /***/ }),
@@ -376,7 +384,7 @@ module.exports = window["wp"]["serverSideRender"];
   \********************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"wp-peeps/social-links","version":"0.1.0","title":"Social Links - WP Peeps","category":"widgets","icon":"smiley","description":"Display social media links.","supports":{"html":false,"align":true,"spacing":{"margin":true,"padding":true,"blockGap":true},"color":{"gradients":true,"background":true,"text":true},"layout":{"allowSwitching":false,"allowInheriting":false,"default":{"type":"flex"}},"__experimentalSelector":".wp-block-wp-peeps-social-links"},"attributes":{"iconColor":{"type":"string"},"iconBackgroundColor":{"type":"string"},"size":{"type":"string","default":"has-normal-icon-size"},"layout":{"type":"object","default":{"type":"flex","orientation":"horizontal","justifyContent":"left"}},"style":{"type":"object"}},"textdomain":"social-links","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"wp-peeps/social-links","version":"0.1.0","title":"Social Links - WP Peeps","category":"widgets","icon":"smiley","description":"Display social media links.","supports":{"html":false,"align":true,"spacing":{"margin":true,"padding":true,"blockGap":true},"color":{"gradients":true,"background":true,"text":true},"layout":{"allowSwitching":false,"allowInheriting":false,"default":{"type":"flex"}},"__experimentalSelector":".wp-block-wp-peeps-social-links"},"attributes":{"iconColor":{"type":"string"},"iconBackgroundColor":{"type":"string"},"size":{"type":"string","default":"has-normal-icon-size"},"layout":{"type":"object","default":{"type":"flex","orientation":"horizontal","justifyContent":"left"}},"style":{"type":"object"},"className":{"type":"string"}},"textdomain":"social-links","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
 
 /***/ })
 

@@ -17,12 +17,14 @@ function wp_peeps_render_social_links_block( $attributes ) {
 		$orientation   = $attributes['layout']['orientation'] ?? 'horizontal';
 		$justify       = $attributes['layout']['justifyContent'] ?? null;
 		$gap           = $attributes['style']['spacing']['blockGap'] ?? null;
+		$class_name    = $attributes['className'] ?? '';
 
 		// Build class list
 		$classes = array(
 			'wp-block-social-links',
 			'wp-peeps-social-links',
 			$size,
+			$class_name
 		);
 
 		if ( $orientation === 'vertical' ) {

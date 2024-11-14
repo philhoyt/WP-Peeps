@@ -50,6 +50,9 @@
 		},
 		"style": {
 			"type": "object"
+		},
+		"className": {
+			"type": "string"
 		}
 	},
 	"textdomain": "social-links",
