@@ -19,6 +19,8 @@ import {
 } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
 import { layout, share } from '@wordpress/icons';
+import { useSelect } from '@wordpress/data';
+import { useEffect, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -60,6 +62,20 @@ export default function Edit({ attributes, setAttributes }) {
     } = attributes;
 
     const blockProps = useBlockProps();
+
+    // Track meta updates
+    const [metaVersion, setMetaVersion] = useState(0);
+    
+    // Subscribe to meta changes
+    const socialLinks = useSelect(select => {
+        const meta = select('core/editor').getEditedPostAttribute('meta');
+        return meta?.wp_peeps_social_links;
+    }, []);
+
+    // Force update when social links change
+    useEffect(() => {
+        setMetaVersion(v => v + 1);
+    }, [socialLinks]);
 
     return (
         <>
@@ -132,7 +148,10 @@ export default function Edit({ attributes, setAttributes }) {
             <div {...blockProps}>
                 <ServerSideRender
                     block="wp-peeps/social-links"
-                    attributes={attributes}
+                    attributes={{
+                        ...attributes,
+                        metaVersion // Add version to force update
+                    }}
                     EmptyResponsePlaceholder={() => (
                         <Placeholder
                             icon={share}
