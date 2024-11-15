@@ -35,14 +35,23 @@
 		"linkRel": {
 			"type": "string",
 			"default": ""
+		},
+		"textAlign": {
+			"type": "string"
+		},
+		"className": {
+			"type": "string"
 		}
 	},
 	"supports": {
 		"html": false,
+		"anchor": true,
+		"className": true,
 		"color": {
 			"text": true,
 			"background": true,
-			"link": true
+			"link": true,
+			"gradients": true
 		},
 		"typography": {
 			"fontSize": true,
@@ -59,5 +68,7 @@
 		}
 	},
 	"textdomain": "wp-peeps",
-	"editorScript": "file:./index.js"
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"render": "file:./render.php"
 }

@@ -29,4 +29,12 @@ function wp_peeps_init() {
 			'render_callback' => 'wp_peeps_render_phone_block',
 		)
 	);
+
+	// Register the social links block.
+	register_block_type(
+		WP_PEEPS_PLUGIN_DIR . 'build/blocks/social-links',
+		array(
+			'render_callback' => 'wp_peeps_render_social_links_block',
+		)
+	);
 }

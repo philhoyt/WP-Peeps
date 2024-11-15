@@ -1,0 +1,73 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wp-peeps/social-links",
+	"version": "0.1.0",
+	"title": "Social Links - WP Peeps",
+	"category": "wp-peeps",
+	"icon": "share",
+	"description": "Add and customize social media links.",
+	"supports": {
+		"html": false,
+		"align": true,
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"blockGap": true
+		},
+		"color": {
+			"gradients": true,
+			"background": true,
+			"text": true
+		},
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"allowJustification": true,
+			"allowVerticalAlignment": true,
+			"default": {
+				"type": "flex",
+				"orientation": "horizontal"
+			}
+		},
+		"__experimentalSelector": ".wp-block-wp-peeps-social-links"
+	},
+	"attributes": {
+		"iconColor": {
+			"type": "string"
+		},
+		"iconBackgroundColor": {
+			"type": "string"
+		},
+		"size": {
+			"type": "string",
+			"default": "has-normal-icon-size"
+		},
+		"layout": {
+			"type": "object",
+			"default": {
+				"type": "flex",
+				"orientation": "horizontal",
+				"justifyContent": "left"
+			}
+		},
+		"style": {
+			"type": "object"
+		},
+		"className": {
+			"type": "string"
+		},
+		"openInNewTab": {
+			"type": "boolean",
+			"default": false
+		},
+		"showLabels": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"textdomain": "social-links",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"render": "file:./render.php"
+}
