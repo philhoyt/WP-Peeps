@@ -20,8 +20,9 @@ import {
 } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
 import { layout, share } from '@wordpress/icons';
+import { useEntityProp } from '@wordpress/core-data';
+import { useEffect, useRef } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
-import { useEffect, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -66,19 +67,28 @@ export default function Edit({ attributes, setAttributes }) {
 
 	const blockProps = useBlockProps();
 
-	// Track meta updates
-	const [metaVersion, setMetaVersion] = useState(0);
+	// Track whether this is the initial load
+	const initialLoadRef = useRef(true);
 	
-	// Subscribe to meta changes
-	const socialLinks = useSelect(select => {
-		const meta = select('core/editor').getEditedPostAttribute('meta');
-		return meta?.wp_peeps_social_links;
-	}, []);
+	// Get meta and meta update status
+	const [meta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
+	const isSaving = useSelect(select => 
+		select('core').isSavingEntityRecord('postType', 'wp_peeps_people'), 
+		[]
+	);
 
-	// Force update when social links change
+	// Force update only on initial load and after save
 	useEffect(() => {
-		setMetaVersion(v => v + 1);
-	}, [socialLinks]);
+		if (initialLoadRef.current) {
+			initialLoadRef.current = false;
+			return;
+		}
+
+		if (!isSaving) {
+			// Force a re-render of ServerSideRender after save
+			setAttributes({ _lastUpdate: Date.now() });
+		}
+	}, [isSaving]);
 
 	return (
 		<>
@@ -163,10 +173,7 @@ export default function Edit({ attributes, setAttributes }) {
 			<div {...blockProps}>
 				<ServerSideRender
 					block="wp-peeps/social-links"
-					attributes={{
-						...attributes,
-						metaVersion // Add version to force update
-					}}
+					attributes={attributes}
 					EmptyResponsePlaceholder={() => (
 						<Placeholder
 							icon={share}
