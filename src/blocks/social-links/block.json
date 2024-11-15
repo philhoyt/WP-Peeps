@@ -4,7 +4,7 @@
 	"name": "wp-peeps/social-links",
 	"version": "0.1.0",
 	"title": "Social Links - WP Peeps",
-	"category": "widgets",
+	"category": "wp-peeps",
 	"icon": "share",
 	"description": "Add and customize social media links.",
 	"supports": {
