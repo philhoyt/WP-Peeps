@@ -25,9 +25,11 @@
 			"allowInheriting": false,
 			"allowJustification": true,
 			"allowVerticalAlignment": true,
+			"allowWrapping": true,
 			"default": {
 				"type": "flex",
-				"orientation": "horizontal"
+				"orientation": "horizontal",
+				"justifyContent": "left"
 			}
 		},
 		"__experimentalSelector": ".wp-block-wp-peeps-social-links"

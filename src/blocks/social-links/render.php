@@ -98,6 +98,7 @@ function wp_peeps_get_social_block_attributes( $attributes ) {
         'className'    => sanitize_html_class( $attributes['className'] ?? '' ),
         'showLabels'   => rest_sanitize_boolean( $attributes['showLabels'] ?? false ),
         'openInNewTab' => rest_sanitize_boolean( $attributes['openInNewTab'] ?? false ),
+        'flexWrap'     => sanitize_text_field( $attributes['layout']['flexWrap'] ?? 'nowrap' ),
     ];
 }
 
@@ -112,9 +113,11 @@ function wp_peeps_get_social_block_classes( $block_attrs ) {
         'wp-block-social-links',
         'wp-peeps-social-links',
         $block_attrs['size'],
-        $block_attrs['className']
+        $block_attrs['className'],
+        'is-style-default'
     ];
 
+    // Add orientation class
     if ( $block_attrs['orientation'] === 'vertical' ) {
         $classes[] = 'is-vertical';
     }
@@ -130,6 +133,16 @@ function wp_peeps_get_social_block_classes( $block_attrs ) {
     if ( $block_attrs['iconBackgroundColor'] ) {
         $classes[] = 'has-icon-background-color';
     }
+
+    // Add flex wrap class
+    if ( isset( $block_attrs['flexWrap'] ) ) {
+        $classes[] = $block_attrs['flexWrap'] === 'wrap' ? 'is-wrap' : 'is-nowrap';
+    }
+
+    // Add layout classes
+    $classes[] = 'is-layout-flex';
+    $classes[] = 'wp-block-social-links-is-layout-flex';
+    $classes[] = sprintf( 'is-content-justification-%s', $block_attrs['justify'] ?: 'left' );
 
     return $classes;
 }
@@ -180,12 +193,20 @@ function wp_peeps_get_vertical_styles( $block_attrs ) {
         'stretch' => 'stretch',
     ];
 
+    // Set flex direction for vertical orientation
+    $styles[] = 'flex-direction: column';
+
     if ( ! empty( $block_attrs['verticalAlign'] ) && isset( $vertical_align_map[ $block_attrs['verticalAlign'] ] ) ) {
         $styles[] = sprintf( 'justify-content: %s', $vertical_align_map[ $block_attrs['verticalAlign'] ] );
     }
 
     if ( ! empty( $block_attrs['justify'] ) && isset( $justify_map[ $block_attrs['justify'] ] ) ) {
         $styles[] = sprintf( 'align-items: %s', $justify_map[ $block_attrs['justify'] ] );
+    }
+
+    // Apply flex wrap
+    if ( isset( $block_attrs['flexWrap'] ) ) {
+        $styles[] = sprintf( 'flex-wrap: %s', $block_attrs['flexWrap'] );
     }
 
     return $styles;
@@ -207,8 +228,20 @@ function wp_peeps_get_horizontal_styles( $block_attrs ) {
         'space-between' => 'space-between',
     ];
 
+    // Set flex direction for horizontal orientation
+    $styles[] = 'flex-direction: row';
+
     if ( ! empty( $block_attrs['justify'] ) && isset( $justify_map[ $block_attrs['justify'] ] ) ) {
         $styles[] = sprintf( 'justify-content: %s', $justify_map[ $block_attrs['justify'] ] );
+    }
+
+    if ( ! empty( $block_attrs['verticalAlign'] ) ) {
+        $styles[] = sprintf( 'align-items: %s', $block_attrs['verticalAlign'] === 'top' ? 'flex-start' : $block_attrs['verticalAlign'] );
+    }
+
+    // Apply flex wrap
+    if ( isset( $block_attrs['flexWrap'] ) ) {
+        $styles[] = sprintf( 'flex-wrap: %s', $block_attrs['flexWrap'] );
     }
 
     return $styles;
@@ -226,12 +259,14 @@ function wp_peeps_get_gap_style( $gap ) {
     }
 
     $gap_value = $gap;
-    if ( 0 === strpos( $gap, 'var:preset|spacing|' ) ) {
+
+    // Handle preset values
+    if ( str_starts_with( $gap, 'var:preset|spacing|' ) ) {
         $preset = str_replace( 'var:preset|spacing|', '', $gap );
         $gap_value = sprintf( 'var(--wp--preset--spacing--%s)', sanitize_html_class( $preset ) );
     }
 
-    return sprintf( 'gap: %s', esc_attr( $gap_value ) );
+    return sprintf( 'gap: %s;', esc_attr( $gap_value ) );
 }
 
 /**
@@ -244,7 +279,7 @@ function wp_peeps_get_gap_style( $gap ) {
  */
 function wp_peeps_build_social_block_content( $social_links, $block_attrs, $wrapper_attributes ) {
     $block_content = sprintf(
-        '<!-- wp:social-links {"openInNewTab":%s,"showLabels":%s,"className":"%s","iconColor":"%s","iconBackgroundColor":"%s","layout":{"type":"flex","orientation":"%s","justifyContent":"%s","verticalAlignment":"%s"}} -->',
+        '<!-- wp:social-links {"openInNewTab":%s,"showLabels":%s,"className":"%s","iconColor":"%s","iconBackgroundColor":"%s","layout":{"type":"flex","orientation":"%s","justifyContent":"%s","verticalAlignment":"%s","flexWrap":"%s"}} -->',
         $block_attrs['openInNewTab'] ? 'true' : 'false',
         $block_attrs['showLabels'] ? 'true' : 'false',
         implode( ' ', array_filter( wp_peeps_get_social_block_classes( $block_attrs ) ) ),
@@ -252,7 +287,8 @@ function wp_peeps_build_social_block_content( $social_links, $block_attrs, $wrap
         esc_attr( $block_attrs['iconBackgroundColor'] ),
         esc_attr( $block_attrs['orientation'] ),
         esc_attr( $block_attrs['justify'] ),
-        esc_attr( $block_attrs['verticalAlign'] )
+        esc_attr( $block_attrs['verticalAlign'] ),
+        esc_attr( $block_attrs['flexWrap'] )
     ) . "\n";
 
     $block_content .= sprintf(
