@@ -391,14 +391,15 @@ function SocialLinksPanel() {
 		<Flex
 			key={index}
 			align="center"
-			justify="space-between"
+			gap={4}
 			className={`social-link-item ${draggedIndex === index ? 'is-dragging' : ''}`}
+			style={{ cursor: 'grab' }}
 			draggable
 			onDragStart={() => handleDragStart(index)}
 			onDragOver={(e) => handleDragOver(e, index)}
 			onDragEnd={() => setDraggedIndex(null)}
 		>
-			<FlexItem className="social-link-drag">
+			<FlexItem >
 				<Icon icon={dragHandle} />
 			</FlexItem>
 			<FlexItem style={{ flex: 1 }}>
@@ -431,8 +432,8 @@ function SocialLinksPanel() {
 		>
 			{socialLinks.map(renderSocialLinkItem)}
 			
-			<Flex align="flex-end" className="add-social-link">
-				<FlexItem>
+			<Flex align="flex-end" gap={4} className="add-social-link">
+				<FlexItem style={{ flex: 1 }}>
 					<TextControl
 						label={__('Add Social Link', 'wp-peeps')}
 						value={newUrl}
@@ -444,7 +445,7 @@ function SocialLinksPanel() {
 						className={urlError ? 'has-error' : ''}
 					/>
 				</FlexItem>
-				<FlexItem>
+				<FlexItem style={{ marginBottom: 8 }}>
 					<Button
 						variant="secondary"
 						onClick={handleAddLink}
