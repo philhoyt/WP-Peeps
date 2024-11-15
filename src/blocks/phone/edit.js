@@ -76,11 +76,11 @@ export default function Edit({ attributes, setAttributes }) {
 	
 	// Create content elements
 	const TagName = tagName;
-	const phoneLink = phoneNumber && (
+	const phoneLink = phoneNumber ? (
 		<a href={`tel:${phoneNumber.replace(/[^0-9+]/g, '')}`}>
 			{formattedPhone}
 		</a>
-	);
+	) : formattedPhone;
 	
 	const content = (
 		<>
