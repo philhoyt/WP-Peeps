@@ -5,8 +5,8 @@
   "version": "0.1.0",
   "title": "Social Links - WP Peeps",
   "category": "widgets",
-  "icon": "smiley",
-  "description": "Display social media links.",
+  "icon": "share",
+  "description": "Add and customize social media links.",
   "supports": {
     "html": false,
     "align": true,
