@@ -151,7 +151,7 @@ import { dragHandle } from '@wordpress/icons';
 // Import and register blocks
 import '../blocks';
 
-function NameFieldsPanel() {
+function PersonDetailsPanel() {
 	const [meta, setMeta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
 	const [, setTitle] = useEntityProp('postType', 'wp_peeps_people', 'title');
 	const [, setSlug] = useEntityProp('postType', 'wp_peeps_people', 'slug');
@@ -229,60 +229,64 @@ function NameFieldsPanel() {
 	]);
 
 	return (
-		<PluginDocumentSettingPanel
-			name="wp-peeps-name-fields"
-			title={__('Name Details', 'wp-peeps')}
-			className="wp-peeps-name-fields"
-			initialOpen={true}
-		>
-			<TextControl
-				label={__('First Name', 'wp-peeps') + ' *'}
-				value={meta?.[NAME_FIELDS.FIRST_NAME] || ''}
-				onChange={(value) => handleMetaChange(NAME_FIELDS.FIRST_NAME, value)}
-				help={errors[NAME_FIELDS.FIRST_NAME] || ''}
-				className={errors[NAME_FIELDS.FIRST_NAME] ? 'has-error' : ''}
-			/>
-			<TextControl
-				label={__('Middle Name', 'wp-peeps')}
-				value={meta?.[NAME_FIELDS.MIDDLE_NAME] || ''}
-				onChange={(value) => handleMetaChange(NAME_FIELDS.MIDDLE_NAME, value)}
-			/>
-			<TextControl
-				label={__('Last Name', 'wp-peeps') + ' *'}
-				value={meta?.[NAME_FIELDS.LAST_NAME] || ''}
-				onChange={(value) => handleMetaChange(NAME_FIELDS.LAST_NAME, value)}
-				help={errors[NAME_FIELDS.LAST_NAME] || ''}
-				className={errors[NAME_FIELDS.LAST_NAME] ? 'has-error' : ''}
-			/>
-			<TextControl
-				label={__('Job Title', 'wp-peeps')}
-				value={meta?.[NAME_FIELDS.JOB_TITLE] || ''}
-				onChange={(value) => handleMetaChange(NAME_FIELDS.JOB_TITLE, value)}
-			/>
-			<TextControl
-				label={__('Phone', 'wp-peeps')}
-				value={meta?.[NAME_FIELDS.PHONE] ? formatPhoneNumber(meta[NAME_FIELDS.PHONE], phoneFormat) : ''}
-				onChange={(value) => handleMetaChange(NAME_FIELDS.PHONE, value)}
-				help={__('Enter 10 digit phone number', 'wp-peeps')}
-				type="tel"
-			/>
-			<TextControl
-				type="email"
-				label={__('Email', 'wp-peeps')}
-				value={meta?.[NAME_FIELDS.EMAIL] || ''}
-				onChange={(value) => handleMetaChange(NAME_FIELDS.EMAIL, value)}
-				help={errors[NAME_FIELDS.EMAIL] || ''}
-				className={errors[NAME_FIELDS.EMAIL] ? 'has-error' : ''}
-			/>
-		</PluginDocumentSettingPanel>
+		<>
+			<PluginDocumentSettingPanel
+				name="wp-peeps-name-panel"
+				title={__('Person Name', 'wp-peeps')}
+				className="wp-peeps-name-panel"
+				initialOpen={true}
+			>
+				<TextControl
+					label={__('First Name', 'wp-peeps') + ' *'}
+					value={meta?.[NAME_FIELDS.FIRST_NAME] || ''}
+					onChange={(value) => handleMetaChange(NAME_FIELDS.FIRST_NAME, value)}
+					help={errors[NAME_FIELDS.FIRST_NAME] || ''}
+					className={errors[NAME_FIELDS.FIRST_NAME] ? 'has-error' : ''}
+				/>
+				<TextControl
+					label={__('Middle Name', 'wp-peeps')}
+					value={meta?.[NAME_FIELDS.MIDDLE_NAME] || ''}
+					onChange={(value) => handleMetaChange(NAME_FIELDS.MIDDLE_NAME, value)}
+				/>
+				<TextControl
+					label={__('Last Name', 'wp-peeps') + ' *'}
+					value={meta?.[NAME_FIELDS.LAST_NAME] || ''}
+					onChange={(value) => handleMetaChange(NAME_FIELDS.LAST_NAME, value)}
+					help={errors[NAME_FIELDS.LAST_NAME] || ''}
+					className={errors[NAME_FIELDS.LAST_NAME] ? 'has-error' : ''}
+				/>
+			</PluginDocumentSettingPanel>
+
+			<PluginDocumentSettingPanel
+				name="wp-peeps-contact-panel"
+				title={__('Contact Information', 'wp-peeps')}
+				className="wp-peeps-contact-panel"
+			>
+				<TextControl
+					label={__('Job Title', 'wp-peeps')}
+					value={meta?.[NAME_FIELDS.JOB_TITLE] || ''}
+					onChange={(value) => handleMetaChange(NAME_FIELDS.JOB_TITLE, value)}
+				/>
+				<TextControl
+					label={__('Phone', 'wp-peeps')}
+					value={meta?.[NAME_FIELDS.PHONE] ? formatPhoneNumber(meta[NAME_FIELDS.PHONE], phoneFormat) : ''}
+					onChange={(value) => handleMetaChange(NAME_FIELDS.PHONE, value)}
+					help={__('Enter 10 digit phone number', 'wp-peeps')}
+					type="tel"
+				/>
+				<TextControl
+					type="email"
+					label={__('Email', 'wp-peeps')}
+					value={meta?.[NAME_FIELDS.EMAIL] || ''}
+					onChange={(value) => handleMetaChange(NAME_FIELDS.EMAIL, value)}
+					help={errors[NAME_FIELDS.EMAIL] || ''}
+					className={errors[NAME_FIELDS.EMAIL] ? 'has-error' : ''}
+				/>
+			</PluginDocumentSettingPanel>
+		</>
 	);
 }
 
-/**
- * Social Links Panel Component
- *
- * @return {JSX.Element|null} The rendered component or null if not in post editor.
- */
 function SocialLinksPanel() {
 	// Check if we're in the post editor
 	const { isPostEditor } = useSelect(select => ({
@@ -454,5 +458,5 @@ function SocialLinksPanel() {
 	);
 }
 
-registerPlugin('wp-peeps-name-fields-panel', { render: NameFieldsPanel });
+registerPlugin('wp-peeps-person-details', { render: PersonDetailsPanel });
 registerPlugin('wp-peeps-social-links-panel', { render: SocialLinksPanel });
