@@ -35,3 +35,4 @@ require_once plugin_dir_path( __FILE__ ) . 'inc/blocks.php';
 require_once __DIR__ . '/src/blocks/full-name/render.php';
 require_once __DIR__ . '/src/blocks/phone/render.php';
 require_once __DIR__ . '/src/blocks/social-links/render.php';
+require_once __DIR__ . '/src/blocks/email/render.php';
