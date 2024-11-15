@@ -35,14 +35,24 @@
 		"linkRel": {
 			"type": "string",
 			"default": ""
+		},
+		"align": {
+			"type": "string"
+		},
+		"className": {
+			"type": "string"
 		}
 	},
 	"supports": {
 		"html": false,
+		"align": ["left", "center", "right", "wide", "full"],
+		"anchor": true,
+		"className": true,
 		"color": {
 			"text": true,
 			"background": true,
-			"link": true
+			"link": true,
+			"gradients": true
 		},
 		"typography": {
 			"fontSize": true,
@@ -59,5 +69,7 @@
 		}
 	},
 	"textdomain": "wp-peeps",
-	"editorScript": "file:./index.js"
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"render": "file:./render.php"
 }
