@@ -1,14 +1,27 @@
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls, BlockControls, AlignmentToolbar } from '@wordpress/block-editor';
-import { PanelBody, ToggleControl, SelectControl, TextControl } from '@wordpress/components';
+import { PanelBody, ToggleControl, TextControl, ToolbarGroup, ToolbarDropdownMenu } from '@wordpress/components';
 import { useEntityProp } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { paragraph, grid, tag } from '@wordpress/icons';
 
 const HTML_TAGS = [
-	{ label: __('Paragraph', 'wp-peeps'), value: 'p' },
-	{ label: __('Div', 'wp-peeps'), value: 'div' },
-	{ label: __('Span', 'wp-peeps'), value: 'span' },
+	{ 
+		title: __('Paragraph', 'wp-peeps'), 
+		value: 'p',
+		icon: paragraph,
+	},
+	{ 
+		title: __('Div', 'wp-peeps'), 
+		value: 'div',
+		icon: grid,
+	},
+	{ 
+		title: __('Span', 'wp-peeps'), 
+		value: 'span',
+		icon: tag,
+	},
 ];
 
 /**
@@ -44,6 +57,7 @@ const formatPhoneNumber = (phoneNumber, format) => {
  */
 export default function Edit({ attributes, setAttributes }) {
 	const { tagName, makeLink, prefix, textAlign } = attributes;
+	
 	const blockProps = useBlockProps({
 		className: textAlign ? `has-text-align-${textAlign}` : undefined,
 	});
@@ -75,9 +89,24 @@ export default function Edit({ attributes, setAttributes }) {
 		</>
 	);
 
+	// Get current tag info
+	const currentTag = HTML_TAGS.find(tag => tag.value === tagName);
+
 	return (
 		<>
 			<BlockControls>
+				<ToolbarGroup>
+					<ToolbarDropdownMenu
+						icon={currentTag?.icon}
+						label={__('Change text element', 'wp-peeps')}
+						controls={HTML_TAGS.map(tag => ({
+							title: tag.title,
+							icon: tag.icon,
+							isActive: tag.value === tagName,
+							onClick: () => setAttributes({ tagName: tag.value }),
+						}))}
+					/>
+				</ToolbarGroup>
 				<AlignmentToolbar
 					value={textAlign}
 					onChange={(value) => setAttributes({ textAlign: value })}
@@ -91,12 +120,6 @@ export default function Edit({ attributes, setAttributes }) {
 						onChange={(value) => setAttributes({ prefix: value })}
 						placeholder={__('e.g., Phone:', 'wp-peeps')}
 						help={__('Text to display before the phone number', 'wp-peeps')}
-					/>
-					<SelectControl
-						label={__('HTML Tag', 'wp-peeps')}
-						value={tagName}
-						options={HTML_TAGS}
-						onChange={(value) => setAttributes({ tagName: value })}
 					/>
 					<ToggleControl
 						label={__('Make Phone Link', 'wp-peeps')}
