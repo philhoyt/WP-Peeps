@@ -1,3 +1,143 @@
+// Constants and configurations
+const REQUIRED_FIELD_ERROR = __('This field is required', 'wp-peeps');
+const EMAIL_VALIDATION_ERROR = __('Please enter a valid email address', 'wp-peeps');
+const URL_VALIDATION_ERROR = __('Please enter a valid URL', 'wp-peeps');
+
+const NAME_FIELDS = {
+	FIRST_NAME: 'wp_peeps_first_name',
+	MIDDLE_NAME: 'wp_peeps_middle_name',
+	LAST_NAME: 'wp_peeps_last_name',
+	JOB_TITLE: 'wp_peeps_job_title',
+	PHONE: 'wp_peeps_phone',
+	EMAIL: 'wp_peeps_email'
+};
+
+const PLATFORM_PATTERNS = {
+	amazon: /amazon\./i,
+	bandcamp: /bandcamp\.com/i,
+	behance: /behance\.net/i,
+	bluesky: /(?:bsky\.app|bsky\.social)/i,
+	codepen: /codepen\.io/i,
+	deviantart: /deviantart\.com/i,
+	dribbble: /dribbble\.com/i,
+	dropbox: /dropbox\.com/i,
+	etsy: /etsy\.com/i,
+	facebook: /(?:facebook\.com|fb\.com|fb\.me)/i,
+	flickr: /flickr\.com/i,
+	foursquare: /foursquare\.com/i,
+	github: /github\.com/i,
+	goodreads: /goodreads\.com/i,
+	google: /(?:google\.com|plus\.google\.com)/i,
+	instagram: /(?:instagram\.com|instagr\.am)/i,
+	lastfm: /last\.fm/i,
+	linkedin: /linkedin\.com/i,
+	mastodon: /@.*@.*\.[a-z]+/i,
+	medium: /medium\.com/i,
+	meetup: /meetup\.com/i,
+	pinterest: /pinterest\./i,
+	pocket: /getpocket\.com/i,
+	reddit: /reddit\.com/i,
+	skype: /skype\.com/i,
+	snapchat: /snapchat\.com/i,
+	soundcloud: /soundcloud\.com/i,
+	spotify: /spotify\.com/i,
+	telegram: /t\.me/i,
+	tumblr: /tumblr\.com/i,
+	twitch: /twitch\.tv/i,
+	twitter: /(?:twitter\.com|x\.com)/i,
+	vimeo: /vimeo\.com/i,
+	whatsapp: /(?:whatsapp\.com|wa\.me)/i,
+	wordpress: /(?:wordpress\.org|wordpress\.com)/i,
+	yelp: /yelp\./i,
+	youtube: /(?:youtube\.com|youtu\.be)/i
+};
+
+/**
+ * Validates an email address.
+ *
+ * @param {string} email The email address to validate.
+ * @return {boolean} Whether the email is valid.
+ */
+const isValidEmail = (email) => {
+	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	return emailRegex.test(email);
+};
+
+/**
+ * Validates a URL.
+ *
+ * @param {string} url The URL to validate.
+ * @return {boolean} Whether the URL is valid.
+ */
+const isValidUrl = (url) => {
+	try {
+		const urlObj = new URL(url);
+		return urlObj.protocol === 'http:' || urlObj.protocol === 'https:';
+	} catch (e) {
+		return false;
+	}
+};
+
+/**
+ * Formats a phone number according to the site's format.
+ *
+ * @param {string} value The phone number to format.
+ * @param {string} format The format template.
+ * @return {string} The formatted phone number.
+ */
+const formatPhoneNumber = (value, format) => {
+	if (!value) return '';
+
+	// Strip all non-digits
+	const digits = value.replace(/\D/g, '');
+	
+	// Get the format template
+	let formatted = format;
+	
+	// Replace each # with a digit
+	for (let i = 0; i < digits.length && i < 10; i++) {
+		formatted = formatted.replace('#', digits[i]);
+	}
+
+	// Remove any remaining # placeholders
+	return formatted.replace(/#/g, '');
+};
+
+/**
+ * Detects the social media platform from a URL.
+ *
+ * @param {string} url The URL to analyze.
+ * @return {string} The detected platform or 'chain' as fallback.
+ */
+const detectPlatform = (url) => {
+	try {
+		const urlObj = new URL(url);
+		
+		for (const [platform, pattern] of Object.entries(PLATFORM_PATTERNS)) {
+			if (pattern.test(urlObj.hostname) || pattern.test(url)) {
+				return platform;
+			}
+		}
+
+		return 'chain';
+	} catch (e) {
+		return 'chain';
+	}
+};
+
+/**
+ * Creates a URL-friendly slug from a string.
+ *
+ * @param {string} str The string to slugify.
+ * @return {string} The slugified string.
+ */
+const createSlug = (str) => {
+	return str
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/^-+|-+$/g, '');
+};
+
 import { __ } from '@wordpress/i18n';
 import { registerPlugin } from '@wordpress/plugins';
 import { PluginDocumentSettingPanel } from '@wordpress/editor';
@@ -12,356 +152,306 @@ import { dragHandle } from '@wordpress/icons';
 import '../blocks';
 
 function NameFieldsPanel() {
-	const [ meta, setMeta ] = useEntityProp( 'postType', 'wp_peeps_people', 'meta' );
-	const [ , setTitle ] = useEntityProp( 'postType', 'wp_peeps_people', 'title' );
-	const [ , setSlug ] = useEntityProp( 'postType', 'wp_peeps_people', 'slug' );
-	const { lockPostSaving, unlockPostSaving, editPost } =
-		dispatch( 'core/editor' );
+	const [meta, setMeta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
+	const [, setTitle] = useEntityProp('postType', 'wp_peeps_people', 'title');
+	const [, setSlug] = useEntityProp('postType', 'wp_peeps_people', 'slug');
+	const [errors, setErrors] = useState({});
+	
+	const { lockPostSaving, unlockPostSaving, editPost } = dispatch('core/editor');
 
 	// Get phone format from settings
 	const phoneFormat = useSelect(
-		( select ) =>
-			select( coreStore ).getEntityRecord( 'root', 'site' )
-				?.wp_peeps_phone_format || '(###) ###-####'
+		(select) => select(coreStore).getEntityRecord('root', 'site')?.wp_peeps_phone_format || '(###) ###-####'
 	);
 
-	const formatPhoneNumber = ( value ) => {
-		// Strip all non-digits
-		const digits = value.replace( /\D/g, '' );
+	const handleMetaChange = (field, value) => {
+		setMeta({
+			...meta,
+			[field]: value,
+		});
 
-		if ( ! digits ) return '';
+		// Clear error for this field
+		if (errors[field]) {
+			setErrors({
+				...errors,
+				[field]: null,
+			});
+		}
+	};
 
-		// Get the format template
-		let format = phoneFormat;
+	const validateFields = () => {
+		const newErrors = {};
 
-		// Replace each # with a digit
-		let formatted = format;
-		for ( let i = 0; i < digits.length && i < 10; i++ ) {
-			formatted = formatted.replace( '#', digits[ i ] );
+		// Required fields
+		if (!meta?.[NAME_FIELDS.FIRST_NAME]?.trim()) {
+			newErrors[NAME_FIELDS.FIRST_NAME] = REQUIRED_FIELD_ERROR;
+		}
+		if (!meta?.[NAME_FIELDS.LAST_NAME]?.trim()) {
+			newErrors[NAME_FIELDS.LAST_NAME] = REQUIRED_FIELD_ERROR;
 		}
 
-		// Remove any remaining # placeholders
-		formatted = formatted.replace( /#/g, '' );
+		// Email validation
+		if (meta?.[NAME_FIELDS.EMAIL] && !isValidEmail(meta[NAME_FIELDS.EMAIL])) {
+			newErrors[NAME_FIELDS.EMAIL] = EMAIL_VALIDATION_ERROR;
+		}
 
-		return formatted;
+		setErrors(newErrors);
+		return Object.keys(newErrors).length === 0;
 	};
 
-	const handlePhoneChange = ( value ) => {
-		// Strip all non-digits and limit to 10
-		const digits = value.replace( /\D/g, '' ).slice( 0, 10 );
-		setMeta( {
-			...meta,
-			wp_peeps_phone: digits,
-		} );
-	};
+	useEffect(() => {
+		if (!meta) return;
 
-	useEffect( () => {
-		if ( ! meta ) return;
-
-		const firstName = meta?.wp_peeps_first_name?.trim() || '';
-		const middleName = meta?.wp_peeps_middle_name?.trim() || '';
-		const lastName = meta?.wp_peeps_last_name?.trim() || '';
-
-		if ( ! firstName || ! lastName ) {
-			lockPostSaving( 'requiredNameFields' );
+		const isValid = validateFields();
+		
+		if (!isValid) {
+			lockPostSaving('requiredNameFields');
 			return;
 		}
 
-		unlockPostSaving( 'requiredNameFields' );
+		unlockPostSaving('requiredNameFields');
 
-		// Create the full name with middle name if present
-		const fullName = middleName
-			? `${ firstName } ${ middleName } ${ lastName }`
-			: `${ firstName } ${ lastName }`;
+		const firstName = meta[NAME_FIELDS.FIRST_NAME]?.trim() || '';
+		const middleName = meta[NAME_FIELDS.MIDDLE_NAME]?.trim() || '';
+		const lastName = meta[NAME_FIELDS.LAST_NAME]?.trim() || '';
 
-		// Update both title and slug
-		setTitle( fullName );
-		editPost( { title: fullName } );
+		// Create the full name
+		const fullName = [firstName, middleName, lastName].filter(Boolean).join(' ');
 
-		// Update slug
-		const newSlug = fullName
-			.toLowerCase()
-			.replace( /[^a-z0-9]+/g, '-' )
-			.replace( /^-+|-+$/g, '' );
-		setSlug( newSlug );
-	}, [ meta?.wp_peeps_first_name, meta?.wp_peeps_middle_name, meta?.wp_peeps_last_name ] );
+		// Update title and slug
+		setTitle(fullName);
+		editPost({ title: fullName });
+		setSlug(createSlug(fullName));
+	}, [
+		meta?.[NAME_FIELDS.FIRST_NAME],
+		meta?.[NAME_FIELDS.MIDDLE_NAME],
+		meta?.[NAME_FIELDS.LAST_NAME]
+	]);
 
 	return (
 		<PluginDocumentSettingPanel
 			name="wp-peeps-name-fields"
-			title={ __( 'Name Details', 'wp-peeps' ) }
+			title={__('Name Details', 'wp-peeps')}
 			className="wp-peeps-name-fields"
-			initialOpen={ true }
+			initialOpen={true}
 		>
 			<TextControl
-				label={ __( 'First Name', 'wp-peeps' ) + ' *' }
-				value={ meta?.wp_peeps_first_name || '' }
-				onChange={ ( newValue ) =>
-					setMeta( {
-						...meta,
-						wp_peeps_first_name: newValue,
-					} )
-				}
-				help={
-					! meta?.wp_peeps_first_name?.trim()
-						? __( 'First name is required', 'wp-peeps' )
-						: ''
-				}
+				label={__('First Name', 'wp-peeps') + ' *'}
+				value={meta?.[NAME_FIELDS.FIRST_NAME] || ''}
+				onChange={(value) => handleMetaChange(NAME_FIELDS.FIRST_NAME, value)}
+				help={errors[NAME_FIELDS.FIRST_NAME] || ''}
+				className={errors[NAME_FIELDS.FIRST_NAME] ? 'has-error' : ''}
 			/>
 			<TextControl
-				label={ __( 'Middle Name', 'wp-peeps' ) }
-				value={ meta?.wp_peeps_middle_name || '' }
-				onChange={ ( newValue ) =>
-					setMeta( {
-						...meta,
-						wp_peeps_middle_name: newValue,
-					} )
-				}
+				label={__('Middle Name', 'wp-peeps')}
+				value={meta?.[NAME_FIELDS.MIDDLE_NAME] || ''}
+				onChange={(value) => handleMetaChange(NAME_FIELDS.MIDDLE_NAME, value)}
 			/>
 			<TextControl
-				label={ __( 'Last Name', 'wp-peeps' ) + ' *' }
-				value={ meta?.wp_peeps_last_name || '' }
-				onChange={ ( newValue ) =>
-					setMeta( {
-						...meta,
-						wp_peeps_last_name: newValue,
-					} )
-				}
-				help={
-					! meta?.wp_peeps_last_name?.trim()
-						? __( 'Last name is required', 'wp-peeps' )
-						: ''
-				}
+				label={__('Last Name', 'wp-peeps') + ' *'}
+				value={meta?.[NAME_FIELDS.LAST_NAME] || ''}
+				onChange={(value) => handleMetaChange(NAME_FIELDS.LAST_NAME, value)}
+				help={errors[NAME_FIELDS.LAST_NAME] || ''}
+				className={errors[NAME_FIELDS.LAST_NAME] ? 'has-error' : ''}
 			/>
 			<TextControl
-				label={ __( 'Job Title', 'wp-peeps' ) }
-				value={ meta?.wp_peeps_job_title || '' }
-				onChange={ ( newValue ) =>
-					setMeta( {
-						...meta,
-						wp_peeps_job_title: newValue,
-					} )
-				}
+				label={__('Job Title', 'wp-peeps')}
+				value={meta?.[NAME_FIELDS.JOB_TITLE] || ''}
+				onChange={(value) => handleMetaChange(NAME_FIELDS.JOB_TITLE, value)}
 			/>
 			<TextControl
-				label={ __( 'Phone', 'wp-peeps' ) }
-				value={ meta?.wp_peeps_phone ? formatPhoneNumber(meta.wp_peeps_phone) : '' }
-				onChange={ handlePhoneChange }
-				help={ __( 'Enter 10 digit phone number', 'wp-peeps' ) }
+				label={__('Phone', 'wp-peeps')}
+				value={meta?.[NAME_FIELDS.PHONE] ? formatPhoneNumber(meta[NAME_FIELDS.PHONE], phoneFormat) : ''}
+				onChange={(value) => handleMetaChange(NAME_FIELDS.PHONE, value)}
+				help={__('Enter 10 digit phone number', 'wp-peeps')}
 				type="tel"
 			/>
 			<TextControl
 				type="email"
-				label={ __( 'Email', 'wp-peeps' ) }
-				value={ meta?.wp_peeps_email || '' }
-				onChange={ ( newValue ) =>
-					setMeta( {
-						...meta,
-						wp_peeps_email: newValue,
-					} )
-				}
-				help={ __( 'Enter valid email address', 'wp-peeps' ) }
+				label={__('Email', 'wp-peeps')}
+				value={meta?.[NAME_FIELDS.EMAIL] || ''}
+				onChange={(value) => handleMetaChange(NAME_FIELDS.EMAIL, value)}
+				help={errors[NAME_FIELDS.EMAIL] || ''}
+				className={errors[NAME_FIELDS.EMAIL] ? 'has-error' : ''}
 			/>
 		</PluginDocumentSettingPanel>
 	);
 }
 
-const PLATFORM_PATTERNS = {
-    '500px': /500px\.com/i,
-    amazon: /amazon\./i,
-    bandcamp: /bandcamp\.com/i,
-    behance: /behance\.net/i,
-    bluesky: /(?:bsky\.app|bsky\.social)/i,
-    codepen: /codepen\.io/i,
-    deviantart: /deviantart\.com/i,
-    dribbble: /dribbble\.com/i,
-    dropbox: /dropbox\.com/i,
-    etsy: /etsy\.com/i,
-    facebook: /(?:facebook\.com|fb\.com|fb\.me)/i,
-    flickr: /flickr\.com/i,
-    foursquare: /foursquare\.com/i,
-    github: /github\.com/i,
-    goodreads: /goodreads\.com/i,
-    google: /(?:google\.com|plus\.google\.com)/i,
-    instagram: /(?:instagram\.com|instagr\.am)/i,
-    lastfm: /last\.fm/i,
-    linkedin: /linkedin\.com/i,
-    mastodon: /@.*@.*\.[a-z]+/i,
-    medium: /medium\.com/i,
-    meetup: /meetup\.com/i,
-    pinterest: /pinterest\./i,
-    pocket: /getpocket\.com/i,
-    reddit: /reddit\.com/i,
-    skype: /skype\.com/i,
-    snapchat: /snapchat\.com/i,
-    soundcloud: /soundcloud\.com/i,
-    spotify: /spotify\.com/i,
-    telegram: /t\.me/i,
-    tumblr: /tumblr\.com/i,
-    twitch: /twitch\.tv/i,
-    twitter: /(?:twitter\.com|x\.com)/i,
-    vimeo: /vimeo\.com/i,
-    whatsapp: /(?:whatsapp\.com|wa\.me)/i,
-    wordpress: /(?:wordpress\.org|wordpress\.com)/i,
-    yelp: /yelp\./i,
-    youtube: /(?:youtube\.com|youtu\.be)/i
-};
-
-const detectPlatform = (url) => {
-    try {
-        const urlObj = new URL(url);
-        
-        // Check against known patterns
-        for (const [platform, pattern] of Object.entries(PLATFORM_PATTERNS)) {
-            if (pattern.test(urlObj.hostname) || pattern.test(url)) {
-                return platform;
-            }
-        }
-
-        // Return chain as fallback
-        return 'chain';
-    } catch (e) {
-        // If URL is invalid, return chain
-        return 'chain';
-    }
-};
-
-const isValidUrl = (url) => {
-    try {
-        const urlObj = new URL(url);
-        return urlObj.protocol === 'http:' || urlObj.protocol === 'https:';
-    } catch (e) {
-        return false;
-    }
-};
-
+/**
+ * Social Links Panel Component
+ *
+ * @return {JSX.Element|null} The rendered component or null if not in post editor.
+ */
 function SocialLinksPanel() {
-    // Check if we're in the post editor
-    const { isPostEditor } = useSelect(select => ({
-        isPostEditor: !!select('core/editor'),
-    }), []);
+	// Check if we're in the post editor
+	const { isPostEditor } = useSelect(select => ({
+		isPostEditor: !!select('core/editor'),
+	}), []);
 
-    // Only render in post editor
-    if (!isPostEditor) {
-        return null;
-    }
+	// Only render in post editor
+	if (!isPostEditor) {
+		return null;
+	}
 
-    const [meta, setMeta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
-    const [newUrl, setNewUrl] = useState('');
+	const [meta, setMeta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
+	const [newUrl, setNewUrl] = useState('');
+	const [urlError, setUrlError] = useState('');
+	const [draggedIndex, setDraggedIndex] = useState(null);
 
-    const socialLinks = meta?.wp_peeps_social_links || [];
+	const socialLinks = meta?.wp_peeps_social_links || [];
 
-    const [draggedIndex, setDraggedIndex] = useState(null);
+	/**
+	 * Handles drag start event
+	 *
+	 * @param {number} index The index of the dragged item
+	 */
+	const handleDragStart = (index) => {
+		setDraggedIndex(index);
+	};
 
-    const handleDragStart = (index) => {
-        setDraggedIndex(index);
-    };
+	/**
+	 * Handles drag over event
+	 *
+	 * @param {Event} e The drag event
+	 * @param {number} index The index of the target item
+	 */
+	const handleDragOver = (e, index) => {
+		e.preventDefault();
+		if (draggedIndex === null || draggedIndex === index) return;
 
-    const handleDragOver = (e, index) => {
-        e.preventDefault();
-        if (draggedIndex === null || draggedIndex === index) return;
+		const updatedLinks = [...socialLinks];
+		const [draggedItem] = updatedLinks.splice(draggedIndex, 1);
+		updatedLinks.splice(index, 0, draggedItem);
+		
+		updateSocialLinks(updatedLinks);
+		setDraggedIndex(index);
+	};
 
-        const updatedLinks = [...socialLinks];
-        const [draggedItem] = updatedLinks.splice(draggedIndex, 1);
-        updatedLinks.splice(index, 0, draggedItem);
-        
-        setMeta({
-            ...meta,
-            wp_peeps_social_links: updatedLinks,
-        });
-        setDraggedIndex(index);
-    };
+	/**
+	 * Updates social links in meta
+	 *
+	 * @param {Array} links The updated social links array
+	 */
+	const updateSocialLinks = (links) => {
+		setMeta({
+			...meta,
+			wp_peeps_social_links: links,
+		});
+	};
 
-    const handleDragEnd = () => {
-        setDraggedIndex(null);
-    };
+	/**
+	 * Handles adding a new social link
+	 */
+	const handleAddLink = () => {
+		if (!newUrl) {
+			setUrlError(__('Please enter a URL', 'wp-peeps'));
+			return;
+		}
 
-    const handleAddLink = () => {
-        if (!newUrl) return;
+		// Validate URL
+		if (!isValidUrl(newUrl)) {
+			setUrlError(URL_VALIDATION_ERROR);
+			return;
+		}
 
-        // Validate URL first
-        if (!isValidUrl(newUrl)) {
-            // Could add a notice here if you want to show an error message
-            return;
-        }
+		const platform = detectPlatform(newUrl);
+		
+		// Add the new link
+		const updatedLinks = [...socialLinks, { platform, url: newUrl }];
+		updateSocialLinks(updatedLinks);
+		
+		// Reset form
+		setNewUrl('');
+		setUrlError('');
+	};
 
-        const platform = detectPlatform(newUrl);
-        if (!platform) return; // Don't add if we can't determine the platform
+	/**
+	 * Handles removing a social link
+	 *
+	 * @param {number} index The index of the link to remove
+	 */
+	const handleRemoveLink = (index) => {
+		const updatedLinks = socialLinks.filter((_, i) => i !== index);
+		updateSocialLinks(updatedLinks);
+	};
 
-        const updatedLinks = [...socialLinks, { platform, url: newUrl }];
-        setMeta({
-            ...meta,
-            wp_peeps_social_links: updatedLinks,
-        });
-        setNewUrl('');
-    };
+	/**
+	 * Renders a single social link item
+	 *
+	 * @param {Object} link The social link object
+	 * @param {number} index The index of the link
+	 * @return {JSX.Element} The rendered social link item
+	 */
+	const renderSocialLinkItem = (link, index) => (
+		<Flex
+			key={index}
+			align="center"
+			justify="space-between"
+			className={`social-link-item ${draggedIndex === index ? 'is-dragging' : ''}`}
+			draggable
+			onDragStart={() => handleDragStart(index)}
+			onDragOver={(e) => handleDragOver(e, index)}
+			onDragEnd={() => setDraggedIndex(null)}
+		>
+			<FlexItem className="social-link-drag">
+				<Icon icon={dragHandle} />
+			</FlexItem>
+			<FlexItem style={{ flex: 1 }}>
+				<TextControl
+					value={link.url}
+					onChange={(url) => {
+						const platform = detectPlatform(url);
+						const updatedLinks = [...socialLinks];
+						updatedLinks[index] = { platform, url };
+						updateSocialLinks(updatedLinks);
+					}}
+				/>
+			</FlexItem>
+			<FlexItem>
+				<Button
+					isDestructive
+					onClick={() => handleRemoveLink(index)}
+					icon="no-alt"
+					label={__('Remove social link', 'wp-peeps')}
+				/>
+			</FlexItem>
+		</Flex>
+	);
 
-    const handleRemoveLink = (index) => {
-        const updatedLinks = socialLinks.filter((_, i) => i !== index);
-        setMeta({
-            ...meta,
-            wp_peeps_social_links: updatedLinks,
-        });
-    };
-
-    return (
-        <PluginDocumentSettingPanel
-            name="wp-peeps-social-links-panel"
-            title={__('Social Links')}
-            className="wp-peeps-social-links-panel"
-        >
-            <div className="wp-peeps-social-links-list">
-                {socialLinks.map((link, index) => (
-                    <Flex
-                        key={index}
-                        className="wp-peeps-social-link-item"
-                        align="center"
-                        style={{ marginBottom: '8px' }}
-                        draggable
-                        onDragStart={() => handleDragStart(index)}
-                        onDragOver={(e) => handleDragOver(e, index)}
-                        onDragEnd={handleDragEnd}
-                    >
-                        <Icon icon={dragHandle} />
-                        <FlexItem>
-                            {link.platform} - {link.url}
-                        </FlexItem>
-                        <Button
-                            isDestructive
-                            onClick={() => handleRemoveLink(index)}
-                            icon="no-alt"
-                            label={__('Remove link')}
-                        />
-                    </Flex>
-                ))}
-            </div>
-
-            <Flex align="flex-start" style={{ marginTop: '16px' }}>
-                <FlexItem>
-                    <TextControl
-                        label={__('Add social link')}
-                        value={newUrl}
-                        onChange={setNewUrl}
-                        onKeyDown={(event) => {
-                            if (event.key === 'Enter') {
-                                event.preventDefault();
-                                handleAddLink();
-                            }
-                        }}
-                    />
-                </FlexItem>
-                <FlexItem>
-                    <Button
-                        variant="secondary"
-                        onClick={handleAddLink}
-                        style={{ marginTop: '24px' }}
-                    >
-                        {__('Add')}
-                    </Button>
-                </FlexItem>
-            </Flex>
-        </PluginDocumentSettingPanel>
-    );
+	return (
+		<PluginDocumentSettingPanel
+			name="wp-peeps-social-links"
+			title={__('Social Links', 'wp-peeps')}
+			className="wp-peeps-social-links"
+		>
+			{socialLinks.map(renderSocialLinkItem)}
+			
+			<Flex align="flex-end" className="add-social-link">
+				<FlexItem>
+					<TextControl
+						label={__('Add Social Link', 'wp-peeps')}
+						value={newUrl}
+						onChange={(value) => {
+							setNewUrl(value);
+							setUrlError('');
+						}}
+						help={urlError}
+						className={urlError ? 'has-error' : ''}
+					/>
+				</FlexItem>
+				<FlexItem>
+					<Button
+						variant="secondary"
+						onClick={handleAddLink}
+						disabled={!newUrl}
+					>
+						{__('Add', 'wp-peeps')}
+					</Button>
+				</FlexItem>
+			</Flex>
+		</PluginDocumentSettingPanel>
+	);
 }
 
 registerPlugin('wp-peeps-name-fields-panel', { render: NameFieldsPanel });
