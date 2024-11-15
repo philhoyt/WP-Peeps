@@ -2,184 +2,279 @@
 /**
  * Render callback for the social-links block.
  *
+ * @package WP_Peeps
+ * @since 1.0.0
+ *
  * @param array $attributes The block attributes.
- * @return string
+ * @return string The rendered block content.
  */
+
+// Define default social links.
+const DEFAULT_SOCIAL_LINKS = [
+    [
+        'platform' => 'linkedin',
+        'url'     => '#',
+    ],
+    [
+        'platform' => 'github',
+        'url'     => '#',
+    ],
+    [
+        'platform' => 'facebook',
+        'url'     => '#',
+    ],
+];
+
 function wp_peeps_render_social_links_block( $attributes ) {
-	$post_id      = get_the_ID();
-	$social_links = get_post_meta( $post_id, 'wp_peeps_social_links', true );
+    // Get social links based on context
+    $social_links = wp_peeps_get_social_links();
+    
+    // Extract and sanitize block attributes
+    $block_attrs = wp_peeps_get_social_block_attributes( $attributes );
+    
+    // Build block classes and styles
+    $classes = wp_peeps_get_social_block_classes( $block_attrs );
+    $styles  = wp_peeps_get_social_block_styles( $block_attrs );
 
-	// If no meta or post ID, use default links
-	if ( empty( $social_links ) || ! is_array( $social_links ) ) {
-		$social_links = array(
-			array(
-				'platform' => 'linkedin',
-				'url'     => '#',
-			),
-			array(
-				'platform' => 'github',
-				'url'     => '#',
-			),
-			array(
-				'platform' => 'facebook',
-				'url'     => '#',
-			),
-		);
-	}
+    // Get block wrapper attributes
+    $wrapper_attributes = get_block_wrapper_attributes(
+        [
+            'class' => implode( ' ', array_filter( $classes ) ),
+            'style' => implode( '; ', $styles ),
+        ]
+    );
 
-	// Get block attributes
-	$size          = $attributes['size'] ?? 'has-normal-icon-size';
-	$icon_color    = $attributes['iconColor'] ?? null;
-	$icon_bg_color = $attributes['iconBackgroundColor'] ?? null;
-	$orientation   = $attributes['layout']['orientation'] ?? 'horizontal';
-	$justify       = $attributes['layout']['justifyContent'] ?? null;
-	$vertical_align = $attributes['layout']['verticalAlignment'] ?? null;
-	$gap           = $attributes['style']['spacing']['blockGap'] ?? null;
-	$class_name    = $attributes['className'] ?? '';
+    // Build block content
+    $block_content = wp_peeps_build_social_block_content( 
+        $social_links, 
+        $block_attrs, 
+        $wrapper_attributes 
+    );
 
-	// Build class list
-	$classes = array(
-		'wp-block-social-links',
-		'wp-peeps-social-links',
-		$size,
-		$class_name
-	);
+    // Parse and render the block
+    $parsed_blocks = parse_blocks( $block_content );
 
-	if ( $orientation === 'vertical' ) {
-		$classes[] = 'is-vertical';
-	}
+    return ! empty( $parsed_blocks ) ? render_block( $parsed_blocks[0] ) : '';
+}
 
-	if ( ! empty( $attributes['showLabels'] ) ) {
-		$classes[] = 'has-visible-labels';
-	}
+/**
+ * Get social links based on context.
+ *
+ * @return array Array of social links.
+ */
+function wp_peeps_get_social_links() {
+    // Check if we're in a post context
+    $post_id = get_the_ID();
+    
+    // If we're not in a post context (e.g., site editor) or don't have permission
+    if ( empty( $post_id ) || ! current_user_can( 'read_post', $post_id ) ) {
+        return DEFAULT_SOCIAL_LINKS;
+    }
 
-	// Add color classes
-	if ( $icon_color ) {
-		$classes[] = 'has-icon-color';
-	}
+    // Get social links from post meta
+    $social_links = get_post_meta( $post_id, 'wp_peeps_social_links', true );
+    
+    // Return default links if meta is empty or invalid
+    return ( ! empty( $social_links ) && is_array( $social_links ) ) 
+        ? $social_links 
+        : DEFAULT_SOCIAL_LINKS;
+}
 
-	if ( $icon_bg_color ) {
-		$classes[] = 'has-icon-background-color';
-	}
+/**
+ * Get sanitized block attributes.
+ *
+ * @param array $attributes Raw block attributes.
+ * @return array Sanitized attributes.
+ */
+function wp_peeps_get_social_block_attributes( $attributes ) {
+    return [
+        'size'          => sanitize_html_class( $attributes['size'] ?? 'has-normal-icon-size' ),
+        'iconColor'    => sanitize_hex_color( $attributes['iconColor'] ?? '' ),
+        'iconBackgroundColor' => sanitize_hex_color( $attributes['iconBackgroundColor'] ?? '' ),
+        'orientation'   => sanitize_text_field( $attributes['layout']['orientation'] ?? 'horizontal' ),
+        'justify'       => sanitize_text_field( $attributes['layout']['justifyContent'] ?? '' ),
+        'verticalAlign' => sanitize_text_field( $attributes['layout']['verticalAlignment'] ?? '' ),
+        'gap'           => sanitize_text_field( $attributes['style']['spacing']['blockGap'] ?? '' ),
+        'className'    => sanitize_html_class( $attributes['className'] ?? '' ),
+        'showLabels'   => rest_sanitize_boolean( $attributes['showLabels'] ?? false ),
+        'openInNewTab' => rest_sanitize_boolean( $attributes['openInNewTab'] ?? false ),
+    ];
+}
 
-	// Build style attribute
-	$styles = array();
-	
-	// Handle alignment based on orientation
-	if ($orientation === 'vertical') {
-		// Vertical alignment (top, middle, bottom, space-between)
-		if ($vertical_align) {
-			switch ($vertical_align) {
-				case 'top':
-					$styles[] = 'justify-content: flex-start';
-					break;
-				case 'middle':
-					$styles[] = 'justify-content: center';
-					break;
-				case 'bottom':
-					$styles[] = 'justify-content: flex-end';
-					break;
-				case 'space-between':
-					$styles[] = 'justify-content: space-between';
-					break;
-			}
-		}
-		// Item justification (left, center, right, stretch)
-		if ($justify) {
-			switch ($justify) {
-				case 'left':
-					$styles[] = 'align-items: flex-start';
-					break;
-				case 'center':
-					$styles[] = 'align-items: center';
-					break;
-				case 'right':
-					$styles[] = 'align-items: flex-end';
-					break;
-				case 'stretch':
-					$styles[] = 'align-items: stretch';
-					break;
-			}
-		}
-	} else {
-		// Horizontal layout uses justify-content
-		if ($justify) {
-			switch ($justify) {
-				case 'left':
-					$styles[] = 'justify-content: flex-start';
-					break;
-				case 'center':
-					$styles[] = 'justify-content: center';
-					break;
-				case 'right':
-					$styles[] = 'justify-content: flex-end';
-					break;
-				case 'space-between':
-					$styles[] = 'justify-content: space-between';
-					break;
-			}
-		}
-	}
+/**
+ * Get block classes.
+ *
+ * @param array $block_attrs Sanitized block attributes.
+ * @return array Block classes.
+ */
+function wp_peeps_get_social_block_classes( $block_attrs ) {
+    $classes = [
+        'wp-block-social-links',
+        'wp-peeps-social-links',
+        $block_attrs['size'],
+        $block_attrs['className']
+    ];
 
-	// Add gap if set
-	if ($gap) {
-		$gap_value = $gap;
-		// Handle preset spacing format
-		if (strpos($gap, 'var:preset|spacing|') === 0) {
-			$preset = str_replace('var:preset|spacing|', '', $gap);
-			$gap_value = "var(--wp--preset--spacing--{$preset})";
-		}
-		$styles[] = "gap: $gap_value";
-	}
+    if ( $block_attrs['orientation'] === 'vertical' ) {
+        $classes[] = 'is-vertical';
+    }
 
-	// Get block wrapper attributes with styles
-	$wrapper_attributes = get_block_wrapper_attributes(
-		array(
-			'class' => implode(' ', array_filter($classes)),
-			'style' => implode('; ', $styles),
-		)
-	);
+    if ( $block_attrs['showLabels'] ) {
+        $classes[] = 'has-visible-labels';
+    }
 
-	// Start building the social links block
-	$block_content = sprintf(
-		'<!-- wp:social-links {"openInNewTab":%s,"showLabels":%s,"className":"%s","iconColor":"%s","iconBackgroundColor":"%s","layout":{"type":"flex","orientation":"%s","justifyContent":"%s","verticalAlignment":"%s"}} -->',
-		! empty( $attributes['openInNewTab'] ) ? 'true' : 'false',
-		! empty( $attributes['showLabels'] ) ? 'true' : 'false',
-		implode(' ', array_filter($classes)),
-		esc_attr($icon_color),
-		esc_attr($icon_bg_color),
-		esc_attr($orientation),
-		esc_attr($justify),
-		esc_attr($vertical_align)
-	) . "\n";
+    if ( $block_attrs['iconColor'] ) {
+        $classes[] = 'has-icon-color';
+    }
 
-	$block_content .= sprintf(
-		'<ul %s>',
-		$wrapper_attributes
-	);
+    if ( $block_attrs['iconBackgroundColor'] ) {
+        $classes[] = 'has-icon-background-color';
+    }
 
-	// Add each social link
-	foreach ( $social_links as $link ) {
-		$service = strtolower( $link['platform'] );
-		$url     = esc_url( $link['url'] );
+    return $classes;
+}
 
-		$block_content .= sprintf(
-			'<!-- wp:social-link {"url":"%s","service":"%s"} /-->',
-			$url,
-			$service
-		);
-	}
+/**
+ * Get block styles.
+ *
+ * @param array $block_attrs Sanitized block attributes.
+ * @return array Block styles.
+ */
+function wp_peeps_get_social_block_styles( $block_attrs ) {
+    $styles = [];
 
-	// Close the social links block
-	$block_content .= '</ul>' . "\n";
-	$block_content .= '<!-- /wp:social-links -->';
+    if ( $block_attrs['orientation'] === 'vertical' ) {
+        $styles = array_merge( $styles, wp_peeps_get_vertical_styles( $block_attrs ) );
+    } else {
+        $styles = array_merge( $styles, wp_peeps_get_horizontal_styles( $block_attrs ) );
+    }
 
-	// Parse and render the block
-	$parsed_blocks = parse_blocks( $block_content );
+    $gap_style = wp_peeps_get_gap_style( $block_attrs['gap'] );
+    if ( $gap_style ) {
+        $styles[] = $gap_style;
+    }
 
-	if ( ! empty( $parsed_blocks ) ) {
-		return render_block( $parsed_blocks[0] );
-	}
+    return $styles;
+}
 
-	return '';
+/**
+ * Get vertical alignment styles.
+ *
+ * @param array $block_attrs Block attributes.
+ * @return array Array of CSS styles.
+ */
+function wp_peeps_get_vertical_styles( $block_attrs ) {
+    $styles = [];
+    
+    $vertical_align_map = [
+        'top'           => 'flex-start',
+        'middle'        => 'center',
+        'bottom'        => 'flex-end',
+        'space-between' => 'space-between',
+    ];
+
+    $justify_map = [
+        'left'    => 'flex-start',
+        'center'  => 'center',
+        'right'   => 'flex-end',
+        'stretch' => 'stretch',
+    ];
+
+    if ( ! empty( $block_attrs['verticalAlign'] ) && isset( $vertical_align_map[ $block_attrs['verticalAlign'] ] ) ) {
+        $styles[] = sprintf( 'justify-content: %s', $vertical_align_map[ $block_attrs['verticalAlign'] ] );
+    }
+
+    if ( ! empty( $block_attrs['justify'] ) && isset( $justify_map[ $block_attrs['justify'] ] ) ) {
+        $styles[] = sprintf( 'align-items: %s', $justify_map[ $block_attrs['justify'] ] );
+    }
+
+    return $styles;
+}
+
+/**
+ * Get horizontal alignment styles.
+ *
+ * @param array $block_attrs Block attributes.
+ * @return array Array of CSS styles.
+ */
+function wp_peeps_get_horizontal_styles( $block_attrs ) {
+    $styles = [];
+    
+    $justify_map = [
+        'left'          => 'flex-start',
+        'center'        => 'center',
+        'right'         => 'flex-end',
+        'space-between' => 'space-between',
+    ];
+
+    if ( ! empty( $block_attrs['justify'] ) && isset( $justify_map[ $block_attrs['justify'] ] ) ) {
+        $styles[] = sprintf( 'justify-content: %s', $justify_map[ $block_attrs['justify'] ] );
+    }
+
+    return $styles;
+}
+
+/**
+ * Get gap styles.
+ *
+ * @param string $gap Gap value.
+ * @return string|null Gap style or null if not set.
+ */
+function wp_peeps_get_gap_style( $gap ) {
+    if ( empty( $gap ) ) {
+        return null;
+    }
+
+    $gap_value = $gap;
+    if ( 0 === strpos( $gap, 'var:preset|spacing|' ) ) {
+        $preset = str_replace( 'var:preset|spacing|', '', $gap );
+        $gap_value = sprintf( 'var(--wp--preset--spacing--%s)', sanitize_html_class( $preset ) );
+    }
+
+    return sprintf( 'gap: %s', esc_attr( $gap_value ) );
+}
+
+/**
+ * Build block content.
+ *
+ * @param array $social_links Social links.
+ * @param array $block_attrs Sanitized block attributes.
+ * @param string $wrapper_attributes Block wrapper attributes.
+ * @return string Block content.
+ */
+function wp_peeps_build_social_block_content( $social_links, $block_attrs, $wrapper_attributes ) {
+    $block_content = sprintf(
+        '<!-- wp:social-links {"openInNewTab":%s,"showLabels":%s,"className":"%s","iconColor":"%s","iconBackgroundColor":"%s","layout":{"type":"flex","orientation":"%s","justifyContent":"%s","verticalAlignment":"%s"}} -->',
+        $block_attrs['openInNewTab'] ? 'true' : 'false',
+        $block_attrs['showLabels'] ? 'true' : 'false',
+        implode( ' ', array_filter( wp_peeps_get_social_block_classes( $block_attrs ) ) ),
+        esc_attr( $block_attrs['iconColor'] ),
+        esc_attr( $block_attrs['iconBackgroundColor'] ),
+        esc_attr( $block_attrs['orientation'] ),
+        esc_attr( $block_attrs['justify'] ),
+        esc_attr( $block_attrs['verticalAlign'] )
+    ) . "\n";
+
+    $block_content .= sprintf(
+        '<ul %s>',
+        $wrapper_attributes
+    );
+
+    // Add each social link
+    foreach ( $social_links as $link ) {
+        $service = strtolower( $link['platform'] );
+        $url     = esc_url( $link['url'] );
+
+        $block_content .= sprintf(
+            '<!-- wp:social-link {"url":"%s","service":"%s"} /-->',
+            $url,
+            $service
+        );
+    }
+
+    // Close the social links block
+    $block_content .= '</ul>' . "\n";
+    $block_content .= '<!-- /wp:social-links -->';
+
+    return $block_content;
 }
