@@ -144,7 +144,7 @@ import { registerPlugin } from '@wordpress/plugins';
 import { PluginDocumentSettingPanel } from '@wordpress/editor';
 import { TextControl, Button, Flex, FlexItem, Icon } from '@wordpress/components';
 import { useEffect, useState } from '@wordpress/element';
-import { dispatch, select } from '@wordpress/data';
+import { dispatch } from '@wordpress/data';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore, useEntityProp } from '@wordpress/core-data';
 import { dragHandle } from '@wordpress/icons';
@@ -152,52 +152,8 @@ import { dragHandle } from '@wordpress/icons';
 // Import and register blocks
 import '../blocks';
 
-/**
- * Remove the post title block from the editor.
- * 
- * We need the title field for query loops to work, but we don't want to show it
- * in the editor since we generate the title automatically from the person's name.
- * This removes the title block from the editor iframe while maintaining the 
- * underlying title support.
- */
-const removeTitleElement = () => {
-    const postType = select('core/editor').getCurrentPostType();
-    if (postType === 'wp_peeps_people') {
-        // Try to find the editor iframe
-        const editorIframe = document.querySelector('iframe[name="editor-canvas"]');
-        if (editorIframe && editorIframe.contentDocument) {
-            const titleWrapper = editorIframe.contentDocument.querySelector('.wp-block-post-title');
-            if (titleWrapper) {
-                titleWrapper.remove();
-            }
-        }
-    }
-};
-
-// Run on initial load with both immediate and delayed checks
-window.addEventListener('load', () => {
-    // Initial check
-    removeTitleElement();
-    // Secondary check after a short delay to ensure iframe is fully loaded
-    setTimeout(removeTitleElement, 200);
-});
-
-// Watch for iframe changes since the editor can reload the iframe
-const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-        if (mutation.addedNodes) {
-            mutation.addedNodes.forEach((node) => {
-                if (node.tagName === 'IFRAME' && node.name === 'editor-canvas') {
-                    // Quick initial check when iframe is added
-                    removeTitleElement();
-                    // Secondary check after a short delay to ensure content is loaded
-                    setTimeout(removeTitleElement, 100);
-                }
-            });
-        }
-    });
-});
-observer.observe(document.body, { childList: true, subtree: true });
+// Import styles
+import './style.scss';
 
 function PersonDetailsPanel() {
     // Check if we're on the people post type
