@@ -2,7 +2,6 @@
 
 A WordPress plugin for managing and displaying people profiles.
 
-![WordPress Plugin: Required WP Version](https://img.shields.io/wordpress/plugin/wp-version/wp-peeps)
 ![License](https://img.shields.io/badge/license-GPL--2.0%2B-blue)
 
 ## Description
