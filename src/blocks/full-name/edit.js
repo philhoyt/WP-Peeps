@@ -3,7 +3,6 @@ import { useBlockProps, InspectorControls, BlockControls, AlignmentToolbar } fro
 import { PanelBody, ToggleControl, TextControl, ToolbarGroup, ToolbarDropdownMenu } from '@wordpress/components';
 import { useEntityProp } from '@wordpress/core-data';
 import {
-	heading as headingIcon,
 	paragraph,
 	grid,
 	headingLevel1,

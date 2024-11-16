@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls, BlockControls, AlignmentToolbar } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls, BlockControls } from '@wordpress/block-editor';
 import { PanelBody, ToggleControl, TextControl, ToolbarGroup, ToolbarDropdownMenu } from '@wordpress/components';
 import { useEntityProp } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
@@ -107,10 +107,6 @@ export default function Edit({ attributes, setAttributes }) {
 						}))}
 					/>
 				</ToolbarGroup>
-				<AlignmentToolbar
-					value={textAlign}
-					onChange={(value) => setAttributes({ textAlign: value })}
-				/>
 			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={__('Phone Settings', 'wp-peeps')}>
