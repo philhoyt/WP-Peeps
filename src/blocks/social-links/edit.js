@@ -69,25 +69,28 @@ export default function Edit({ attributes, setAttributes }) {
 	// Track whether this is the initial load
 	const initialLoadRef = useRef(true);
 
-	// Get meta and meta update status
-	const isSaving = useSelect(
-		(select) =>
-			select('core').isSavingEntityRecord('postType', 'wp_peeps_people'),
-		[],
-	);
+	// Get meta and save status
+	const { isSaving, isDirty } = useSelect((select) => {
+		const coreEditor = select('core/editor');
+		return {
+			isSaving: select('core').isSavingEntityRecord('postType', 'wp_peeps_people'),
+			isDirty: coreEditor ? coreEditor.isEditedPostDirty() : false
+		};
+	}, []);
 
-	// Force update only on initial load and after save
+	// Force update after save
 	useEffect(() => {
 		if (initialLoadRef.current) {
 			initialLoadRef.current = false;
 			return;
 		}
 
-		if (!isSaving) {
-			// Force a re-render of ServerSideRender after save
+		// If we were saving and now we're not, and the post is no longer dirty
+		if (!isSaving && !isDirty) {
+			// Force a re-render of ServerSideRender
 			setAttributes({ _lastUpdate: Date.now() });
 		}
-	}, [isSaving, setAttributes]);
+	}, [isSaving, isDirty, setAttributes]);
 
 	return (
 		<>
