@@ -87,7 +87,7 @@ export default function Edit({ attributes, setAttributes }) {
 			// Force a re-render of ServerSideRender after save
 			setAttributes({ _lastUpdate: Date.now() });
 		}
-	}, [isSaving]);
+	}, [isSaving, setAttributes]);
 
 	return (
 		<>

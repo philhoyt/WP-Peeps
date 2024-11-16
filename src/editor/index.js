@@ -154,7 +154,7 @@ import {
 	FlexItem,
 	Icon,
 } from '@wordpress/components';
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect, useState, useCallback, useMemo } from '@wordpress/element';
 import { dispatch, useSelect } from '@wordpress/data';
 import { store as coreStore, useEntityProp } from '@wordpress/core-data';
 import { dragHandle } from '@wordpress/icons';
@@ -171,45 +171,38 @@ function PersonDetailsPanel() {
 		(select) => select('core/editor').getCurrentPostType(),
 		[],
 	);
-	if (postType !== 'wp_peeps_people') {
-		return null;
-	}
 
-	const [meta, setMeta] = useEntityProp(
-		'postType',
-		'wp_peeps_people',
-		'meta',
-	);
+	const [meta, setMeta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
 	const [, setTitle] = useEntityProp('postType', 'wp_peeps_people', 'title');
 	const [, setSlug] = useEntityProp('postType', 'wp_peeps_people', 'slug');
 	const [errors, setErrors] = useState({});
 
-	const { lockPostSaving, unlockPostSaving, editPost } =
-		dispatch('core/editor');
+	const { lockPostSaving, unlockPostSaving, editPost } = dispatch('core/editor');
 
 	// Get phone format from settings
 	const phoneFormat = useSelect(
 		(select) =>
-			select(coreStore).getEntityRecord('root', 'site')
-				?.wp_peeps_phone_format || '(###) ###-####',
+			select(coreStore).getEntityRecord('root', 'site')?.wp_peeps_phone_format || '(###) ###-####',
+		[],
 	);
 
-	const handleMetaChange = (field, value) => {
+	// Move this outside of the component if possible, or memoize if it needs component scope
+	const handleMetaChange = useCallback((field, value) => {
 		setMeta({
 			...meta,
 			[field]: value,
 		});
 
 		// Clear error for this field
-		if (errors[field]) {
-			setErrors({
-				...errors,
+		setErrors((prevErrors) =>
+			prevErrors[field] ? {
+				...prevErrors,
 				[field]: null,
-			});
-		}
-	};
+			} : prevErrors
+		);
+	}, [meta, setMeta]);
 
-	const validateFields = () => {
+	const validateFields = useCallback(() => {
 		const newErrors = {};
 
 		// Required fields
@@ -221,30 +214,34 @@ function PersonDetailsPanel() {
 		}
 
 		// Email validation
-		if (
-			meta?.[NAME_FIELDS.EMAIL] &&
-			!isValidEmail(meta[NAME_FIELDS.EMAIL])
-		) {
+		if (meta?.[NAME_FIELDS.EMAIL] && !isValidEmail(meta[NAME_FIELDS.EMAIL])) {
 			newErrors[NAME_FIELDS.EMAIL] = EMAIL_VALIDATION_ERROR;
 		}
 
 		setErrors(newErrors);
 		return Object.keys(newErrors).length === 0;
-	};
+	}, [meta]);
+
+	const validateAndLock = useCallback(() => {
+		const isValid = validateFields();
+		if (!isValid) {
+			lockPostSaving('requiredNameFields');
+		} else {
+			unlockPostSaving('requiredNameFields');
+		}
+	}, [validateFields, lockPostSaving, unlockPostSaving]);
 
 	useEffect(() => {
 		if (!meta) {
 			return;
 		}
+		validateAndLock();
+	}, [meta, validateAndLock]);
 
-		const isValid = validateFields();
-
-		if (!isValid) {
-			lockPostSaving('requiredNameFields');
+	useEffect(() => {
+		if (!meta) {
 			return;
 		}
-
-		unlockPostSaving('requiredNameFields');
 
 		const firstName = meta[NAME_FIELDS.FIRST_NAME]?.trim() || '';
 		const middleName = meta[NAME_FIELDS.MIDDLE_NAME]?.trim() || '';
@@ -259,11 +256,11 @@ function PersonDetailsPanel() {
 		setTitle(fullName);
 		editPost({ title: fullName });
 		setSlug(createSlug(fullName));
-	}, [
-		meta?.[NAME_FIELDS.FIRST_NAME],
-		meta?.[NAME_FIELDS.MIDDLE_NAME],
-		meta?.[NAME_FIELDS.LAST_NAME],
-	]);
+	}, [meta, setTitle, setSlug, editPost]);
+
+	if (postType !== 'wp_peeps_people') {
+		return null;
+	}
 
 	return (
 		<>
@@ -346,42 +343,30 @@ function PersonDetailsPanel() {
 }
 
 function SocialLinksPanel() {
-	// Check if we're on the people post type
 	const postType = useSelect(
 		(select) => select('core/editor').getCurrentPostType(),
 		[],
 	);
-	if (postType !== 'wp_peeps_people') {
-		return null;
-	}
 
-	const [meta, setMeta] = useEntityProp(
-		'postType',
-		'wp_peeps_people',
-		'meta',
-	);
+	const [meta, setMeta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
 	const [newUrl, setNewUrl] = useState('');
 	const [urlError, setUrlError] = useState('');
 	const [draggedIndex, setDraggedIndex] = useState(null);
 
-	const socialLinks = meta?.wp_peeps_social_links || [];
+	const socialLinks = useMemo(() => meta?.wp_peeps_social_links || [], [meta]);
 
-	/**
-	 * Handles drag start event
-	 *
-	 * @param {number} index The index of the dragged item
-	 */
-	const handleDragStart = (index) => {
+	const handleDragStart = useCallback((index) => {
 		setDraggedIndex(index);
-	};
+	}, []);
 
-	/**
-	 * Handles drag over event
-	 *
-	 * @param {Event}  e     The drag event
-	 * @param {number} index The index of the target item
-	 */
-	const handleDragOver = (e, index) => {
+	const updateSocialLinks = useCallback((links) => {
+		setMeta({
+			...meta,
+			wp_peeps_social_links: links,
+		});
+	}, [meta, setMeta]);
+
+	const handleDragOver = useCallback((e, index) => {
 		e.preventDefault();
 		if (draggedIndex === null || draggedIndex === index) {
 			return;
@@ -393,24 +378,9 @@ function SocialLinksPanel() {
 
 		updateSocialLinks(updatedLinks);
 		setDraggedIndex(index);
-	};
+	}, [draggedIndex, socialLinks, updateSocialLinks]);
 
-	/**
-	 * Updates social links in meta
-	 *
-	 * @param {Array} links The updated social links array
-	 */
-	const updateSocialLinks = (links) => {
-		setMeta({
-			...meta,
-			wp_peeps_social_links: links,
-		});
-	};
-
-	/**
-	 * Handles adding a new social link
-	 */
-	const handleAddLink = () => {
+	const handleAddLink = useCallback(() => {
 		if (!newUrl) {
 			setUrlError(__('Please enter a URL', 'wp-peeps'));
 			return;
@@ -431,26 +401,14 @@ function SocialLinksPanel() {
 		// Reset form
 		setNewUrl('');
 		setUrlError('');
-	};
+	}, [newUrl, socialLinks, updateSocialLinks]);
 
-	/**
-	 * Handles removing a social link
-	 *
-	 * @param {number} index The index of the link to remove
-	 */
-	const handleRemoveLink = (index) => {
+	const handleRemoveLink = useCallback((index) => {
 		const updatedLinks = socialLinks.filter((_, i) => i !== index);
 		updateSocialLinks(updatedLinks);
-	};
+	}, [socialLinks, updateSocialLinks]);
 
-	/**
-	 * Renders a single social link item
-	 *
-	 * @param {Object} link  The social link object
-	 * @param {number} index The index of the link
-	 * @return {JSX.Element} The rendered social link item
-	 */
-	const renderSocialLinkItem = (link, index) => (
+	const renderSocialLinkItem = useCallback((link, index) => (
 		<Flex
 			key={index}
 			align="center"
@@ -485,7 +443,11 @@ function SocialLinksPanel() {
 				/>
 			</FlexItem>
 		</Flex>
-	);
+	), [draggedIndex, handleDragStart, handleDragOver, socialLinks, updateSocialLinks, handleRemoveLink]);
+
+	if (postType !== 'wp_peeps_people') {
+		return null;
+	}
 
 	return (
 		<PluginDocumentSettingPanel
