@@ -21,6 +21,7 @@ function SettingsPage() {
 	const [localSettings, setLocalSettings] = useState({});
 	const [hasChanges, setHasChanges] = useState(false);
 	const [showRewriteNotice, setShowRewriteNotice] = useState(false);
+	const [error, setError] = useState(null);
 
 	const { isPublic, phoneFormat, cptSlug, isSaving } = useSelect(
 		(select) => ({
@@ -55,6 +56,7 @@ function SettingsPage() {
 		try {
 			await saveEntityRecord('root', 'site', localSettings);
 			setHasChanges(false);
+			setError(null); // Clear any existing errors
 			// Show notice if slug or public status was changed
 			if (
 				localSettings.wp_peeps_cpt_slug ||
@@ -62,13 +64,22 @@ function SettingsPage() {
 			) {
 				setShowRewriteNotice(true);
 			}
-		} catch (error) {
-			console.error('Failed to save settings:', error);
+		} catch (err) {
+			setError(err?.message || 'Failed to save settings. Please try again.');
 		}
 	};
 
 	return (
 		<div>
+			{error && (
+				<Notice
+					status="error"
+					isDismissible={true}
+					onDismiss={() => setError(null)}
+				>
+					{error}
+				</Notice>
+			)}
 			{showRewriteNotice && (
 				<Notice
 					status="warning"

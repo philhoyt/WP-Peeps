@@ -107,7 +107,7 @@ export default function Edit({ attributes, setAttributes }) {
 	);
 
 	// Get current tag info
-	const currentTag = HTML_TAGS.find((tag) => tag.value === tagName);
+	const currentTag = HTML_TAGS.find((htmlTag) => htmlTag.value === tagName);
 
 	return (
 		<>
@@ -116,12 +116,12 @@ export default function Edit({ attributes, setAttributes }) {
 					<ToolbarDropdownMenu
 						icon={currentTag?.icon}
 						label={__('Change text element', 'wp-peeps')}
-						controls={HTML_TAGS.map((tag) => ({
-							title: tag.title,
-							icon: tag.icon,
-							isActive: tag.value === tagName,
+						controls={HTML_TAGS.map((htmlTag) => ({
+							title: htmlTag.title,
+							icon: htmlTag.icon,
+							isActive: htmlTag.value === tagName,
 							onClick: () =>
-								setAttributes({ tagName: tag.value }),
+								setAttributes({ tagName: htmlTag.value }),
 						}))}
 					/>
 				</ToolbarGroup>
