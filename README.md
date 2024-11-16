@@ -11,10 +11,10 @@ WP Peeps is a WordPress plugin that helps you create and manage a directory of p
 
 ### Features
 
-- Custom post type for managing people profiles
-- Configurable phone number formatting
-- Custom URL structure for people profiles
-- Public/private directory option
+-   Custom post type for managing people profiles
+-   Configurable phone number formatting
+-   Custom URL structure for people profiles
+-   Public/private directory option
 
 ## Installation
 
@@ -45,30 +45,26 @@ To generate test people profiles with random data:
 ```bash
 # Generate 20 test profiles
 wp eval-file wp-content/plugins/wp-peeps/bin/generate-test-data.php 20
-
-# Or specify a different number
-wp eval-file wp-content/plugins/wp-peeps/bin/generate-test-data.php 5
 ```
 
 This will create test profiles with:
 
-- Random first, middle, and last names
-- Generated email addresses
-- Random phone numbers
-- Random job titles
-- 2-4 random social media links
-- Gender-appropriate avatars based on the person's name
+-   Random first, middle, and last names
+-   Generated email addresses
+-   Random phone numbers
+-   Random job titles
+-   2-4 random social media links
 
 ## Changelog
 
 ### 0.1.0
 
-- Initial release
-- People directory custom post type
-- Admin settings page
-- Phone number formatting
-- Required name fields
-- Contact information fields
+-   Initial release
+-   People directory custom post type
+-   Admin settings page
+-   Phone number formatting
+-   Required name fields
+-   Contact information fields
 
 ## Credits
 
