@@ -55,6 +55,7 @@ function register_people_post_type() {
 		'menu_position'      => null,
 		'menu_icon'          => 'dashicons-groups',
 		'supports'           => array(
+			'title',
 			'editor',
 			'thumbnail',
 			'excerpt',
