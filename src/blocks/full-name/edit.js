@@ -80,12 +80,9 @@ export default function Edit({ attributes, setAttributes }) {
 		makeLink, 
 		openInNewTab, 
 		linkRel,
-		textAlign 
 	} = attributes;
 
-	const blockProps = useBlockProps({
-		className: textAlign ? `has-text-align-${textAlign}` : undefined,
-	});
+	const blockProps = useBlockProps();
 	
 	const [meta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
 	const firstName = meta?.wp_peeps_first_name || 'First';
@@ -124,10 +121,6 @@ export default function Edit({ attributes, setAttributes }) {
 						}))}
 					/>
 				</ToolbarGroup>
-				<AlignmentToolbar
-					value={textAlign}
-					onChange={(value) => setAttributes({ textAlign: value })}
-				/>
 			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={__('Name Settings', 'wp-peeps')}>
