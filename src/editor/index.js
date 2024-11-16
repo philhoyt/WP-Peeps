@@ -156,11 +156,11 @@ import '../blocks';
 import './style.scss';
 
 function PersonDetailsPanel() {
-    // Check if we're on the people post type
-    const postType = useSelect(select => select('core/editor').getCurrentPostType(), []);
-    if (postType !== 'wp_peeps_people') {
-        return null;
-    }
+	// Check if we're on the people post type
+	const postType = useSelect(select => select('core/editor').getCurrentPostType(), []);
+	if (postType !== 'wp_peeps_people') {
+		return null;
+	}
 
 
 	const [meta, setMeta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
@@ -299,11 +299,11 @@ function PersonDetailsPanel() {
 }
 
 function SocialLinksPanel() {
-    // Check if we're on the people post type
-    const postType = useSelect(select => select('core/editor').getCurrentPostType(), []);
-    if (postType !== 'wp_peeps_people') {
-        return null;
-    }
+	// Check if we're on the people post type
+	const postType = useSelect(select => select('core/editor').getCurrentPostType(), []);
+	if (postType !== 'wp_peeps_people') {
+		return null;
+	}
 
 	const [meta, setMeta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
 	const [newUrl, setNewUrl] = useState('');
@@ -467,9 +467,9 @@ function SocialLinksPanel() {
 }
 
 registerPlugin('wp-peeps-person-details', {
-    render: PersonDetailsPanel,
+	render: PersonDetailsPanel,
 });
 
 registerPlugin('wp-peeps-social-links-panel', {
-    render: SocialLinksPanel,
+	render: SocialLinksPanel,
 });
