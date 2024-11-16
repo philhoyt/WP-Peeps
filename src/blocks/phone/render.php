@@ -3,7 +3,7 @@
  * Render the Phone block
  *
  * @package WP_Peeps
- * @since 1.0.0
+ * @since 0.1.0
  *
  * @param array  $attributes The block attributes.
  * @param string $content    The block default content.

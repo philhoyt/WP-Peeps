@@ -8,6 +8,11 @@ A WordPress plugin for managing and displaying people profiles.
 
 WP Peeps is a WordPress plugin that helps you create and manage a directory of people on your website. Perfect for displaying staff members, team rosters, or employee directories.
 
+### Requirements
+
+-   WordPress 6.6 or higher
+-   PHP 7.2 or higher
+
 ### Features
 
 -   Custom post type for managing people profiles
@@ -35,6 +40,15 @@ Yes, in People → Settings you can disable the "Make People Directory Public" o
 
 Go to People → Settings and update the "Phone Number Format" field. Use # symbols where you want digits to appear. For example: (###) ###-####
 
+## Beta Testing
+
+This plugin is currently in beta. To help test:
+
+1. Download the latest beta release from GitHub
+2. Install and activate the plugin
+3. Report any issues on the GitHub repository
+4. Note: This is a pre-release version, not recommended for production sites
+
 ## Development
 
 ### Generate Test Data
@@ -55,6 +69,15 @@ This will create test profiles with:
 -   2-4 random social media links
 
 ## Changelog
+
+### 0.1.0-beta.1
+
+-   Initial beta release
+-   Added Full Name block
+-   Added Phone Number block
+-   Added Email Address block
+-   Added Social Links block
+-   Custom phone number formatting
 
 ### 0.1.0
 
