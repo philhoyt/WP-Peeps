@@ -1,9 +1,7 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls, BlockControls, AlignmentToolbar } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls, BlockControls } from '@wordpress/block-editor';
 import { PanelBody, ToggleControl, TextControl, ToolbarGroup, ToolbarDropdownMenu } from '@wordpress/components';
 import { useEntityProp } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
 import { paragraph, grid, tag } from '@wordpress/icons';
 
 const HTML_TAGS = [
@@ -62,12 +60,6 @@ export default function Edit({ attributes, setAttributes }) {
     return (
         <>
             <BlockControls>
-                <AlignmentToolbar
-                    value={textAlign}
-                    onChange={(nextAlign) => {
-                        setAttributes({ textAlign: nextAlign });
-                    }}
-                />
                 <ToolbarGroup>
                     <ToolbarDropdownMenu
                         icon={currentTag?.icon}
