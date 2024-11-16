@@ -66,18 +66,21 @@ function wp_peeps_get_social_links() {
 	// Check if we're in a post context
 	$post_id = get_the_ID();
 	
-	// If we're not in a post context (e.g., site editor) or don't have permission
-	if ( empty( $post_id ) || ! current_user_can( 'read_post', $post_id ) ) {
+	// Get social links from post meta if available
+	if ( ! empty( $post_id ) && current_user_can( 'read_post', $post_id ) ) {
+		$social_links = get_post_meta( $post_id, 'wp_peeps_social_links', true );
+		if ( ! empty( $social_links ) ) {
+			return $social_links;
+		}
+	}
+
+	// If we're in the editor and no social links found, return default links
+	if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
 		return DEFAULT_SOCIAL_LINKS;
 	}
 
-	// Get social links from post meta
-	$social_links = get_post_meta( $post_id, 'wp_peeps_social_links', true );
-	
-	// Return default links if meta is empty or invalid
-	return ( ! empty( $social_links ) && is_array( $social_links ) ) 
-		? $social_links 
-		: DEFAULT_SOCIAL_LINKS;
+	// If we're on the frontend and no social links found, return empty array
+	return array();
 }
 
 /**
