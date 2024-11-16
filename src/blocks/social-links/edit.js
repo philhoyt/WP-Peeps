@@ -57,8 +57,8 @@ const SIZES = [
  */
 export default function Edit({ attributes, setAttributes }) {
 	const {
-		iconColor,
-		iconBackgroundColor,
+		iconColorValue,
+		iconBackgroundColorValue,
 		size = 'has-normal-icon-size',
 		openInNewTab,
 		showLabels,
@@ -162,16 +162,20 @@ export default function Edit({ attributes, setAttributes }) {
 					title={__('Color settings')}
 					colorSettings={[
 						{
-							value: iconColor,
+							value: iconColorValue,
 							onChange: (color) => {
-								setAttributes({ iconColor: color });
+								setAttributes({ 
+									iconColorValue: color 
+								});
 							},
 							label: __('Icon color'),
 						},
 						{
-							value: iconBackgroundColor,
+							value: iconBackgroundColorValue,
 							onChange: (color) => {
-								setAttributes({ iconBackgroundColor: color });
+								setAttributes({ 
+									iconBackgroundColorValue: color 
+								});
 							},
 							label: __('Icon background'),
 						},
