@@ -37,4 +37,12 @@ function wp_peeps_init() {
 			'render_callback' => 'wp_peeps_render_social_links_block',
 		)
 	);
+
+	// Register the email block.
+	register_block_type(
+		WP_PEEPS_PLUGIN_DIR . 'build/blocks/email',
+		array(
+			'render_callback' => 'wp_peeps_render_email_block',
+		)
+	);
 }
