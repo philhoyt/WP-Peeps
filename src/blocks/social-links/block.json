@@ -15,11 +15,6 @@
 			"padding": true,
 			"blockGap": true
 		},
-		"color": {
-			"gradients": true,
-			"background": true,
-			"text": true
-		},
 		"layout": {
 			"allowSwitching": false,
 			"allowInheriting": false,
@@ -35,10 +30,10 @@
 		"__experimentalSelector": ".wp-block-wp-peeps-social-links"
 	},
 	"attributes": {
-		"iconColor": {
+		"iconColorValue": {
 			"type": "string"
 		},
-		"iconBackgroundColor": {
+		"iconBackgroundColorValue": {
 			"type": "string"
 		},
 		"size": {
