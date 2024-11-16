@@ -1,6 +1,5 @@
-import { registerBlockStyle, unregisterBlockStyle } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
-import { registerBlockType } from '@wordpress/blocks';
+import { registerBlockStyle, registerBlockType } from '@wordpress/blocks';
 
 import Edit from './edit';
 import metadata from './block.json';
@@ -10,6 +9,6 @@ registerBlockStyle('wp-peeps/social-links', {
 	label: __('Logos Only'),
 });
 
-registerBlockType( metadata.name, {
+registerBlockType(metadata.name, {
 	edit: Edit,
-} );
+});

@@ -20,7 +20,6 @@ import {
 } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
 import { layout, share } from '@wordpress/icons';
-import { useEntityProp } from '@wordpress/core-data';
 import { useEffect, useRef } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 
@@ -51,8 +50,8 @@ const SIZES = [
 /**
  * Edit component for the social links block.
  *
- * @param {Object} props               Block props.
- * @param {Object} props.attributes    Block attributes.
+ * @param {Object}   props               Block props.
+ * @param {Object}   props.attributes    Block attributes.
  * @param {Function} props.setAttributes Function to set block attributes.
  * @return {Element} Element to render.
  */
@@ -69,12 +68,12 @@ export default function Edit({ attributes, setAttributes }) {
 
 	// Track whether this is the initial load
 	const initialLoadRef = useRef(true);
-	
+
 	// Get meta and meta update status
-	const [meta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
-	const isSaving = useSelect(select => 
-		select('core').isSavingEntityRecord('postType', 'wp_peeps_people'), 
-		[]
+	const isSaving = useSelect(
+		(select) =>
+			select('core').isSavingEntityRecord('postType', 'wp_peeps_people'),
+		[],
 	);
 
 	// Force update only on initial load and after save
@@ -121,7 +120,12 @@ export default function Edit({ attributes, setAttributes }) {
 							},
 						})
 					}
-					allowedControls={['left', 'center', 'right', 'space-between']}
+					allowedControls={[
+						'left',
+						'center',
+						'right',
+						'space-between',
+					]}
 				/>
 			</BlockControls>
 			<InspectorControls>
@@ -129,12 +133,16 @@ export default function Edit({ attributes, setAttributes }) {
 					<ToggleControl
 						label={__('Show labels')}
 						checked={showLabels}
-						onChange={() => setAttributes({ showLabels: !showLabels })}
+						onChange={() =>
+							setAttributes({ showLabels: !showLabels })
+						}
 					/>
 					<ToggleControl
 						label={__('Open links in new tab')}
 						checked={openInNewTab}
-						onChange={() => setAttributes({ openInNewTab: !openInNewTab })}
+						onChange={() =>
+							setAttributes({ openInNewTab: !openInNewTab })
+						}
 					/>
 				</PanelBody>
 				<PanelBody title={__('Styles')}>
@@ -178,14 +186,13 @@ export default function Edit({ attributes, setAttributes }) {
 						<Placeholder
 							icon={share}
 							label={__('Social Links')}
-							instructions={__('Add social links in the Person settings to display them here.')}
+							instructions={__(
+								'Add social links in the Person settings to display them here.',
+							)}
 						/>
 					)}
 					LoadingResponsePlaceholder={() => (
-						<Placeholder
-							icon={share}
-							label={__('Social Links')}
-						>
+						<Placeholder icon={share} label={__('Social Links')}>
 							<Spinner />
 						</Placeholder>
 					)}
