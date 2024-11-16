@@ -231,7 +231,7 @@ add_action( 'init', __NAMESPACE__ . '\register_people_meta' );
  */
 function update_title_from_name( $meta_id, $post_id, $meta_key, $meta_value ) {
 	// Only proceed if we're updating first or last name.
-	if ( ! in_array( $meta_key, array( 'wp_peeps_first_name', 'wp_peeps_last_name' ), true ) ) {
+	if ( ! in_array( $meta_key, array( 'wp_peeps_first_name', 'wp_peeps_middle_name', 'wp_peeps_last_name' ), true ) ) {
 		return;
 	}
 
@@ -245,10 +245,11 @@ function update_title_from_name( $meta_id, $post_id, $meta_key, $meta_value ) {
 	try {
 		// Get both names.
 		$first_name = get_post_meta( $post_id, 'wp_peeps_first_name', true );
+		$middle_name = get_post_meta( $post_id, 'wp_peeps_middle_name', true );
 		$last_name  = get_post_meta( $post_id, 'wp_peeps_last_name', true );
 
 		// Build the full name.
-		$full_name = trim( sprintf( '%s %s', $first_name, $last_name ) );
+		$full_name = trim( sprintf( '%s %s %s', $first_name, $middle_name, $last_name ) );
 
 		if ( empty( $full_name ) ) {
 			error_log( sprintf( 'WP Peeps: Empty full name for post %d', $post_id ) );
