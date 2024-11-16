@@ -1,6 +1,9 @@
 // Constants and configurations
 const REQUIRED_FIELD_ERROR = __('This field is required', 'wp-peeps');
-const EMAIL_VALIDATION_ERROR = __('Please enter a valid email address', 'wp-peeps');
+const EMAIL_VALIDATION_ERROR = __(
+	'Please enter a valid email address',
+	'wp-peeps',
+);
 const URL_VALIDATION_ERROR = __('Please enter a valid URL', 'wp-peeps');
 
 const NAME_FIELDS = {
@@ -9,7 +12,7 @@ const NAME_FIELDS = {
 	LAST_NAME: 'wp_peeps_last_name',
 	JOB_TITLE: 'wp_peeps_job_title',
 	PHONE: 'wp_peeps_phone',
-	EMAIL: 'wp_peeps_email'
+	EMAIL: 'wp_peeps_email',
 };
 
 const PLATFORM_PATTERNS = {
@@ -50,7 +53,7 @@ const PLATFORM_PATTERNS = {
 	whatsapp: /(?:whatsapp\.com|wa\.me)/i,
 	wordpress: /(?:wordpress\.org|wordpress\.com)/i,
 	yelp: /yelp\./i,
-	youtube: /(?:youtube\.com|youtu\.be)/i
+	youtube: /(?:youtube\.com|youtu\.be)/i,
 };
 
 /**
@@ -82,19 +85,21 @@ const isValidUrl = (url) => {
 /**
  * Formats a phone number according to the site's format.
  *
- * @param {string} value The phone number to format.
+ * @param {string} value  The phone number to format.
  * @param {string} format The format template.
  * @return {string} The formatted phone number.
  */
 const formatPhoneNumber = (value, format) => {
-	if (!value) return '';
+	if (!value) {
+		return '';
+	}
 
 	// Strip all non-digits
 	const digits = value.replace(/\D/g, '');
-	
+
 	// Get the format template
 	let formatted = format;
-	
+
 	// Replace each # with a digit
 	for (let i = 0; i < digits.length && i < 10; i++) {
 		formatted = formatted.replace('#', digits[i]);
@@ -113,7 +118,7 @@ const formatPhoneNumber = (value, format) => {
 const detectPlatform = (url) => {
 	try {
 		const urlObj = new URL(url);
-		
+
 		for (const [platform, pattern] of Object.entries(PLATFORM_PATTERNS)) {
 			if (pattern.test(urlObj.hostname) || pattern.test(url)) {
 				return platform;
@@ -142,10 +147,15 @@ const createSlug = (str) => {
 import { __ } from '@wordpress/i18n';
 import { registerPlugin } from '@wordpress/plugins';
 import { PluginDocumentSettingPanel } from '@wordpress/editor';
-import { TextControl, Button, Flex, FlexItem, Icon } from '@wordpress/components';
+import {
+	TextControl,
+	Button,
+	Flex,
+	FlexItem,
+	Icon,
+} from '@wordpress/components';
 import { useEffect, useState } from '@wordpress/element';
-import { dispatch } from '@wordpress/data';
-import { useSelect } from '@wordpress/data';
+import { dispatch, useSelect } from '@wordpress/data';
 import { store as coreStore, useEntityProp } from '@wordpress/core-data';
 import { dragHandle } from '@wordpress/icons';
 
@@ -157,22 +167,31 @@ import './style.scss';
 
 function PersonDetailsPanel() {
 	// Check if we're on the people post type
-	const postType = useSelect(select => select('core/editor').getCurrentPostType(), []);
+	const postType = useSelect(
+		(select) => select('core/editor').getCurrentPostType(),
+		[],
+	);
 	if (postType !== 'wp_peeps_people') {
 		return null;
 	}
 
-
-	const [meta, setMeta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
+	const [meta, setMeta] = useEntityProp(
+		'postType',
+		'wp_peeps_people',
+		'meta',
+	);
 	const [, setTitle] = useEntityProp('postType', 'wp_peeps_people', 'title');
 	const [, setSlug] = useEntityProp('postType', 'wp_peeps_people', 'slug');
 	const [errors, setErrors] = useState({});
-	
-	const { lockPostSaving, unlockPostSaving, editPost } = dispatch('core/editor');
+
+	const { lockPostSaving, unlockPostSaving, editPost } =
+		dispatch('core/editor');
 
 	// Get phone format from settings
 	const phoneFormat = useSelect(
-		(select) => select(coreStore).getEntityRecord('root', 'site')?.wp_peeps_phone_format || '(###) ###-####'
+		(select) =>
+			select(coreStore).getEntityRecord('root', 'site')
+				?.wp_peeps_phone_format || '(###) ###-####',
 	);
 
 	const handleMetaChange = (field, value) => {
@@ -202,7 +221,10 @@ function PersonDetailsPanel() {
 		}
 
 		// Email validation
-		if (meta?.[NAME_FIELDS.EMAIL] && !isValidEmail(meta[NAME_FIELDS.EMAIL])) {
+		if (
+			meta?.[NAME_FIELDS.EMAIL] &&
+			!isValidEmail(meta[NAME_FIELDS.EMAIL])
+		) {
 			newErrors[NAME_FIELDS.EMAIL] = EMAIL_VALIDATION_ERROR;
 		}
 
@@ -211,10 +233,12 @@ function PersonDetailsPanel() {
 	};
 
 	useEffect(() => {
-		if (!meta) return;
+		if (!meta) {
+			return;
+		}
 
 		const isValid = validateFields();
-		
+
 		if (!isValid) {
 			lockPostSaving('requiredNameFields');
 			return;
@@ -227,7 +251,9 @@ function PersonDetailsPanel() {
 		const lastName = meta[NAME_FIELDS.LAST_NAME]?.trim() || '';
 
 		// Create the full name
-		const fullName = [firstName, middleName, lastName].filter(Boolean).join(' ');
+		const fullName = [firstName, middleName, lastName]
+			.filter(Boolean)
+			.join(' ');
 
 		// Update title and slug
 		setTitle(fullName);
@@ -236,7 +262,7 @@ function PersonDetailsPanel() {
 	}, [
 		meta?.[NAME_FIELDS.FIRST_NAME],
 		meta?.[NAME_FIELDS.MIDDLE_NAME],
-		meta?.[NAME_FIELDS.LAST_NAME]
+		meta?.[NAME_FIELDS.LAST_NAME],
 	]);
 
 	return (
@@ -250,19 +276,27 @@ function PersonDetailsPanel() {
 				<TextControl
 					label={__('First Name', 'wp-peeps') + ' *'}
 					value={meta?.[NAME_FIELDS.FIRST_NAME] || ''}
-					onChange={(value) => handleMetaChange(NAME_FIELDS.FIRST_NAME, value)}
+					onChange={(value) =>
+						handleMetaChange(NAME_FIELDS.FIRST_NAME, value)
+					}
 					help={errors[NAME_FIELDS.FIRST_NAME] || ''}
-					className={errors[NAME_FIELDS.FIRST_NAME] ? 'has-error' : ''}
+					className={
+						errors[NAME_FIELDS.FIRST_NAME] ? 'has-error' : ''
+					}
 				/>
 				<TextControl
 					label={__('Middle Name', 'wp-peeps')}
 					value={meta?.[NAME_FIELDS.MIDDLE_NAME] || ''}
-					onChange={(value) => handleMetaChange(NAME_FIELDS.MIDDLE_NAME, value)}
+					onChange={(value) =>
+						handleMetaChange(NAME_FIELDS.MIDDLE_NAME, value)
+					}
 				/>
 				<TextControl
 					label={__('Last Name', 'wp-peeps') + ' *'}
 					value={meta?.[NAME_FIELDS.LAST_NAME] || ''}
-					onChange={(value) => handleMetaChange(NAME_FIELDS.LAST_NAME, value)}
+					onChange={(value) =>
+						handleMetaChange(NAME_FIELDS.LAST_NAME, value)
+					}
 					help={errors[NAME_FIELDS.LAST_NAME] || ''}
 					className={errors[NAME_FIELDS.LAST_NAME] ? 'has-error' : ''}
 				/>
@@ -276,12 +310,23 @@ function PersonDetailsPanel() {
 				<TextControl
 					label={__('Job Title', 'wp-peeps')}
 					value={meta?.[NAME_FIELDS.JOB_TITLE] || ''}
-					onChange={(value) => handleMetaChange(NAME_FIELDS.JOB_TITLE, value)}
+					onChange={(value) =>
+						handleMetaChange(NAME_FIELDS.JOB_TITLE, value)
+					}
 				/>
 				<TextControl
 					label={__('Phone', 'wp-peeps')}
-					value={meta?.[NAME_FIELDS.PHONE] ? formatPhoneNumber(meta[NAME_FIELDS.PHONE], phoneFormat) : ''}
-					onChange={(value) => handleMetaChange(NAME_FIELDS.PHONE, value)}
+					value={
+						meta?.[NAME_FIELDS.PHONE]
+							? formatPhoneNumber(
+									meta[NAME_FIELDS.PHONE],
+									phoneFormat,
+								)
+							: ''
+					}
+					onChange={(value) =>
+						handleMetaChange(NAME_FIELDS.PHONE, value)
+					}
 					help={__('Enter 10 digit phone number', 'wp-peeps')}
 					type="tel"
 				/>
@@ -289,7 +334,9 @@ function PersonDetailsPanel() {
 					type="email"
 					label={__('Email', 'wp-peeps')}
 					value={meta?.[NAME_FIELDS.EMAIL] || ''}
-					onChange={(value) => handleMetaChange(NAME_FIELDS.EMAIL, value)}
+					onChange={(value) =>
+						handleMetaChange(NAME_FIELDS.EMAIL, value)
+					}
 					help={errors[NAME_FIELDS.EMAIL] || ''}
 					className={errors[NAME_FIELDS.EMAIL] ? 'has-error' : ''}
 				/>
@@ -300,12 +347,19 @@ function PersonDetailsPanel() {
 
 function SocialLinksPanel() {
 	// Check if we're on the people post type
-	const postType = useSelect(select => select('core/editor').getCurrentPostType(), []);
+	const postType = useSelect(
+		(select) => select('core/editor').getCurrentPostType(),
+		[],
+	);
 	if (postType !== 'wp_peeps_people') {
 		return null;
 	}
 
-	const [meta, setMeta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
+	const [meta, setMeta] = useEntityProp(
+		'postType',
+		'wp_peeps_people',
+		'meta',
+	);
 	const [newUrl, setNewUrl] = useState('');
 	const [urlError, setUrlError] = useState('');
 	const [draggedIndex, setDraggedIndex] = useState(null);
@@ -324,17 +378,19 @@ function SocialLinksPanel() {
 	/**
 	 * Handles drag over event
 	 *
-	 * @param {Event} e The drag event
+	 * @param {Event}  e     The drag event
 	 * @param {number} index The index of the target item
 	 */
 	const handleDragOver = (e, index) => {
 		e.preventDefault();
-		if (draggedIndex === null || draggedIndex === index) return;
+		if (draggedIndex === null || draggedIndex === index) {
+			return;
+		}
 
 		const updatedLinks = [...socialLinks];
 		const [draggedItem] = updatedLinks.splice(draggedIndex, 1);
 		updatedLinks.splice(index, 0, draggedItem);
-		
+
 		updateSocialLinks(updatedLinks);
 		setDraggedIndex(index);
 	};
@@ -367,11 +423,11 @@ function SocialLinksPanel() {
 		}
 
 		const platform = detectPlatform(newUrl);
-		
+
 		// Add the new link
 		const updatedLinks = [...socialLinks, { platform, url: newUrl }];
 		updateSocialLinks(updatedLinks);
-		
+
 		// Reset form
 		setNewUrl('');
 		setUrlError('');
@@ -390,7 +446,7 @@ function SocialLinksPanel() {
 	/**
 	 * Renders a single social link item
 	 *
-	 * @param {Object} link The social link object
+	 * @param {Object} link  The social link object
 	 * @param {number} index The index of the link
 	 * @return {JSX.Element} The rendered social link item
 	 */
@@ -406,7 +462,7 @@ function SocialLinksPanel() {
 			onDragOver={(e) => handleDragOver(e, index)}
 			onDragEnd={() => setDraggedIndex(null)}
 		>
-			<FlexItem >
+			<FlexItem>
 				<Icon icon={dragHandle} />
 			</FlexItem>
 			<FlexItem style={{ flex: 1 }}>
@@ -438,7 +494,7 @@ function SocialLinksPanel() {
 			className="wp-peeps-social-links"
 		>
 			{socialLinks.map(renderSocialLinkItem)}
-			
+
 			<Flex align="flex-end" gap={4} className="add-social-link">
 				<FlexItem style={{ flex: 1 }}>
 					<TextControl

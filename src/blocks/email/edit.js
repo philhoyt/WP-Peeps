@@ -1,34 +1,44 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls, BlockControls } from '@wordpress/block-editor';
-import { PanelBody, ToggleControl, TextControl, ToolbarGroup, ToolbarDropdownMenu } from '@wordpress/components';
+import {
+	useBlockProps,
+	InspectorControls,
+	BlockControls,
+} from '@wordpress/block-editor';
+import {
+	PanelBody,
+	ToggleControl,
+	TextControl,
+	ToolbarGroup,
+	ToolbarDropdownMenu,
+} from '@wordpress/components';
 import { useEntityProp } from '@wordpress/core-data';
 import { paragraph, grid, tag } from '@wordpress/icons';
 
 const HTML_TAGS = [
-	{ 
-		title: __('Paragraph', 'wp-peeps'), 
+	{
+		title: __('Paragraph', 'wp-peeps'),
 		value: 'p',
 		icon: paragraph,
 	},
-	{ 
-		title: __('Div', 'wp-peeps'), 
+	{
+		title: __('Div', 'wp-peeps'),
 		value: 'div',
 		icon: grid,
 	},
-	{ 
-		title: __('Span', 'wp-peeps'), 
+	{
+		title: __('Span', 'wp-peeps'),
 		value: 'span',
 		icon: tag,
 	},
 ];
 
 /**
- * Email block edit component.
+ * Email block edit function.
  *
- * @param {Object} props               Block props.
- * @param {Object} props.attributes    Block attributes.
+ * @param {Object}   props               Block props.
+ * @param {Object}   props.attributes    Block attributes.
  * @param {Function} props.setAttributes Function to set block attributes.
- * @return {WPElement} Element to render.
+ * @return {JSX.Element}              The edit component.
  */
 export default function Edit({ attributes, setAttributes }) {
 	const { tagName, makeLink, prefix, textAlign } = attributes;
@@ -43,9 +53,12 @@ export default function Edit({ attributes, setAttributes }) {
 	const TagName = tagName;
 
 	// Create content elements
-	const emailLink = email && email !== 'name@domain.com' ? (
-		<a href={`mailto:${email}`}>{email}</a>
-	) : email;
+	const emailLink =
+		email && email !== 'name@domain.com' ? (
+			<a href={`mailto:${email}`}>{email}</a>
+		) : (
+			email
+		);
 
 	const content = (
 		<>
@@ -55,7 +68,7 @@ export default function Edit({ attributes, setAttributes }) {
 	);
 
 	// Get current tag info
-	const currentTag = HTML_TAGS.find(tag => tag.value === tagName);
+	const currentTag = HTML_TAGS.find((tag) => tag.value === tagName);
 
 	return (
 		<>
@@ -87,9 +100,7 @@ export default function Edit({ attributes, setAttributes }) {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<TagName {...blockProps}>
-				{content}
-			</TagName>
+			<TagName {...blockProps}>{content}</TagName>
 		</>
 	);
 }

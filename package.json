@@ -22,7 +22,13 @@
 		"src"
 	],
 	"devDependencies": {
+		"@wordpress/eslint-plugin": "^21.4.0",
 		"@wordpress/scripts": "^30.4.0",
+		"@wordpress/stylelint-config": "^23.3.0",
+		"eslint": "^8.57.1",
+		"prettier": "^3.3.3",
+		"stylelint": "^16.10.0",
+		"stylelint-scss": "^6.9.0",
 		"webpack-remove-empty-scripts": "^1.0.4"
 	},
 	"dependencies": {
@@ -34,6 +40,7 @@
 		"@wordpress/editor": "^13.0.0",
 		"@wordpress/element": "^5.0.0",
 		"@wordpress/i18n": "^4.0.0",
+		"@wordpress/icons": "^10.11.0",
 		"@wordpress/plugins": "^6.0.0"
 	}
 }
