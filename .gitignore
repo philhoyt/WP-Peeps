@@ -32,6 +32,10 @@ node_modules/
 # Composer dependencies
 /vendor/
 
+# Build directory
+build/
+dist/
+
 # VS Code settings
 .vscode
 .editorconfig
