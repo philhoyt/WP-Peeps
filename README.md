@@ -68,6 +68,25 @@ This will create test profiles with:
 -   Random job titles
 -   2-4 random social media links
 
+#### Available Scripts
+
+-   `npm start` - Starts the development build process with hot reloading
+-   `npm run build` - Creates a production build
+-   `npm run format` - Formats JavaScript files using Prettier
+-   `npm run lint:css` - Lints CSS/SCSS files
+-   `npm run lint:js` - Lints JavaScript files
+-   `npm run plugin-zip` - Creates a distributable plugin zip file
+
+#### Testing
+
+To generate test data for development:
+
+```bash
+wp eval-file wp-content/plugins/wp-peeps/bin/generate-test-data.php 20
+```
+
+This will create 20 test people profiles in your WordPress installation.
+
 ## Changelog
 
 ### 0.1.0-beta.1
