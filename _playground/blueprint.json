@@ -1,0 +1,21 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"landingPage": "/wp-admin/edit.php?post_type=wp_peeps_people",
+	"login": true,
+	"steps": [
+	  {
+		"step": "setSiteOptions",
+		"options": {
+		  "blogname": "WP Peeps 0.1.0"
+		}
+	  },
+	  {
+		"step": "installPlugin",
+		"pluginData": {
+		  "resource": "url",
+		  "url": "https://github-proxy.com/proxy/?repo=philhoyt/WP-Peeps&branch=main"
+		}
+	  }
+	]
+  }
+  
