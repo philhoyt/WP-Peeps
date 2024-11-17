@@ -5,6 +5,13 @@
  * @package WP_Peeps
  */
 
+namespace WP_Peeps\Inc;
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Initialize blocks
  *
@@ -12,8 +19,7 @@
  *
  * @return void
  */
-add_action( 'init', 'wp_peeps_init' );
-function wp_peeps_init() {
+function resgister_blocks() {
 	// Register the full name block.
 	register_block_type(
 		WP_PEEPS_PLUGIN_DIR . 'build/blocks/full-name',
@@ -46,3 +52,4 @@ function wp_peeps_init() {
 		)
 	);
 }
+add_action( 'init', __NAMESPACE__ . '\resgister_blocks' );
