@@ -4,8 +4,12 @@
  *
  * @package WP_Peeps
  */
+namespace WP_Peeps\Inc;
 
-add_action( 'admin_notices', 'wp_peeps_admin_notices' );
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Display admin notices
@@ -14,7 +18,7 @@ add_action( 'admin_notices', 'wp_peeps_admin_notices' );
  *
  * @return void
  */
-function wp_peeps_admin_notices() {
+function admin_notices() {
 	if ( get_transient( 'wp_peeps_show_permalink_notice' ) ) {
 		?>
 		<div class="notice notice-warning is-dismissible">
@@ -33,3 +37,4 @@ function wp_peeps_admin_notices() {
 		delete_transient( 'wp_peeps_show_permalink_notice' );
 	}
 }
+add_action( 'admin_notices', __NAMESPACE__ . '\admin_notices' );
