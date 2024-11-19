@@ -112,6 +112,7 @@ function register_people_meta() {
 			'show_in_rest'      => true,
 			'single'            => true,
 			'type'              => 'string',
+			'label'             => __( 'First Name', 'wp-peeps' ),
 			'sanitize_callback' => 'sanitize_text_field',
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
@@ -126,6 +127,7 @@ function register_people_meta() {
 			'show_in_rest'      => true,
 			'single'            => true,
 			'type'              => 'string',
+			'label'             => __( 'Middle Name', 'wp-peeps' ),
 			'sanitize_callback' => 'sanitize_text_field',
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
@@ -140,6 +142,7 @@ function register_people_meta() {
 			'show_in_rest'      => true,
 			'single'            => true,
 			'type'              => 'string',
+			'label'             => __( 'Last Name', 'wp-peeps' ),
 			'sanitize_callback' => 'sanitize_text_field',
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
@@ -154,6 +157,7 @@ function register_people_meta() {
 			'show_in_rest'      => true,
 			'single'            => true,
 			'type'              => 'string',
+			'label'             => __( 'Job Title', 'wp-peeps' ),
 			'sanitize_callback' => 'sanitize_text_field',
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
@@ -168,6 +172,7 @@ function register_people_meta() {
 			'show_in_rest'      => true,
 			'single'            => true,
 			'type'              => 'string',
+			'label'             => __( 'Phone Number', 'wp-peeps' ),
 			'sanitize_callback' => __NAMESPACE__ . '\validate_phone',
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
@@ -182,6 +187,7 @@ function register_people_meta() {
 			'show_in_rest'      => true,
 			'single'            => true,
 			'type'              => 'string',
+			'label'             => __( 'Email Address', 'wp-peeps' ),
 			'sanitize_callback' => __NAMESPACE__ . '\validate_email',
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
@@ -211,6 +217,7 @@ function register_people_meta() {
 			),
 			'single'            => true,
 			'type'              => 'array',
+			'label'             => __( 'Social Links', 'wp-peeps' ),
 			'sanitize_callback' => __NAMESPACE__ . '\validate_social_links',
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
