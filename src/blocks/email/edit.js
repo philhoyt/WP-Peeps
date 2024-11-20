@@ -88,15 +88,31 @@ export default function Edit({ attributes, setAttributes }) {
 			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'wp-peeps')}>
-					<ToggleControl
-						label={__('Make email clickable', 'wp-peeps')}
-						checked={makeLink}
-						onChange={() => setAttributes({ makeLink: !makeLink })}
-					/>
 					<TextControl
 						label={__('Prefix text', 'wp-peeps')}
 						value={prefix}
 						onChange={(value) => setAttributes({ prefix: value })}
+						placeholder={__('e.g., Phone:', 'wp-peeps')}
+						help={__(
+							'Text to display before the email address.',
+							'wp-peeps',
+						)}
+					/>
+					<ToggleControl
+						label={__('Make email clickable', 'wp-peeps')}
+						checked={makeLink}
+						onChange={() => setAttributes({ makeLink: !makeLink })}
+						help={
+							makeLink
+								? __(
+										'Email address will be clickable',
+										'wp-peeps',
+									)
+								: __(
+										'Email address will be plain text',
+										'wp-peeps',
+									)
+						}
 					/>
 				</PanelBody>
 			</InspectorControls>
