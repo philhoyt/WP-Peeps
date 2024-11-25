@@ -63,21 +63,26 @@ function wp_peeps_render_social_links_block( $attributes ) {
  * @return array Array of social links.
  */
 function wp_peeps_get_social_links() {
-	// Check if we're in a post context
-	$post_id = get_the_ID();
-	
-	// If we're not in a post context (e.g., site editor) or don't have permission
-	if ( empty( $post_id ) || ! current_user_can( 'read_post', $post_id ) ) {
-		return DEFAULT_SOCIAL_LINKS;
-	}
-
 	// Get social links from post meta
+	$post_id = get_the_ID();
 	$social_links = get_post_meta( $post_id, 'wp_peeps_social_links', true );
 	
-	// Return default links if meta is empty or invalid
+	// Check if we're in the editor context
+	$is_editor = is_admin() || 
+		( defined( 'REST_REQUEST' ) && REST_REQUEST ) || 
+		( function_exists( 'wp_is_block_theme' ) && wp_is_block_theme() && is_admin() );
+	
+	// In editor context, return default links if no social links exist
+	if ( $is_editor ) {
+		return ( ! empty( $social_links ) && is_array( $social_links ) ) 
+			? $social_links 
+			: DEFAULT_SOCIAL_LINKS;
+	}
+
+	// On frontend, only return actual social links or empty array
 	return ( ! empty( $social_links ) && is_array( $social_links ) ) 
 		? $social_links 
-		: DEFAULT_SOCIAL_LINKS;
+		: [];
 }
 
 /**
