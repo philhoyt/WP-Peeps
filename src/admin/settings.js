@@ -65,7 +65,9 @@ function SettingsPage() {
 				setShowRewriteNotice(true);
 			}
 		} catch (err) {
-			setError(err?.message || 'Failed to save settings. Please try again.');
+			setError(
+				err?.message || 'Failed to save settings. Please try again.',
+			);
 		}
 	};
 
@@ -161,10 +163,7 @@ function SettingsPage() {
 											>
 												people
 											</button>
-											{__(
-												'"',
-												'wp-peeps',
-											)} .
+											{__('"', 'wp-peeps')} .
 										</>
 									}
 									value={

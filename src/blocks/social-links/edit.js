@@ -73,8 +73,11 @@ export default function Edit({ attributes, setAttributes }) {
 	const { isSaving, isDirty } = useSelect((select) => {
 		const coreEditor = select('core/editor');
 		return {
-			isSaving: select('core').isSavingEntityRecord('postType', 'wp_peeps_people'),
-			isDirty: coreEditor ? coreEditor.isEditedPostDirty() : false
+			isSaving: select('core').isSavingEntityRecord(
+				'postType',
+				'wp_peeps_people',
+			),
+			isDirty: coreEditor ? coreEditor.isEditedPostDirty() : false,
 		};
 	}, []);
 
@@ -167,8 +170,8 @@ export default function Edit({ attributes, setAttributes }) {
 						{
 							value: iconColorValue,
 							onChange: (color) => {
-								setAttributes({ 
-									iconColorValue: color 
+								setAttributes({
+									iconColorValue: color,
 								});
 							},
 							label: __('Icon color'),
@@ -176,8 +179,8 @@ export default function Edit({ attributes, setAttributes }) {
 						{
 							value: iconBackgroundColorValue,
 							onChange: (color) => {
-								setAttributes({ 
-									iconBackgroundColorValue: color 
+								setAttributes({
+									iconBackgroundColorValue: color,
 								});
 							},
 							label: __('Icon background'),

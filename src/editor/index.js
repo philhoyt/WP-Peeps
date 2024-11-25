@@ -172,35 +172,46 @@ function PersonDetailsPanel() {
 		[],
 	);
 
-	const [meta, setMeta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
+	const [meta, setMeta] = useEntityProp(
+		'postType',
+		'wp_peeps_people',
+		'meta',
+	);
 	const [, setTitle] = useEntityProp('postType', 'wp_peeps_people', 'title');
 	const [, setSlug] = useEntityProp('postType', 'wp_peeps_people', 'slug');
 	const [errors, setErrors] = useState({});
 
-	const { lockPostSaving, unlockPostSaving, editPost } = dispatch('core/editor');
+	const { lockPostSaving, unlockPostSaving, editPost } =
+		dispatch('core/editor');
 
 	// Get phone format from settings
 	const phoneFormat = useSelect(
 		(select) =>
-			select(coreStore).getEntityRecord('root', 'site')?.wp_peeps_phone_format || '(###) ###-####',
+			select(coreStore).getEntityRecord('root', 'site')
+				?.wp_peeps_phone_format || '(###) ###-####',
 		[],
 	);
 
 	// Move this outside of the component if possible, or memoize if it needs component scope
-	const handleMetaChange = useCallback((field, value) => {
-		setMeta({
-			...meta,
-			[field]: value,
-		});
+	const handleMetaChange = useCallback(
+		(field, value) => {
+			setMeta({
+				...meta,
+				[field]: value,
+			});
 
-		// Clear error for this field
-		setErrors((prevErrors) =>
-			prevErrors[field] ? {
-				...prevErrors,
-				[field]: null,
-			} : prevErrors
-		);
-	}, [meta, setMeta]);
+			// Clear error for this field
+			setErrors((prevErrors) =>
+				prevErrors[field]
+					? {
+							...prevErrors,
+							[field]: null,
+						}
+					: prevErrors,
+			);
+		},
+		[meta, setMeta],
+	);
 
 	const validateFields = useCallback(() => {
 		const newErrors = {};
@@ -214,7 +225,10 @@ function PersonDetailsPanel() {
 		}
 
 		// Email validation
-		if (meta?.[NAME_FIELDS.EMAIL] && !isValidEmail(meta[NAME_FIELDS.EMAIL])) {
+		if (
+			meta?.[NAME_FIELDS.EMAIL] &&
+			!isValidEmail(meta[NAME_FIELDS.EMAIL])
+		) {
 			newErrors[NAME_FIELDS.EMAIL] = EMAIL_VALIDATION_ERROR;
 		}
 
@@ -348,37 +362,50 @@ function SocialLinksPanel() {
 		[],
 	);
 
-	const [meta, setMeta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
+	const [meta, setMeta] = useEntityProp(
+		'postType',
+		'wp_peeps_people',
+		'meta',
+	);
 	const [newUrl, setNewUrl] = useState('');
 	const [urlError, setUrlError] = useState('');
 	const [draggedIndex, setDraggedIndex] = useState(null);
 
-	const socialLinks = useMemo(() => meta?.wp_peeps_social_links || [], [meta]);
+	const socialLinks = useMemo(
+		() => meta?.wp_peeps_social_links || [],
+		[meta],
+	);
 
 	const handleDragStart = useCallback((index) => {
 		setDraggedIndex(index);
 	}, []);
 
-	const updateSocialLinks = useCallback((links) => {
-		setMeta({
-			...meta,
-			wp_peeps_social_links: links,
-		});
-	}, [meta, setMeta]);
+	const updateSocialLinks = useCallback(
+		(links) => {
+			setMeta({
+				...meta,
+				wp_peeps_social_links: links,
+			});
+		},
+		[meta, setMeta],
+	);
 
-	const handleDragOver = useCallback((e, index) => {
-		e.preventDefault();
-		if (draggedIndex === null || draggedIndex === index) {
-			return;
-		}
+	const handleDragOver = useCallback(
+		(e, index) => {
+			e.preventDefault();
+			if (draggedIndex === null || draggedIndex === index) {
+				return;
+			}
 
-		const updatedLinks = [...socialLinks];
-		const [draggedItem] = updatedLinks.splice(draggedIndex, 1);
-		updatedLinks.splice(index, 0, draggedItem);
+			const updatedLinks = [...socialLinks];
+			const [draggedItem] = updatedLinks.splice(draggedIndex, 1);
+			updatedLinks.splice(index, 0, draggedItem);
 
-		updateSocialLinks(updatedLinks);
-		setDraggedIndex(index);
-	}, [draggedIndex, socialLinks, updateSocialLinks]);
+			updateSocialLinks(updatedLinks);
+			setDraggedIndex(index);
+		},
+		[draggedIndex, socialLinks, updateSocialLinks],
+	);
 
 	const handleAddLink = useCallback(() => {
 		if (!newUrl) {
@@ -403,47 +430,60 @@ function SocialLinksPanel() {
 		setUrlError('');
 	}, [newUrl, socialLinks, updateSocialLinks]);
 
-	const handleRemoveLink = useCallback((index) => {
-		const updatedLinks = socialLinks.filter((_, i) => i !== index);
-		updateSocialLinks(updatedLinks);
-	}, [socialLinks, updateSocialLinks]);
+	const handleRemoveLink = useCallback(
+		(index) => {
+			const updatedLinks = socialLinks.filter((_, i) => i !== index);
+			updateSocialLinks(updatedLinks);
+		},
+		[socialLinks, updateSocialLinks],
+	);
 
-	const renderSocialLinkItem = useCallback((link, index) => (
-		<Flex
-			key={index}
-			align="center"
-			gap={4}
-			className={`social-link-item ${draggedIndex === index ? 'is-dragging' : ''}`}
-			style={{ cursor: 'grab' }}
-			draggable
-			onDragStart={() => handleDragStart(index)}
-			onDragOver={(e) => handleDragOver(e, index)}
-			onDragEnd={() => setDraggedIndex(null)}
-		>
-			<FlexItem>
-				<Icon icon={dragHandle} />
-			</FlexItem>
-			<FlexItem style={{ flex: 1 }}>
-				<TextControl
-					value={link.url}
-					onChange={(url) => {
-						const platform = detectPlatform(url);
-						const updatedLinks = [...socialLinks];
-						updatedLinks[index] = { platform, url };
-						updateSocialLinks(updatedLinks);
-					}}
-				/>
-			</FlexItem>
-			<FlexItem>
-				<Button
-					isDestructive
-					onClick={() => handleRemoveLink(index)}
-					icon="no-alt"
-					label={__('Remove social link', 'wp-peeps')}
-				/>
-			</FlexItem>
-		</Flex>
-	), [draggedIndex, handleDragStart, handleDragOver, socialLinks, updateSocialLinks, handleRemoveLink]);
+	const renderSocialLinkItem = useCallback(
+		(link, index) => (
+			<Flex
+				key={index}
+				align="center"
+				gap={4}
+				className={`social-link-item ${draggedIndex === index ? 'is-dragging' : ''}`}
+				style={{ cursor: 'grab' }}
+				draggable
+				onDragStart={() => handleDragStart(index)}
+				onDragOver={(e) => handleDragOver(e, index)}
+				onDragEnd={() => setDraggedIndex(null)}
+			>
+				<FlexItem>
+					<Icon icon={dragHandle} />
+				</FlexItem>
+				<FlexItem style={{ flex: 1 }}>
+					<TextControl
+						value={link.url}
+						onChange={(url) => {
+							const platform = detectPlatform(url);
+							const updatedLinks = [...socialLinks];
+							updatedLinks[index] = { platform, url };
+							updateSocialLinks(updatedLinks);
+						}}
+					/>
+				</FlexItem>
+				<FlexItem>
+					<Button
+						isDestructive
+						onClick={() => handleRemoveLink(index)}
+						icon="no-alt"
+						label={__('Remove social link', 'wp-peeps')}
+					/>
+				</FlexItem>
+			</Flex>
+		),
+		[
+			draggedIndex,
+			handleDragStart,
+			handleDragOver,
+			socialLinks,
+			updateSocialLinks,
+			handleRemoveLink,
+		],
+	);
 
 	if (postType !== 'wp_peeps_people') {
 		return null;
