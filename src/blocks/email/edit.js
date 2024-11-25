@@ -77,12 +77,15 @@ export default function Edit({ attributes, setAttributes }) {
 					<ToolbarDropdownMenu
 						icon={currentTag?.icon}
 						label={__('HTML element', 'wp-peeps')}
-						controls={HTML_TAGS.map(({ title, value, icon: tagIcon }) => ({
-							title,
-							icon: tagIcon,
-							isActive: tagName === value,
-							onClick: () => setAttributes({ tagName: value }),
-						}))}
+						controls={HTML_TAGS.map(
+							({ title, value, icon: tagIcon }) => ({
+								title,
+								icon: tagIcon,
+								isActive: tagName === value,
+								onClick: () =>
+									setAttributes({ tagName: value }),
+							}),
+						)}
 					/>
 				</ToolbarGroup>
 			</BlockControls>
