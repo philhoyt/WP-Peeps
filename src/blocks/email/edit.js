@@ -95,7 +95,7 @@ export default function Edit({ attributes, setAttributes }) {
 						label={__('Prefix text', 'wp-peeps')}
 						value={prefix}
 						onChange={(value) => setAttributes({ prefix: value })}
-						placeholder={__('e.g., Phone:', 'wp-peeps')}
+						placeholder={__('e.g., Email:', 'wp-peeps')}
 						help={__(
 							'Text to display before the email address.',
 							'wp-peeps',
