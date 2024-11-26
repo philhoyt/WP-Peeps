@@ -29,6 +29,11 @@ function wp_peeps_render_social_links_block( $attributes ) {
 	// Get social links based on context
 	$social_links = wp_peeps_get_social_links();
 	
+	// Don't render anything on frontend if no social links exist
+	if ( empty( $social_links ) ) {
+		return '';
+	}
+	
 	// Extract and sanitize block attributes
 	$block_attrs = wp_peeps_get_social_block_attributes( $attributes );
 	
@@ -60,7 +65,7 @@ function wp_peeps_render_social_links_block( $attributes ) {
 /**
  * Get social links based on context.
  *
- * @return array Array of social links.
+ * @return array|null Array of social links or null if no links exist on frontend.
  */
 function wp_peeps_get_social_links() {
 	// Get social links from post meta
@@ -68,9 +73,7 @@ function wp_peeps_get_social_links() {
 	$social_links = get_post_meta( $post_id, 'wp_peeps_social_links', true );
 	
 	// Check if we're in the editor context
-	$is_editor = is_admin() || 
-		( defined( 'REST_REQUEST' ) && REST_REQUEST ) || 
-		( function_exists( 'wp_is_block_theme' ) && wp_is_block_theme() && is_admin() );
+	$is_editor = is_admin();
 	
 	// In editor context, return default links if no social links exist
 	if ( $is_editor ) {
@@ -79,10 +82,10 @@ function wp_peeps_get_social_links() {
 			: DEFAULT_SOCIAL_LINKS;
 	}
 
-	// On frontend, only return actual social links or empty array
+	// On frontend, only return actual social links or null
 	return ( ! empty( $social_links ) && is_array( $social_links ) ) 
 		? $social_links 
-		: [];
+		: null;
 }
 
 /**
