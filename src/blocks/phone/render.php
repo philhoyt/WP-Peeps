@@ -5,11 +5,10 @@
  * @package WP_Peeps
  * @since 0.1.0
  *
- * @param array  $attributes The block attributes.
- * @param string $content    The block default content.
- * @return string           The block HTML.
+ * @param array $attributes The block attributes.
+ * @return string          The block HTML.
  */
-function wp_peeps_render_phone_block( $attributes, $content ) {
+function wp_peeps_render_phone_block( $attributes ) {
 	$post_id = get_the_ID();
 
 	// Bail early if no post ID or user can't read the post
