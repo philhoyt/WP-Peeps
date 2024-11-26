@@ -15,9 +15,19 @@ function wp_peeps_render_email_block( $attributes, $content ) {
 		return '';
 	}
 
-	// Get and sanitize email
+	// Get email from post meta
 	$email = get_post_meta( $post_id, 'wp_peeps_email', true );
-	if ( empty( $email ) ) {
+
+	// Check if we're in the editor context
+	$is_editor = is_admin();
+
+	// On frontend, return early if no email exists
+	if ( ! $is_editor && empty( $email ) ) {
+		return '';
+	}
+
+	// In editor context, use placeholder if no email exists
+	if ( $is_editor && empty( $email ) ) {
 		$email = 'name@domain.com';
 	}
 
