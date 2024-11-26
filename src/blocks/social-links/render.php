@@ -25,12 +25,19 @@ const DEFAULT_SOCIAL_LINKS = [
 	],
 ];
 
+/**
+ * Render the social links block.
+ *
+ * @param array $attributes The block attributes.
+ * @return string The rendered block content.
+ */
 function wp_peeps_render_social_links_block( $attributes ) {
 	// Get social links based on context
 	$social_links = wp_peeps_get_social_links();
 	
-	// Don't render anything on frontend if no social links exist
-	if ( empty( $social_links ) ) {
+	// Only return empty on frontend when no social links exist
+	$is_editor = defined( 'REST_REQUEST' ) && REST_REQUEST;
+	if ( empty( $social_links ) && ! $is_editor ) {
 		return '';
 	}
 	
@@ -58,7 +65,6 @@ function wp_peeps_render_social_links_block( $attributes ) {
 
 	// Parse and render the block
 	$parsed_blocks = parse_blocks( $block_content );
-
 	return ! empty( $parsed_blocks ) ? render_block( $parsed_blocks[0] ) : '';
 }
 
@@ -71,21 +77,23 @@ function wp_peeps_get_social_links() {
 	// Get social links from post meta
 	$post_id = get_the_ID();
 	$social_links = get_post_meta( $post_id, 'wp_peeps_social_links', true );
+	$has_social_links = ! empty( $social_links ) && is_array( $social_links );
 	
 	// Check if we're in the editor context
-	$is_editor = is_admin();
+	$is_editor = defined( 'REST_REQUEST' ) && REST_REQUEST;
 	
-	// In editor context, return default links if no social links exist
-	if ( $is_editor ) {
-		return ( ! empty( $social_links ) && is_array( $social_links ) ) 
-			? $social_links 
-			: DEFAULT_SOCIAL_LINKS;
+	// If we have social links, return them regardless of context
+	if ( $has_social_links ) {
+		return $social_links;
 	}
-
-	// On frontend, only return actual social links or null
-	return ( ! empty( $social_links ) && is_array( $social_links ) ) 
-		? $social_links 
-		: null;
+	
+	// If we're in editor and don't have social links, return defaults
+	if ( $is_editor ) {
+		return DEFAULT_SOCIAL_LINKS;
+	}
+	
+	// If we're on frontend and don't have social links, return null
+	return null;
 }
 
 /**

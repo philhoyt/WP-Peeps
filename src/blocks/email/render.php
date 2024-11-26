@@ -2,12 +2,10 @@
 /**
  * Render the email block on the front end.
  *
- * @param array    $attributes The block attributes.
- * @param string   $content    The block content.
- * @param WP_Block $block      The block instance.
+ * @param array $attributes The block attributes.
  * @return string Returns the block content.
  */
-function wp_peeps_render_email_block( $attributes, $content ) {
+function wp_peeps_render_email_block( $attributes ) {
 	$post_id = get_the_ID();
 
 	// Bail early if no post ID or user can't read the post
@@ -18,17 +16,9 @@ function wp_peeps_render_email_block( $attributes, $content ) {
 	// Get email from post meta
 	$email = get_post_meta( $post_id, 'wp_peeps_email', true );
 
-	// Check if we're in the editor context
-	$is_editor = is_admin();
-
-	// On frontend, return early if no email exists
-	if ( ! $is_editor && empty( $email ) ) {
+	// Return early if no email exists
+	if ( empty( $email ) ) {
 		return '';
-	}
-
-	// In editor context, use placeholder if no email exists
-	if ( $is_editor && empty( $email ) ) {
-		$email = 'name@domain.com';
 	}
 
 	// Get and sanitize attributes
@@ -50,7 +40,7 @@ function wp_peeps_render_email_block( $attributes, $content ) {
 		$email_content = $prefix . esc_html( $email );
 	}
 
-	// Build and return the final HTML
+	// Return the email wrapped in its HTML tag
 	return sprintf(
 		'<%1$s %2$s>%3$s</%1$s>',
 		$tag_name,
