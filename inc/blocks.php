@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @return void
  */
-function resgister_blocks() {
+function register_blocks() {
 	// Register the full name block.
 	register_block_type(
 		WP_PEEPS_PLUGIN_DIR . 'build/blocks/full-name',
@@ -52,4 +52,4 @@ function resgister_blocks() {
 		)
 	);
 }
-add_action( 'init', __NAMESPACE__ . '\resgister_blocks' );
+add_action( 'init', __NAMESPACE__ . '\register_blocks' );
