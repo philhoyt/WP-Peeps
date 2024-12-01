@@ -11,7 +11,8 @@ import {
 	ToolbarGroup,
 	ToolbarDropdownMenu,
 } from '@wordpress/components';
-import { useEntityProp } from '@wordpress/core-data';
+import { useEntityProp, store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
 import { paragraph, grid, tag } from '@wordpress/icons';
 
 // Allowed formats for the prefix field
@@ -49,17 +50,27 @@ const HTML_TAGS = [
  * @param {Object}   props.attributes    Block attributes.
  * @param {Function} props.setAttributes Function to set block attributes.
  * @param {boolean}  props.isSelected    Whether block is selected.
+ * @param {Object}   props.context       Block context.
  * @return {JSX.Element}              The edit component.
  */
-export default function Edit({ attributes, setAttributes, isSelected }) {
+export default function Edit({ attributes, setAttributes, isSelected, context }) {
 	const { tagName, makeLink, prefix, textAlign } = attributes;
+	const { postType, postId } = context;
+
 	const blockProps = useBlockProps({
 		className: textAlign ? `has-text-align-${textAlign}` : undefined,
 	});
 
-	// Get email from meta
-	const [meta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
-	const email = meta?.wp_peeps_email || 'name@domain.com';
+	// Get post data from context
+	const post = useSelect(
+		(select) => {
+			if (!postId) {return null;}
+			return select(coreStore).getEntityRecord('postType', postType || 'wp_peeps_people', postId);
+		},
+		[postId, postType]
+	);
+
+	const email = post?.meta?.wp_peeps_email || 'name@domain.com';
 
 	const TagName = tagName;
 

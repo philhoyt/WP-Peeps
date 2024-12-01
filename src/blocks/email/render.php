@@ -12,11 +12,12 @@
 /**
  * Render the Email block.
  *
- * @param array $attributes The block attributes containing email-related settings.
- * @return string           The rendered HTML for the email block.
+ * @param array    $attributes The block attributes containing email-related settings.
+ * @param WP_Block $block      Block instance.
+ * @return string             The rendered HTML for the email block.
  */
-function wp_peeps_render_email_block( $attributes ) {
-	$post_id = get_the_ID();
+function wp_peeps_render_email_block( $attributes, $block ) {
+	$post_id = isset( $block->context['postId'] ) ? $block->context['postId'] : get_the_ID();
 
 	// Bail early if no post ID or user can't read the post.
 	if ( empty( $post_id ) || ! current_user_can( 'read_post', $post_id ) ) {

@@ -3,6 +3,7 @@ import {
 	useBlockProps,
 	InspectorControls,
 	BlockControls,
+	useBlockEditContext,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -12,6 +13,8 @@ import {
 	ToolbarDropdownMenu,
 } from '@wordpress/components';
 import { useEntityProp } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 import {
 	paragraph,
 	grid,
@@ -78,9 +81,10 @@ const HTML_TAGS = [
  * @param {Object}   props               Block props.
  * @param {Object}   props.attributes    Block attributes.
  * @param {Function} props.setAttributes Function to set block attributes.
+ * @param {Object}   props.context       Block context.
  * @return {JSX.Element}              The edit component.
  */
-export default function Edit({ attributes, setAttributes }) {
+export default function Edit({ attributes, setAttributes, context }) {
 	const {
 		showFirst,
 		showMiddle,
@@ -92,11 +96,20 @@ export default function Edit({ attributes, setAttributes }) {
 	} = attributes;
 
 	const blockProps = useBlockProps();
+	const { postType, postId } = context;
 
-	const [meta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
-	const firstName = meta?.wp_peeps_first_name || 'First';
-	const middleName = meta?.wp_peeps_middle_name || 'Middle';
-	const lastName = meta?.wp_peeps_last_name || 'Last';
+	const post = useSelect(
+		(select) => {
+			if (!postId) {return null;}
+			return select(coreStore).getEntityRecord('postType', postType || 'wp_peeps_people', postId);
+		},
+		[postId, postType]
+	);
+
+	// Get meta values either from context post or current post
+	const firstName = post?.meta?.wp_peeps_first_name || 'First';
+	const middleName = post?.meta?.wp_peeps_middle_name || 'Middle';
+	const lastName = post?.meta?.wp_peeps_last_name || 'Last';
 
 	// Build the preview text based on toggle settings
 	const nameParts = [
