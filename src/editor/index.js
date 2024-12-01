@@ -319,13 +319,6 @@ function PersonDetailsPanel() {
 				className="wp-peeps-contact-panel"
 			>
 				<TextControl
-					label={__('Job Title', 'wp-peeps')}
-					value={meta?.[NAME_FIELDS.JOB_TITLE] || ''}
-					onChange={(value) =>
-						handleMetaChange(NAME_FIELDS.JOB_TITLE, value)
-					}
-				/>
-				<TextControl
 					label={__('Phone', 'wp-peeps')}
 					value={
 						meta?.[NAME_FIELDS.PHONE]

@@ -152,21 +152,6 @@ function register_people_meta() {
 
 	register_post_meta(
 		'wp_peeps_people',
-		'wp_peeps_job_title',
-		array(
-			'show_in_rest'      => true,
-			'single'            => true,
-			'type'              => 'string',
-			'label'             => __( 'Job Title', 'wp-peeps' ),
-			'sanitize_callback' => 'sanitize_text_field',
-			'auth_callback'     => function () {
-				return current_user_can( 'edit_posts' );
-			},
-		)
-	);
-
-	register_post_meta(
-		'wp_peeps_people',
 		'wp_peeps_phone',
 		array(
 			'show_in_rest'      => true,
