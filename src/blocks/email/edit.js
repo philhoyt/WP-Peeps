@@ -3,16 +3,26 @@ import {
 	useBlockProps,
 	InspectorControls,
 	BlockControls,
+	RichText,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	ToggleControl,
-	TextControl,
 	ToolbarGroup,
 	ToolbarDropdownMenu,
 } from '@wordpress/components';
 import { useEntityProp } from '@wordpress/core-data';
 import { paragraph, grid, tag } from '@wordpress/icons';
+
+// Allowed formats for the prefix field
+const ALLOWED_FORMATS = [
+	'core/bold',
+	'core/image',
+	'core/italic',
+	'core/link',
+	'core/strikethrough',
+	'core/text-color',
+];
 
 const HTML_TAGS = [
 	{
@@ -38,9 +48,10 @@ const HTML_TAGS = [
  * @param {Object}   props               Block props.
  * @param {Object}   props.attributes    Block attributes.
  * @param {Function} props.setAttributes Function to set block attributes.
+ * @param {boolean}  props.isSelected    Whether block is selected.
  * @return {JSX.Element}              The edit component.
  */
-export default function Edit({ attributes, setAttributes }) {
+export default function Edit({ attributes, setAttributes, isSelected }) {
 	const { tagName, makeLink, prefix, textAlign } = attributes;
 	const blockProps = useBlockProps({
 		className: textAlign ? `has-text-align-${textAlign}` : undefined,
@@ -62,7 +73,18 @@ export default function Edit({ attributes, setAttributes }) {
 
 	const content = (
 		<>
-			{prefix && <span>{prefix} </span>}
+			{(isSelected || prefix) && (
+				<RichText
+					identifier="prefix"
+					allowedFormats={ALLOWED_FORMATS}
+					className="wp-block-wp-peeps-email__prefix"
+					aria-label={__('Prefix')}
+					placeholder={__('Prefix', 'wp-peeps') + ' '}
+					value={prefix}
+					onChange={(value) => setAttributes({ prefix: value })}
+					tagName="span"
+				/>
+			)}
 			{makeLink ? emailLink : email}
 		</>
 	);
@@ -91,30 +113,14 @@ export default function Edit({ attributes, setAttributes }) {
 			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'wp-peeps')}>
-					<TextControl
-						label={__('Prefix text', 'wp-peeps')}
-						value={prefix}
-						onChange={(value) => setAttributes({ prefix: value })}
-						placeholder={__('e.g., Email:', 'wp-peeps')}
-						help={__(
-							'Text to display before the email address.',
-							'wp-peeps',
-						)}
-					/>
 					<ToggleControl
 						label={__('Make email clickable', 'wp-peeps')}
 						checked={makeLink}
 						onChange={() => setAttributes({ makeLink: !makeLink })}
 						help={
 							makeLink
-								? __(
-										'Email address will be clickable',
-										'wp-peeps',
-									)
-								: __(
-										'Email address will be plain text',
-										'wp-peeps',
-									)
+								? __('Email address will be clickable', 'wp-peeps')
+								: __('Email address will be plain text', 'wp-peeps')
 						}
 					/>
 				</PanelBody>
