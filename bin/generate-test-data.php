@@ -33,11 +33,51 @@ $number_of_people = $args[0] ?? 10;
 
 // Sample data with gender
 $first_names = [
-    'boy' => ['John', 'Michael', 'David', 'Robert', 'William'],
-    'girl' => ['Jane', 'Sarah', 'Emily', 'Lisa', 'Emma']
+    'boy' => [
+        'John', 'Michael', 'David', 'Robert', 'William', 
+        'James', 'Joseph', 'Charles', 'Thomas', 'Daniel',
+        'Christopher', 'Matthew', 'Anthony', 'Mark', 'Andrew',
+        'Brian', 'Joshua', 'Kevin', 'Jonathan', 'Edward',
+        'Jason', 'Ryan', 'Nicholas', 'Eric', 'Jacob',
+        'Justin', 'Paul', 'Brandon', 'Ethan', 'Nathan',
+        'Alexander', 'Aaron', 'Zachary', 'Benjamin', 'Lucas',
+        'Jack', 'Logan', 'Tyler', 'Dylan', 'Samuel'
+    ],
+    'girl' => [
+        'Jane', 'Sarah', 'Emily', 'Lisa', 'Emma', 
+        'Sophia', 'Olivia', 'Isabella', 'Mia', 'Charlotte',
+        'Amelia', 'Harper', 'Evelyn', 'Abigail', 'Ella',
+        'Ava', 'Chloe', 'Madison', 'Lily', 'Hannah',
+        'Grace', 'Scarlett', 'Victoria', 'Aria', 'Layla',
+        'Zoe', 'Riley', 'Nora', 'Aubrey', 'Sofia',
+        'Audrey', 'Elizabeth', 'Mila', 'Ellie', 'Lucy',
+        'Brooklyn', 'Violet', 'Lillian', 'Bella', 'Aurora'
+    ]
 ];
-$middle_names = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-$last_names = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez'];
+
+$middle_names = [
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 
+    'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+    'U', 'V', 'W', 'X', 'Y', 'Z', 
+    'Marie', 'Lee', 'Ann', 'Grace', 'James', 
+    'Rose', 'Lynn', 'Rae', 'Jean', 'Scott',
+    'Claire', 'Faith', 'Jade', 'May', 'Paul',
+    'Noel', 'Ray', 'Hope', 'Taylor', 'Jay',
+    'Drew', 'Reese', 'Kai', 'Beau', 'Dean'
+];
+
+$last_names = [
+    'Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 
+    'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez', 
+    'Hernandez', 'Lopez', 'Gonzalez', 'Wilson', 'Anderson',
+    'Thomas', 'Taylor', 'Moore', 'Jackson', 'Martin',
+    'Lee', 'Perez', 'Thompson', 'White', 'Harris',
+    'Sanchez', 'Clark', 'Ramirez', 'Lewis', 'Robinson',
+    'Walker', 'Young', 'Allen', 'King', 'Wright',
+    'Scott', 'Torres', 'Nguyen', 'Hill', 'Flores',
+    'Green', 'Adams', 'Nelson', 'Baker', 'Hall',
+    'Rivera', 'Campbell', 'Mitchell', 'Carter', 'Roberts'
+];
 $domains = ['example.com', 'test.com', 'email.com', 'domain.com', 'mail.com'];
 $job_titles = ['Manager', 'Developer', 'Designer', 'Director', 'Analyst', 'Coordinator', 'Specialist', 'Engineer', 'Consultant', 'Administrator'];
 $social_platforms = [
