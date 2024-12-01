@@ -48,8 +48,13 @@
 			"__experimentalDefaultControls": {
 				"fontSize": true
 			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
 		}
 	},
+	"usesContext": ["postId", "postType"],
 	"textdomain": "wp-peeps",
 	"editorScript": "file:./index.js",
 	"style": "file:./style.css",

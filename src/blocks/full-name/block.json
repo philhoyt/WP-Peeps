@@ -75,6 +75,7 @@
 			}
 		}
 	},
+	"usesContext": ["postId", "postType"],
 	"textdomain": "wp-peeps",
 	"editorScript": "file:./index.js",
 	"render": "file:./render.php"

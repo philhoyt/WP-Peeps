@@ -77,17 +77,25 @@ const formatPhoneNumber = (phoneNumber, format) => {
  * @param {Object}   props.attributes    Block attributes.
  * @param {Function} props.setAttributes Function to set block attributes.
  * @param {boolean}  props.isSelected    Whether block is selected.
+ * @param {Object}   props.context       Block context.
  * @return {JSX.Element}              The edit component.
  */
-export default function Edit({ attributes, setAttributes, isSelected }) {
+export default function Edit({ attributes, setAttributes, isSelected, context }) {
 	const { tagName, makeLink, prefix, textAlign } = attributes;
+	const { postType, postId } = context;
 
 	const blockProps = useBlockProps({
 		className: textAlign ? `has-text-align-${textAlign}` : undefined,
 	});
 
-	// Get phone number from meta
-	const [meta] = useEntityProp('postType', 'wp_peeps_people', 'meta');
+	// Get post data from context
+	const post = useSelect(
+		(select) => {
+			if (!postId) {return null;}
+			return select(coreStore).getEntityRecord('postType', postType || 'wp_peeps_people', postId);
+		},
+		[postId, postType]
+	);
 
 	// Get phone format from site settings
 	const format = useSelect(
@@ -97,8 +105,8 @@ export default function Edit({ attributes, setAttributes, isSelected }) {
 		[],
 	);
 
-	const phoneNumber = meta?.wp_peeps_phone;
-	const formattedPhone = formatPhoneNumber(phoneNumber, format);
+	const phoneNumber = post?.meta?.wp_peeps_phone;
+	const formattedPhone = formatPhoneNumber(phoneNumber || '', format);
 
 	// Create content elements
 	const TagName = tagName;
