@@ -3,17 +3,27 @@ import {
 	useBlockProps,
 	InspectorControls,
 	BlockControls,
+	RichText,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	ToggleControl,
-	TextControl,
 	ToolbarGroup,
 	ToolbarDropdownMenu,
 } from '@wordpress/components';
 import { useEntityProp, store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { paragraph, grid, tag } from '@wordpress/icons';
+
+// Allowed formats for the prefix field
+const ALLOWED_FORMATS = [
+	'core/bold',
+	'core/image',
+	'core/italic',
+	'core/link',
+	'core/strikethrough',
+	'core/text-color',
+];
 
 const HTML_TAGS = [
 	{
@@ -66,9 +76,10 @@ const formatPhoneNumber = (phoneNumber, format) => {
  * @param {Object}   props               Block props.
  * @param {Object}   props.attributes    Block attributes.
  * @param {Function} props.setAttributes Function to set block attributes.
+ * @param {boolean}  props.isSelected    Whether block is selected.
  * @return {JSX.Element}              The edit component.
  */
-export default function Edit({ attributes, setAttributes }) {
+export default function Edit({ attributes, setAttributes, isSelected }) {
 	const { tagName, makeLink, prefix, textAlign } = attributes;
 
 	const blockProps = useBlockProps({
@@ -101,7 +112,18 @@ export default function Edit({ attributes, setAttributes }) {
 
 	const content = (
 		<>
-			{prefix && <span>{prefix} </span>}
+			{(isSelected || prefix) && (
+				<RichText
+					identifier="prefix"
+					allowedFormats={ALLOWED_FORMATS}
+					className="wp-block-wp-peeps-phone__prefix"
+					aria-label={__('Prefix')}
+					placeholder={__('Prefix', 'wp-peeps') + ' '}
+					value={prefix}
+					onChange={(value) => setAttributes({ prefix: value })}
+					tagName="span"
+				/>
+			)}
 			{makeLink ? phoneLink : formattedPhone}
 		</>
 	);
@@ -128,16 +150,6 @@ export default function Edit({ attributes, setAttributes }) {
 			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={__('Phone Settings', 'wp-peeps')}>
-					<TextControl
-						label={__('Prefix', 'wp-peeps')}
-						value={prefix}
-						onChange={(value) => setAttributes({ prefix: value })}
-						placeholder={__('e.g., Phone:', 'wp-peeps')}
-						help={__(
-							'Text to display before the phone number',
-							'wp-peeps',
-						)}
-					/>
 					<ToggleControl
 						label={__('Make Phone Link', 'wp-peeps')}
 						checked={makeLink}
@@ -147,11 +159,11 @@ export default function Edit({ attributes, setAttributes }) {
 								? __(
 										'Phone number will be clickable',
 										'wp-peeps',
-									)
+								  )
 								: __(
 										'Phone number will be plain text',
 										'wp-peeps',
-									)
+								  )
 						}
 					/>
 				</PanelBody>
