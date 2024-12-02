@@ -79,7 +79,10 @@ $last_names = [
 	'Rivera', 'Campbell', 'Mitchell', 'Carter', 'Roberts'
 ];
 $domains = ['example.com', 'test.com', 'email.com', 'domain.com', 'mail.com'];
-//$job_titles = ['Manager', 'Developer', 'Designer', 'Director', 'Analyst', 'Coordinator', 'Specialist', 'Engineer', 'Consultant', 'Administrator'];
+
+// Job titles for test data
+$job_titles = ['Manager', 'Developer', 'Designer', 'Director', 'Analyst', 'Coordinator', 'Specialist', 'Engineer', 'Consultant', 'Administrator'];
+
 $social_platforms = [
 	'facebook' => 'https://facebook.com/%s',
 	'twitter' => 'https://twitter.com/%s',
@@ -114,7 +117,24 @@ try {
 			rand(2,9), rand(0,9), rand(0,9),
 			rand(0,9), rand(0,9), rand(0,9), rand(0,9)
 		);
-		//$job_title = $job_titles[array_rand($job_titles)];
+
+		// Check if job-title taxonomy exists
+		if (taxonomy_exists('job-title')) {
+			// Get a random job title
+			$job_title = $job_titles[array_rand($job_titles)];
+			
+			// Check if the term already exists
+			$existing_term = get_term_by('name', $job_title, 'job-title');
+			if (!$existing_term) {
+				// Create the term if it doesn't exist
+				$new_term = wp_insert_term($job_title, 'job-title');
+				if (!is_wp_error($new_term)) {
+					$job_term_id = $new_term['term_id'];
+				}
+			} else {
+				$job_term_id = $existing_term->term_id;
+			}
+		}
 
 		// Generate random content
 		$num_paragraphs = rand(2, 5);
@@ -144,7 +164,10 @@ try {
 		update_post_meta( $post_id, 'wp_peeps_last_name', $last_name );
 		update_post_meta( $post_id, 'wp_peeps_email', $email );
 		update_post_meta( $post_id, 'wp_peeps_phone', preg_replace('/[^0-9]/', '', $phone) );
-		//update_post_meta( $post_id, 'wp_peeps_job_title', $job_title );
+		if (isset($job_term_id)) {
+			wp_set_post_terms($post_id, [$job_term_id], 'job-title');
+			update_post_meta($post_id, 'wp_peeps_job_title', $job_title);
+		}
 
 		// Generate random social links
 		$num_social = rand(2, 4); // Random number of social platforms per person
