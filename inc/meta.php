@@ -235,9 +235,9 @@ function update_title_from_name( $meta_id, $post_id, $meta_key, $meta_value ) {
 
 	try {
 		// Get both names.
-		$first_name = get_post_meta( $post_id, 'wp_peeps_first_name', true );
+		$first_name  = get_post_meta( $post_id, 'wp_peeps_first_name', true );
 		$middle_name = get_post_meta( $post_id, 'wp_peeps_middle_name', true );
-		$last_name  = get_post_meta( $post_id, 'wp_peeps_last_name', true );
+		$last_name   = get_post_meta( $post_id, 'wp_peeps_last_name', true );
 
 		// Build the full name.
 		$full_name = trim( sprintf( '%s %s %s', $first_name, $middle_name, $last_name ) );
