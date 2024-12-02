@@ -10,15 +10,11 @@
  * @return string The block content.
  */
 function wp_peeps_render_full_name_block( $attributes, $block ) {
-	// Debug: Log initial block context and post ID
-	error_log( '[WP Peeps Debug] Block Context: ' . print_r( isset( $block->context ) ? $block->context : 'No context', true ) );
-	
+
 	$post_id = isset( $block->context['postId'] ) ? $block->context['postId'] : get_the_ID();
-	error_log( '[WP Peeps Debug] Post ID: ' . $post_id );
 
 	// Bail early if no post ID or user can't read the post.
 	if ( empty( $post_id ) || ! current_user_can( 'read_post', $post_id ) ) {
-		error_log( '[WP Peeps Debug] Bailing early - Empty post ID or no read permission' );
 		return '';
 	}
 
@@ -33,13 +29,6 @@ function wp_peeps_render_full_name_block( $attributes, $block ) {
 	$first_name  = get_post_meta( $post_id, 'wp_peeps_first_name', true );
 	$middle_name = get_post_meta( $post_id, 'wp_peeps_middle_name', true );
 	$last_name   = get_post_meta( $post_id, 'wp_peeps_last_name', true );
-
-	// Debug: Log meta values
-	error_log( sprintf( '[WP Peeps Debug] Meta values - First: %s, Middle: %s, Last: %s',
-		$first_name ? $first_name : 'empty',
-		$middle_name ? $middle_name : 'empty',
-		$last_name ? $last_name : 'empty'
-	) );
 
 	// Build name parts array.
 	$name_parts = array();
