@@ -1,7 +1,7 @@
 <?php
 /**
  * Generate test data for WP Peeps plugin
- * 
+ *
  * Usage: wp eval-file generate-test-data.php [number_of_people]
  */
 

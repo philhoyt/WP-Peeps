@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Register custom meta fields for the plugin
  *
@@ -84,7 +83,7 @@ function validate_social_links( $links ) {
 			continue;
 		}
 
-		// Validate URL
+		// Validate URL.
 		$url = esc_url_raw( $link['url'] );
 		if ( empty( $url ) ) {
 			continue;

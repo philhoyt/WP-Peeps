@@ -53,7 +53,12 @@ const HTML_TAGS = [
  * @param {Object}   props.context       Block context.
  * @return {JSX.Element}              The edit component.
  */
-export default function Edit({ attributes, setAttributes, isSelected, context }) {
+export default function Edit({
+	attributes,
+	setAttributes,
+	isSelected,
+	context,
+}) {
 	const { tagName, makeLink, prefix, textAlign } = attributes;
 	const { postType, postId } = context;
 
@@ -64,10 +69,16 @@ export default function Edit({ attributes, setAttributes, isSelected, context })
 	// Get post data from context
 	const post = useSelect(
 		(select) => {
-			if (!postId) {return null;}
-			return select(coreStore).getEntityRecord('postType', postType || 'wp_peeps_people', postId);
+			if (!postId) {
+				return null;
+			}
+			return select(coreStore).getEntityRecord(
+				'postType',
+				postType || 'wp_peeps_people',
+				postId,
+			);
 		},
-		[postId, postType]
+		[postId, postType],
 	);
 
 	const email = post?.meta?.wp_peeps_email || 'name@domain.com';
@@ -130,8 +141,14 @@ export default function Edit({ attributes, setAttributes, isSelected, context })
 						onChange={() => setAttributes({ makeLink: !makeLink })}
 						help={
 							makeLink
-								? __('Email address will be clickable', 'wp-peeps')
-								: __('Email address will be plain text', 'wp-peeps')
+								? __(
+										'Email address will be clickable',
+										'wp-peeps',
+									)
+								: __(
+										'Email address will be plain text',
+										'wp-peeps',
+									)
 						}
 					/>
 				</PanelBody>

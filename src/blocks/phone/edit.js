@@ -80,7 +80,12 @@ const formatPhoneNumber = (phoneNumber, format) => {
  * @param {Object}   props.context       Block context.
  * @return {JSX.Element}              The edit component.
  */
-export default function Edit({ attributes, setAttributes, isSelected, context }) {
+export default function Edit({
+	attributes,
+	setAttributes,
+	isSelected,
+	context,
+}) {
 	const { tagName, makeLink, prefix, textAlign } = attributes;
 	const { postType, postId } = context;
 
@@ -91,10 +96,16 @@ export default function Edit({ attributes, setAttributes, isSelected, context })
 	// Get post data from context
 	const post = useSelect(
 		(select) => {
-			if (!postId) {return null;}
-			return select(coreStore).getEntityRecord('postType', postType || 'wp_peeps_people', postId);
+			if (!postId) {
+				return null;
+			}
+			return select(coreStore).getEntityRecord(
+				'postType',
+				postType || 'wp_peeps_people',
+				postId,
+			);
 		},
-		[postId, postType]
+		[postId, postType],
 	);
 
 	// Get phone format from site settings
@@ -167,11 +178,11 @@ export default function Edit({ attributes, setAttributes, isSelected, context })
 								? __(
 										'Phone number will be clickable',
 										'wp-peeps',
-								  )
+									)
 								: __(
 										'Phone number will be plain text',
 										'wp-peeps',
-								  )
+									)
 						}
 					/>
 				</PanelBody>
