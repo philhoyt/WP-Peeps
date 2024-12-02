@@ -32,7 +32,7 @@ const DEFAULT_SOCIAL_LINKS = [
  * @return string The rendered block content.
  */
 function wp_peeps_render_social_links_block( $attributes ) {
-	// Get social links based on context
+	// Get social links based on context.
 	$social_links = wp_peeps_get_social_links();
 	
 	// Only return empty on frontend when no social links exist
@@ -40,15 +40,15 @@ function wp_peeps_render_social_links_block( $attributes ) {
 	if ( empty( $social_links ) && ! $is_editor ) {
 		return '';
 	}
-	
-	// Extract and sanitize block attributes
+
+	// Extract and sanitize block attributes.
 	$block_attrs = wp_peeps_get_social_block_attributes( $attributes );
-	
-	// Build block classes and styles
+
+	// Build block classes and styles.
 	$classes = wp_peeps_get_social_block_classes( $block_attrs );
 	$styles  = wp_peeps_get_social_block_styles( $block_attrs );
 
-	// Get block wrapper attributes
+	// Get block wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		[
 			'class' => implode( ' ', array_filter( $classes ) ),
@@ -56,14 +56,14 @@ function wp_peeps_render_social_links_block( $attributes ) {
 		]
 	);
 
-	// Build block content
-	$block_content = wp_peeps_build_social_block_content( 
-		$social_links, 
-		$block_attrs, 
-		$wrapper_attributes 
+	// Build block content.
+	$block_content = wp_peeps_build_social_block_content(
+		$social_links,
+		$block_attrs,
+		$wrapper_attributes
 	);
 
-	// Parse and render the block
+	// Parse and render the block.
 	$parsed_blocks = parse_blocks( $block_content );
 	return ! empty( $parsed_blocks ) ? render_block( $parsed_blocks[0] ) : '';
 }
@@ -74,25 +74,25 @@ function wp_peeps_render_social_links_block( $attributes ) {
  * @return array|null Array of social links or null if no links exist on frontend.
  */
 function wp_peeps_get_social_links() {
-	// Get social links from post meta
+	// Get social links from post meta.
 	$post_id = get_the_ID();
 	$social_links = get_post_meta( $post_id, 'wp_peeps_social_links', true );
 	$has_social_links = ! empty( $social_links ) && is_array( $social_links );
-	
-	// Check if we're in the editor context
+
+	// Check if we're in the editor context.
 	$is_editor = defined( 'REST_REQUEST' ) && REST_REQUEST;
-	
+
 	// If we have social links, return them regardless of context
 	if ( $has_social_links ) {
 		return $social_links;
 	}
-	
-	// If we're in editor and don't have social links, return defaults
+
+	// If we're in editor and don't have social links, return defaults.
 	if ( $is_editor ) {
 		return DEFAULT_SOCIAL_LINKS;
 	}
-	
-	// If we're on frontend and don't have social links, return null
+
+	// If we're on frontend and don't have social links, return null.
 	return null;
 }
 
@@ -130,10 +130,10 @@ function wp_peeps_get_social_block_classes( $block_attrs ) {
 		'wp-peeps-social-links',
 		$block_attrs['size'],
 		$block_attrs['className'],
-		'is-style-default'
+		'is-style-default',
 	];
 
-	// Add orientation class
+	// Add orientation class.
 	if ( $block_attrs['orientation'] === 'vertical' ) {
 		$classes[] = 'is-vertical';
 	}
@@ -150,12 +150,12 @@ function wp_peeps_get_social_block_classes( $block_attrs ) {
 		$classes[] = 'has-icon-background-color';
 	}
 
-	// Add flex wrap class
+	// Add flex wrap class.
 	if ( isset( $block_attrs['flexWrap'] ) ) {
 		$classes[] = $block_attrs['flexWrap'] === 'wrap' ? 'is-wrap' : 'is-nowrap';
 	}
 
-	// Add layout classes
+	// Add layout classes.
 	$classes[] = 'is-layout-flex';
 	$classes[] = 'wp-block-social-links-is-layout-flex';
 	$classes[] = sprintf( 'is-content-justification-%s', $block_attrs['justify'] ?: 'left' );
@@ -194,7 +194,7 @@ function wp_peeps_get_social_block_styles( $block_attrs ) {
  */
 function wp_peeps_get_vertical_styles( $block_attrs ) {
 	$styles = [];
-	
+
 	$vertical_align_map = [
 		'top'           => 'flex-start',
 		'middle'        => 'center',
@@ -209,7 +209,7 @@ function wp_peeps_get_vertical_styles( $block_attrs ) {
 		'stretch' => 'stretch',
 	];
 
-	// Set flex direction for vertical orientation
+	// Set flex direction for vertical orientation.
 	$styles[] = 'flex-direction: column';
 
 	if ( ! empty( $block_attrs['verticalAlign'] ) && isset( $vertical_align_map[ $block_attrs['verticalAlign'] ] ) ) {
@@ -220,8 +220,7 @@ function wp_peeps_get_vertical_styles( $block_attrs ) {
 		$styles[] = sprintf( 'align-items: %s', $justify_map[ $block_attrs['justify'] ] );
 	}
 
-	// Apply flex wrap
-	if ( isset( $block_attrs['flexWrap'] ) ) {
+	// Apply flex wrap.	if ( isset( $block_attrs['flexWrap'] ) ) {
 		$styles[] = sprintf( 'flex-wrap: %s', $block_attrs['flexWrap'] );
 	}
 
@@ -236,7 +235,7 @@ function wp_peeps_get_vertical_styles( $block_attrs ) {
  */
 function wp_peeps_get_horizontal_styles( $block_attrs ) {
 	$styles = [];
-	
+
 	$justify_map = [
 		'left'          => 'flex-start',
 		'center'        => 'center',
@@ -244,7 +243,7 @@ function wp_peeps_get_horizontal_styles( $block_attrs ) {
 		'space-between' => 'space-between',
 	];
 
-	// Set flex direction for horizontal orientation
+	// Set flex direction for horizontal orientation.
 	$styles[] = 'flex-direction: row';
 
 	if ( ! empty( $block_attrs['justify'] ) && isset( $justify_map[ $block_attrs['justify'] ] ) ) {
@@ -255,7 +254,7 @@ function wp_peeps_get_horizontal_styles( $block_attrs ) {
 		$styles[] = sprintf( 'align-items: %s', $block_attrs['verticalAlign'] === 'top' ? 'flex-start' : $block_attrs['verticalAlign'] );
 	}
 
-	// Apply flex wrap
+	// Apply flex wrap.
 	if ( isset( $block_attrs['flexWrap'] ) ) {
 		$styles[] = sprintf( 'flex-wrap: %s', $block_attrs['flexWrap'] );
 	}
@@ -276,7 +275,7 @@ function wp_peeps_get_gap_style( $gap ) {
 
 	$gap_value = $gap;
 
-	// Handle preset values
+	// Handle preset values.
 	if ( str_starts_with( $gap, 'var:preset|spacing|' ) ) {
 		$preset = str_replace( 'var:preset|spacing|', '', $gap );
 		$gap_value = sprintf( 'var(--wp--preset--spacing--%s)', sanitize_html_class( $preset ) );
@@ -312,7 +311,7 @@ function wp_peeps_build_social_block_content( $social_links, $block_attrs, $wrap
 		$wrapper_attributes
 	);
 
-	// Add each social link
+	// Add each social link.
 	foreach ( $social_links as $link ) {
 		$service = strtolower( $link['platform'] );
 		$url     = esc_url( $link['url'] );
@@ -324,7 +323,7 @@ function wp_peeps_build_social_block_content( $social_links, $block_attrs, $wrap
 		);
 	}
 
-	// Close the social links block
+	// Close the social links block.
 	$block_content .= '</ul>' . "\n";
 	$block_content .= '<!-- /wp:social-links -->';
 

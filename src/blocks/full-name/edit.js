@@ -100,10 +100,16 @@ export default function Edit({ attributes, setAttributes, context }) {
 
 	const post = useSelect(
 		(select) => {
-			if (!postId) {return null;}
-			return select(coreStore).getEntityRecord('postType', postType || 'wp_peeps_people', postId);
+			if (!postId) {
+				return null;
+			}
+			return select(coreStore).getEntityRecord(
+				'postType',
+				postType || 'wp_peeps_people',
+				postId,
+			);
 		},
-		[postId, postType]
+		[postId, postType],
 	);
 
 	// Get meta values either from context post or current post
