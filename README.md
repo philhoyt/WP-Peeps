@@ -62,6 +62,15 @@ This will create 20 test people profiles in your WordPress installation.
 
 ## Changelog
 
+### 0.1.0-beta.2
+
+-   Removed Job Title field
+-   Improved editor experience
+-   Added inline editing for prefixing phone and email
+-   Improved social links functionality
+-   Full Name, Email, and Phone now display data in query loop editor
+-   Various code cleanup and optimizations
+
 ### 0.1.0-beta.1
 
 -   Initial beta release
