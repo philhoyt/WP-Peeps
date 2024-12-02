@@ -29,6 +29,7 @@
         <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
         <exclude name="WordPress.PHP.YodaConditions.NotYoda"/>
         <exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+        <exclude name="Universal.Arrays.DisallowShortArraySyntax" />
     </rule>
 
     <!-- Allow short array syntax -->

@@ -34,8 +34,8 @@ const DEFAULT_SOCIAL_LINKS = [
 function wp_peeps_render_social_links_block( $attributes ) {
 	// Get social links based on context.
 	$social_links = wp_peeps_get_social_links();
-	
-	// Only return empty on frontend when no social links exist
+
+	// Only return empty on frontend when no social links exist.
 	$is_editor = defined( 'REST_REQUEST' ) && REST_REQUEST;
 	if ( empty( $social_links ) && ! $is_editor ) {
 		return '';
@@ -60,7 +60,7 @@ function wp_peeps_render_social_links_block( $attributes ) {
 	$block_content = wp_peeps_build_social_block_content(
 		$social_links,
 		$block_attrs,
-		$wrapper_attributes
+		$wrapper_attributes,
 	);
 
 	// Parse and render the block.
@@ -82,7 +82,7 @@ function wp_peeps_get_social_links() {
 	// Check if we're in the editor context.
 	$is_editor = defined( 'REST_REQUEST' ) && REST_REQUEST;
 
-	// If we have social links, return them regardless of context
+	// If we have social links, return them regardless of context.
 	if ( $has_social_links ) {
 		return $social_links;
 	}
@@ -220,7 +220,8 @@ function wp_peeps_get_vertical_styles( $block_attrs ) {
 		$styles[] = sprintf( 'align-items: %s', $justify_map[ $block_attrs['justify'] ] );
 	}
 
-	// Apply flex wrap.	if ( isset( $block_attrs['flexWrap'] ) ) {
+	// Apply flex wrap.
+	if ( isset( $block_attrs['flexWrap'] ) ) {
 		$styles[] = sprintf( 'flex-wrap: %s', $block_attrs['flexWrap'] );
 	}
 
