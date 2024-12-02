@@ -13,8 +13,8 @@ function wp_peeps_render_full_name_block( $attributes, $block ) {
 
 	$post_id = isset( $block->context['postId'] ) ? $block->context['postId'] : get_the_ID();
 
-	// Bail early if no post ID or user can't read the post.
-	if ( empty( $post_id ) || ! current_user_can( 'read_post', $post_id ) ) {
+	// Bail early if no post ID.
+	if ( empty( $post_id ) ) {
 		return '';
 	}
 
