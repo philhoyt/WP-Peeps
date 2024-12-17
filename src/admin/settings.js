@@ -67,11 +67,13 @@ function SettingsPage() {
 	};
 
 	const saveSettings = async () => {
-		// Validate phone format before saving
-		const formatPlaceholders = (localSettings.wp_peeps_phone_format?.match(/#/g) || []).length;
-		if (formatPlaceholders < 10 || formatPlaceholders > 15) {
-			setError(__('Phone format must contain between 10 and 15 # symbols.', 'wp-peeps'));
-			return;
+		// Only validate phone format if it's being changed
+		if (localSettings.wp_peeps_phone_format !== undefined) {
+			const formatPlaceholders = (localSettings.wp_peeps_phone_format.match(/#/g) || []).length;
+			if (formatPlaceholders < 10 || formatPlaceholders > 15) {
+				setError(__('Phone format must contain between 10 and 15 # symbols.', 'wp-peeps'));
+				return;
+			}
 		}
 
 		try {
