@@ -136,7 +136,7 @@ export default function Edit({
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'wp-peeps')}>
 					<ToggleControl
-						label={__('Make email clickable', 'wp-peeps')}
+						label={__('Make Email Link', 'wp-peeps')}
 						checked={makeLink}
 						onChange={() => setAttributes({ makeLink: !makeLink })}
 						help={
