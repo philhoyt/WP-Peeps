@@ -86,5 +86,22 @@ function register_plugin_settings() {
 			},
 		)
 	);
+
+	register_setting(
+		'wp_peeps',
+		'wp_peeps_menu_position',
+		array(
+			'type'         => 'integer',
+			'default'      => 25,
+			'show_in_rest' => array(
+				'name'   => 'wp_peeps_menu_position',
+				'schema' => array(
+					'type'    => 'integer',
+					'default' => 25,
+				),
+			),
+			'description'  => __( 'Position in admin menu where People should appear', 'wp-peeps' ),
+		)
+	);
 }
 add_action( 'init', __NAMESPACE__ . '\register_plugin_settings' );
