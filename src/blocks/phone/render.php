@@ -76,9 +76,15 @@ function wp_peeps_format_phone_number( $phone, $format ) {
 
 	$formatted_phone = $format;
 	$digits = preg_replace( '/[^0-9]/', '', $phone );
+	$placeholder_count = substr_count( $format, '#' );
 
-	for ( $i = 0; $i < strlen( $digits ) && $i < substr_count( $format, '#' ); $i++ ) {
+	for ( $i = 0; $i < strlen( $digits ) && $i < $placeholder_count; $i++ ) {
 		$formatted_phone = preg_replace( '/#/', $digits[ $i ], $formatted_phone, 1 );
+	}
+
+	// If we have more digits than format placeholders, append them
+	if ( strlen( $digits ) > $placeholder_count ) {
+		$formatted_phone .= substr( $digits, $placeholder_count );
 	}
 
 	// Remove any remaining placeholders.

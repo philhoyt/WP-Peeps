@@ -27,11 +27,12 @@ function validate_phone( $phone ) {
 	// Should already be digits only, but sanitize just in case.
 	$digits = preg_replace( '/[^0-9]/', '', $phone );
 
-	// Check if we have exactly 10 digits.
-	if ( strlen( $digits ) !== 10 ) {
+	// Check if we have between 10 and 15 digits.
+	$length = strlen( $digits );
+	if ( $length < 10 || $length > 15 ) {
 		return new \WP_Error(
 			'invalid_phone',
-			__( 'Phone number must be empty or contain exactly 10 digits.', 'wp-peeps' )
+			__( 'Phone number must be empty or contain between 10 and 15 digits.', 'wp-peeps' )
 		);
 	}
 
