@@ -22,7 +22,8 @@ function register_people_post_type() {
 	$is_public = filter_var( $is_public, FILTER_VALIDATE_BOOLEAN );
 	$has_archive = get_option( 'wp_peeps_has_archive', true );
 	$has_archive = filter_var( $has_archive, FILTER_VALIDATE_BOOLEAN );
-	$slug      = get_option( 'wp_peeps_cpt_slug', 'people' );
+	$slug = get_option( 'wp_peeps_cpt_slug', 'people' );
+	$menu_position = get_option( 'wp_peeps_menu_position', 25 );
 
 	$labels = array(
 		'name'                  => _x( 'People', 'Post type general name', 'wp-peeps' ),
@@ -54,7 +55,7 @@ function register_people_post_type() {
 		'capability_type'    => 'post',
 		'has_archive'        => $has_archive,
 		'hierarchical'       => false,
-		'menu_position'      => null,
+		'menu_position'      => (int) $menu_position,
 		'menu_icon'          => 'dashicons-groups',
 		'supports'           => array(
 			'title',

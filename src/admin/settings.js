@@ -7,6 +7,7 @@ import {
 	Card,
 	CardHeader,
 	CardBody,
+	SelectControl,
 } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
@@ -23,7 +24,7 @@ function SettingsPage() {
 	const [showRewriteNotice, setShowRewriteNotice] = useState(false);
 	const [error, setError] = useState(null);
 
-	const { isPublic, hasArchive, phoneFormat, cptSlug, isSaving } = useSelect(
+	const { isPublic, hasArchive, phoneFormat, cptSlug, menuPosition, isSaving } = useSelect(
 		(select) => {
 			const record = select(coreStore).getEditedEntityRecord(
 				'root',
@@ -35,10 +36,26 @@ function SettingsPage() {
 				hasArchive: record.wp_peeps_has_archive,
 				phoneFormat: record.wp_peeps_phone_format,
 				cptSlug: record.wp_peeps_cpt_slug,
+				menuPosition: record.wp_peeps_menu_position,
 				isSaving: select(coreStore).isSavingEntityRecord('root', 'site'),
 			};
 		},
 	);
+
+	// Menu position options
+	const menuPositions = [
+		{ value: '5', label: __('Below Posts (5)', 'wp-peeps') },
+		{ value: '10', label: __('Below Media (10)', 'wp-peeps') },
+		{ value: '15', label: __('Below Links (15)', 'wp-peeps') },
+		{ value: '20', label: __('Below Pages (20)', 'wp-peeps') },
+		{ value: '25', label: __('Below Comments (25)', 'wp-peeps') },
+		{ value: '60', label: __('Below First Separator (60)', 'wp-peeps') },
+		{ value: '65', label: __('Below Plugins (65)', 'wp-peeps') },
+		{ value: '70', label: __('Below Users (70)', 'wp-peeps') },
+		{ value: '75', label: __('Below Tools (75)', 'wp-peeps') },
+		{ value: '80', label: __('Below Settings (80)', 'wp-peeps') },
+		{ value: '100', label: __('Below Second Separator (100)', 'wp-peeps') },
+	];
 
 	const updateLocalSetting = (value, setting) => {
 		setLocalSettings((prev) => ({
@@ -167,6 +184,30 @@ function SettingsPage() {
 										!(localSettings.wp_peeps_public_cpt ??
 										isPublic)
 									}
+								/>
+							</div>
+	
+							<div className="wp-peeps-setting-row">
+								<SelectControl
+									__nextHasNoMarginBottom
+									label={__('Menu Position', 'wp-peeps')}
+									help={__(
+										'Choose where the People menu appears in the admin sidebar.',
+										'wp-peeps',
+									)}
+									value={String(
+										localSettings.wp_peeps_menu_position ??
+										menuPosition ??
+										'25'
+									)}
+									options={menuPositions}
+									onChange={(value) =>
+										updateLocalSetting(
+											parseInt(value, 10),
+											'wp_peeps_menu_position',
+										)
+									}
+									disabled={isSaving}
 								/>
 							</div>
 
