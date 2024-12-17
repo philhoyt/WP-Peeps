@@ -20,6 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 function register_people_post_type() {
 	$is_public = get_option( 'wp_peeps_public_cpt', true );
 	$is_public = filter_var( $is_public, FILTER_VALIDATE_BOOLEAN );
+	$has_archive = get_option( 'wp_peeps_has_archive', true );
+	$has_archive = filter_var( $has_archive, FILTER_VALIDATE_BOOLEAN );
 	$slug      = get_option( 'wp_peeps_cpt_slug', 'people' );
 
 	$labels = array(
@@ -50,7 +52,7 @@ function register_people_post_type() {
 		'query_var'          => true,
 		'rewrite'            => array( 'slug' => $slug ),
 		'capability_type'    => 'post',
-		'has_archive'        => true,
+		'has_archive'        => $has_archive,
 		'hierarchical'       => false,
 		'menu_position'      => null,
 		'menu_icon'          => 'dashicons-groups',

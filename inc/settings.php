@@ -35,6 +35,23 @@ function register_plugin_settings() {
 
 	register_setting(
 		'wp_peeps',
+		'wp_peeps_has_archive',
+		array(
+			'type'         => 'boolean',
+			'default'      => true,
+			'show_in_rest' => array(
+				'name'   => 'wp_peeps_has_archive',
+				'schema' => array(
+					'type'    => 'boolean',
+					'default' => true,
+				),
+			),
+			'description'  => __( 'Whether to enable the archive page for people', 'wp-peeps' ),
+		)
+	);
+
+	register_setting(
+		'wp_peeps',
 		'wp_peeps_phone_format',
 		array(
 			'type'         => 'string',
