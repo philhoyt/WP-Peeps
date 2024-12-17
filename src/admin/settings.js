@@ -23,25 +23,21 @@ function SettingsPage() {
 	const [showRewriteNotice, setShowRewriteNotice] = useState(false);
 	const [error, setError] = useState(null);
 
-	const { isPublic, phoneFormat, cptSlug, isSaving } = useSelect(
-		(select) => ({
-			isPublic: select(coreStore).getEditedEntityRecord(
+	const { isPublic, hasArchive, phoneFormat, cptSlug, isSaving } = useSelect(
+		(select) => {
+			const record = select(coreStore).getEditedEntityRecord(
 				'root',
 				'site',
 				undefined,
-			).wp_peeps_public_cpt,
-			phoneFormat: select(coreStore).getEditedEntityRecord(
-				'root',
-				'site',
-				undefined,
-			).wp_peeps_phone_format,
-			cptSlug: select(coreStore).getEditedEntityRecord(
-				'root',
-				'site',
-				undefined,
-			).wp_peeps_cpt_slug,
-			isSaving: select(coreStore).isSavingEntityRecord('root', 'site'),
-		}),
+			);
+			return {
+				isPublic: record.wp_peeps_public_cpt,
+				hasArchive: record.wp_peeps_has_archive,
+				phoneFormat: record.wp_peeps_phone_format,
+				cptSlug: record.wp_peeps_cpt_slug,
+				isSaving: select(coreStore).isSavingEntityRecord('root', 'site'),
+			};
+		},
 	);
 
 	const updateLocalSetting = (value, setting) => {
@@ -60,7 +56,8 @@ function SettingsPage() {
 			// Show notice if slug or public status was changed
 			if (
 				localSettings.wp_peeps_cpt_slug ||
-				localSettings.wp_peeps_public_cpt !== undefined
+				localSettings.wp_peeps_public_cpt !== undefined ||
+				localSettings.wp_peeps_has_archive !== undefined
 			) {
 				setShowRewriteNotice(true);
 			}
@@ -142,6 +139,38 @@ function SettingsPage() {
 							</div>
 
 							<div className="wp-peeps-setting-row">
+								<ToggleControl
+									__nextHasNoMarginBottom
+									label={__(
+										'Enable People Archive Page',
+										'wp-peeps',
+									)}
+									help={__(
+										'When enabled, a page listing all people will be available.',
+										'wp-peeps',
+									)}
+									checked={
+										(localSettings.wp_peeps_public_cpt ??
+										isPublic)
+											? (localSettings.wp_peeps_has_archive ??
+												hasArchive)
+											: false
+									}
+									onChange={(value) =>
+										updateLocalSetting(
+											value,
+											'wp_peeps_has_archive',
+										)
+									}
+									disabled={
+										isSaving ||
+										!(localSettings.wp_peeps_public_cpt ??
+										isPublic)
+									}
+								/>
+							</div>
+
+							<div className="wp-peeps-setting-row">
 								<TextControl
 									__nextHasNoMarginBottom
 									label={__('Directory Slug', 'wp-peeps')}
@@ -211,34 +240,28 @@ function SettingsPage() {
 										localSettings.wp_peeps_phone_format ??
 										phoneFormat
 									}
-									onChange={(value) => {
-										const digitCount = (
-											value.match(/#/g) || []
-										).length;
-										if (digitCount >= 10) {
-											updateLocalSetting(
-												value,
-												'wp_peeps_phone_format',
-											);
-										}
-									}}
+									onChange={(value) =>
+										updateLocalSetting(
+											value,
+											'wp_peeps_phone_format',
+										)
+									}
 									disabled={isSaving}
 								/>
 							</div>
+						</div>
 
-							{hasChanges && (
-								<div className="wp-peeps-settings__footer">
-									<Button
-										variant="primary"
-										onClick={saveSettings}
-										disabled={isSaving}
-									>
-										{isSaving
-											? __('Saving…', 'wp-peeps')
-											: __('Save Changes', 'wp-peeps')}
-									</Button>
-								</div>
-							)}
+						<div className="wp-peeps-settings__footer">
+							<Button
+								variant="primary"
+								onClick={saveSettings}
+								disabled={!hasChanges || isSaving}
+								isBusy={isSaving}
+							>
+								{isSaving
+									? __('Saving…', 'wp-peeps')
+									: __('Save Changes', 'wp-peeps')}
+							</Button>
 						</div>
 					</CardBody>
 				</Card>
