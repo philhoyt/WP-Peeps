@@ -150,8 +150,11 @@ function SettingsPage() {
 										'wp-peeps',
 									)}
 									checked={
-										localSettings.wp_peeps_has_archive ??
-										hasArchive
+										(localSettings.wp_peeps_public_cpt ??
+										isPublic)
+											? (localSettings.wp_peeps_has_archive ??
+												hasArchive)
+											: false
 									}
 									onChange={(value) =>
 										updateLocalSetting(
@@ -159,7 +162,11 @@ function SettingsPage() {
 											'wp_peeps_has_archive',
 										)
 									}
-									disabled={isSaving}
+									disabled={
+										isSaving ||
+										!(localSettings.wp_peeps_public_cpt ??
+										isPublic)
+									}
 								/>
 							</div>
 
