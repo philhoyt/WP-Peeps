@@ -101,8 +101,13 @@ const formatPhoneNumber = (value, format) => {
 	let formatted = format;
 
 	// Replace each # with a digit
-	for (let i = 0; i < digits.length && i < 10; i++) {
+	for (let i = 0; i < digits.length && i < (format.match(/#/g) || []).length; i++) {
 		formatted = formatted.replace('#', digits[i]);
+	}
+
+	// If we have more digits than format placeholders, append them
+	if (digits.length > (format.match(/#/g) || []).length) {
+		formatted += digits.slice((format.match(/#/g) || []).length);
 	}
 
 	// Remove any remaining # placeholders
@@ -331,7 +336,7 @@ function PersonDetailsPanel() {
 					onChange={(value) =>
 						handleMetaChange(NAME_FIELDS.PHONE, value)
 					}
-					help={__('Enter 10 digit phone number', 'wp-peeps')}
+					help={__('Enter between 10-15 digit phone number', 'wp-peeps')}
 					type="tel"
 				/>
 				<TextControl
