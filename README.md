@@ -65,7 +65,7 @@ This will create 20 test people profiles in your WordPress installation.
 ### 0.1.0-beta.3
 
 -   Fixed issue with social links styling
--   Adjust phone number formatting to all betwen 10 and 15 digits
+-   Adjust phone number formatting to all between 10 and 15 digits
 -   Added toggle to disable archive view
 -   Added settings for menu position
 
