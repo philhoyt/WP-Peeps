@@ -105,8 +105,8 @@ function wp_peeps_get_social_links() {
 function wp_peeps_get_social_block_attributes( $attributes ) {
 	return [
 		'size'          => sanitize_html_class( $attributes['size'] ?? 'has-normal-icon-size' ),
-		'iconColor'    => sanitize_hex_color( $attributes['iconColor'] ?? '' ),
-		'iconBackgroundColor' => sanitize_hex_color( $attributes['iconBackgroundColor'] ?? '' ),
+		'iconColor'    => sanitize_hex_color( $attributes['iconColorValue'] ?? '' ),
+		'iconBackgroundColor' => sanitize_hex_color( $attributes['iconBackgroundColorValue'] ?? '' ),
 		'orientation'   => sanitize_text_field( $attributes['layout']['orientation'] ?? 'horizontal' ),
 		'justify'       => sanitize_text_field( $attributes['layout']['justifyContent'] ?? '' ),
 		'verticalAlign' => sanitize_text_field( $attributes['layout']['verticalAlignment'] ?? '' ),
@@ -288,14 +288,14 @@ function wp_peeps_get_gap_style( $gap ) {
 /**
  * Build block content.
  *
- * @param array $social_links Social links.
- * @param array $block_attrs Sanitized block attributes.
+ * @param array  $social_links Social links.
+ * @param array  $block_attrs Sanitized block attributes.
  * @param string $wrapper_attributes Block wrapper attributes.
  * @return string Block content.
  */
 function wp_peeps_build_social_block_content( $social_links, $block_attrs, $wrapper_attributes ) {
 	$block_content = sprintf(
-		'<!-- wp:social-links {"openInNewTab":%s,"showLabels":%s,"className":"%s","iconColor":"%s","iconBackgroundColor":"%s","layout":{"type":"flex","orientation":"%s","justifyContent":"%s","verticalAlignment":"%s","flexWrap":"%s"}} -->',
+		'<!-- wp:social-links {"openInNewTab":%s,"showLabels":%s,"className":"%s","iconColorValue":"%s","iconBackgroundColorValue":"%s","layout":{"type":"flex","orientation":"%s","justifyContent":"%s","verticalAlignment":"%s","flexWrap":"%s"}} -->',
 		$block_attrs['openInNewTab'] ? 'true' : 'false',
 		$block_attrs['showLabels'] ? 'true' : 'false',
 		implode( ' ', array_filter( wp_peeps_get_social_block_classes( $block_attrs ) ) ),
