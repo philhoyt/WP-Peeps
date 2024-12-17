@@ -23,6 +23,7 @@ function SettingsPage() {
 	const [hasChanges, setHasChanges] = useState(false);
 	const [showRewriteNotice, setShowRewriteNotice] = useState(false);
 	const [error, setError] = useState(null);
+	const [phoneFormatError, setPhoneFormatError] = useState('');
 
 	const { isPublic, hasArchive, phoneFormat, cptSlug, menuPosition, isSaving } = useSelect(
 		(select) => {
@@ -66,6 +67,13 @@ function SettingsPage() {
 	};
 
 	const saveSettings = async () => {
+		// Validate phone format before saving
+		const formatPlaceholders = (localSettings.wp_peeps_phone_format?.match(/#/g) || []).length;
+		if (formatPlaceholders < 10 || formatPlaceholders > 15) {
+			setError(__('Phone format must contain between 10 and 15 # symbols.', 'wp-peeps'));
+			return;
+		}
+
 		try {
 			await saveEntityRecord('root', 'site', localSettings);
 			setHasChanges(false);
@@ -260,7 +268,7 @@ function SettingsPage() {
 									help={
 										<>
 											{__(
-												'Use # for digits. Example:',
+												'Use # for digits (10–15 digits). Example:',
 												'wp-peeps',
 											)}
 											<button
@@ -281,14 +289,31 @@ function SettingsPage() {
 										localSettings.wp_peeps_phone_format ??
 										phoneFormat
 									}
-									onChange={(value) =>
+									onChange={(value) => {
+										const placeholderCount = (value.match(/#/g) || []).length;
+										if (placeholderCount < 10 || placeholderCount > 15) {
+											setPhoneFormatError(
+												__('Format must contain between 10 and 15 # symbols.', 'wp-peeps')
+											);
+										} else {
+											setPhoneFormatError('');
+										}
 										updateLocalSetting(
 											value,
 											'wp_peeps_phone_format',
-										)
-									}
+										);
+									}}
 									disabled={isSaving}
 								/>
+								{phoneFormatError && (
+									<Notice
+										status="error"
+										isDismissible={false}
+										className="wp-peeps-field-error"
+									>
+										{phoneFormatError}
+									</Notice>
+								)}
 							</div>
 						</div>
 
