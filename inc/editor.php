@@ -27,7 +27,7 @@ function enqueue_editor_assets() {
 	$base_path  = dirname( __DIR__ );
 	$asset_file = include $base_path . '/build/editor/index.asset.php';
 
-	// Enqueue the editor JavaScript
+	// Enqueue the editor JavaScript.
 	wp_enqueue_script(
 		'wp-peeps-editor',
 		plugins_url( 'wp-peeps/build/editor/index.js', $base_path ),
@@ -36,12 +36,16 @@ function enqueue_editor_assets() {
 		true
 	);
 
-	// Enqueue the editor-specific styles
-	wp_enqueue_style(
-		'wp-peeps-editor',
-		plugins_url( 'wp-peeps/build/editor/style-index.css', $base_path ),
-		array(),
-		$asset_file['version']
-	);
+	// This is for UI elements OUTSIDE the content area
+	// wp_enqueue_style(
+	// 	'wp-peeps-editor-ui',
+	// 	plugins_url( 'wp-peeps/build/editor/style-index.css', $base_path ),
+	// 	array(),
+	// 	$asset_file['version']
+	// );
+	
+	// This is for styling INSIDE the editor content area.
+	add_theme_support( 'editor-styles' );
+	add_editor_style( plugins_url( 'wp-peeps/build/editor/style-index.css', $base_path ) );
 }
 add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\enqueue_editor_assets' );
