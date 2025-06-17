@@ -6,12 +6,12 @@
 	pointer-events: none !important;
 	user-select: none !important;
 	cursor: not-allowed !important;
+	opacity: .5;
 	
-	/* Add explanatory message */
 	span {
 
 		&::after {
-			content: "Update in Sidebar" !important;
+			content: "Person Name" !important;
 		}
 	}
 }
