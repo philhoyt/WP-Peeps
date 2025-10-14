@@ -62,6 +62,10 @@ This will create 20 test people profiles in your WordPress installation.
 
 ## Changelog
 
+### 0.1.1
+
+-   Disable post title editing
+
 ### 0.1.0-beta.3
 
 -   Fixed issue with social links styling
