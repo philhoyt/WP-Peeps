@@ -21,6 +21,9 @@ function wp_peeps_render_phone_block( $attributes, $block ) {
 
 	// Bail early if no post ID or user can't read the post.
 	if ( empty( $post_id ) ) {
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			error_log( 'WP Peeps: Phone block - No post ID available' );
+		}
 		return '';
 	}
 

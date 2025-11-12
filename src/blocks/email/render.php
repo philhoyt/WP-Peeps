@@ -21,6 +21,9 @@ function wp_peeps_render_email_block( $attributes, $block ) {
 
 	// Bail early if no post ID.
 	if ( empty( $post_id ) ) {
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			error_log( 'WP Peeps: Email block - No post ID available' );
+		}
 		return '';
 	}
 
