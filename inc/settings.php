@@ -14,6 +14,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Register plugin settings
+ *
+ * Registers all plugin settings with WordPress Settings API,
+ * including REST API support for block editor integration.
+ *
+ * @return void
  */
 function register_plugin_settings() {
 	register_setting(
