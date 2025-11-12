@@ -3,7 +3,7 @@
  * Render callback for the social-links block.
  *
  * @package WP_Peeps
- * @since 0.1.0
+ * @since 1.0.0
  *
  * @param array $attributes The block attributes.
  * @return string The rendered block content.
