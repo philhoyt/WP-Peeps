@@ -321,13 +321,21 @@ function wp_peeps_build_social_block_content( $social_links, $block_attrs, $wrap
 
 	// Add each social link.
 	foreach ( $social_links as $link ) {
-		$service = strtolower( $link['platform'] );
-		$url     = esc_url( $link['url'] );
+		$service = sanitize_key( strtolower( $link['platform'] ) ); // Sanitize platform name.
+		$url     = esc_url_raw( $link['url'] ); // Use esc_url_raw for JSON encoding.
+
+		// Build JSON attributes properly to prevent XSS.
+		$block_attributes = wp_json_encode(
+			array(
+				'url'     => $url,
+				'service' => $service,
+			),
+			JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
+		);
 
 		$block_content .= sprintf(
-			'<!-- wp:social-link {"url":"%s","service":"%s"} /-->',
-			$url,
-			$service
+			'<!-- wp:social-link %s /-->',
+			$block_attributes
 		);
 	}
 
