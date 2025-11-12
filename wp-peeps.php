@@ -34,7 +34,7 @@ require_once __DIR__ . '/inc/notices.php';
 require_once __DIR__ . '/inc/blocks.php';
 
 // Block render callbacks.
-require_once __DIR__ . '/src/blocks/full-name/render.php';
-require_once __DIR__ . '/src/blocks/phone/render.php';
-require_once __DIR__ . '/src/blocks/social-links/render.php';
-require_once __DIR__ . '/src/blocks/email/render.php';
+require_once __DIR__ . '/build/blocks/full-name/render.php';
+require_once __DIR__ . '/build/blocks/phone/render.php';
+require_once __DIR__ . '/build/blocks/social-links/render.php';
+require_once __DIR__ . '/build/blocks/email/render.php';
