@@ -181,35 +181,26 @@ function PersonDetailsPanel() {
 	// Get dispatch function for edit-post store
 	const { openGeneralSidebar, toggleEditorPanelOpened } = useDispatch(editPostStore);
 
-	// Check if panel is open and get post status
-	const { isPanelOpen, isNewPost } = useSelect(
-		(select) => {
-			const editorStore = select('core/editor');
-			return {
-				isPanelOpen: select(editPostStore).isEditorPanelOpened('wp-peeps-name-panel'),
-				isNewPost: editorStore.isEditedPostNew(),
-			};
-		},
+	// Check if post is new
+	const isNewPost = useSelect(
+		(select) => select('core/editor').isEditedPostNew(),
 		[],
 	);
 
-	// Open Person Name panel by default on new posts (respects user preferences once set)
+	// Open Person Name panel by default on new posts
 	useEffect(() => {
 		if (postType === 'wp_peeps_people' && isNewPost) {
 			// Ensure the document sidebar is open
 			openGeneralSidebar('edit-post/document');
 			
-			// Open the panel by default on new posts (with a small delay to ensure state is ready)
-			// This only runs once - if user closes it, their preference is saved and respected
+			// Open the panel on new posts (with a small delay to ensure state is ready)
 			const timer = setTimeout(() => {
-				if (!isPanelOpen) {
-					toggleEditorPanelOpened('wp-peeps-name-panel');
-				}
+				toggleEditorPanelOpened('wp-peeps-name-panel');
 			}, 100);
 
 			return () => clearTimeout(timer);
 		}
-	}, [postType, isNewPost, isPanelOpen, toggleEditorPanelOpened, openGeneralSidebar]);
+	}, [postType, isNewPost, toggleEditorPanelOpened, openGeneralSidebar]);
 
 	const [meta, setMeta] = useEntityProp(
 		'postType',
