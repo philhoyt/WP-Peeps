@@ -54,7 +54,7 @@ function wp_peeps_render_email_block( $attributes, $block ) {
 	// Return the email wrapped in its HTML tag.
 	return sprintf(
 		'<%1$s %2$s>%3$s</%1$s>',
-		$tag_name,
+		tag_escape( $tag_name ),
 		$wrapper_attributes,
 		$email_content
 	);
