@@ -21,17 +21,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // At the top of the file, after the ABSPATH check.
 define( 'WP_PEEPS_PLUGIN_FILE', __FILE__ );
-define( 'WP_PEEPS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'WP_PEEPS_PLUGIN_DIR', __DIR__ . '/' );
 
 // Core includes.
-require_once plugin_dir_path( __FILE__ ) . 'inc/cpt.php';
-require_once plugin_dir_path( __FILE__ ) . 'inc/meta.php';
-require_once plugin_dir_path( __FILE__ ) . 'inc/editor.php';
-require_once plugin_dir_path( __FILE__ ) . 'inc/admin.php';
-require_once plugin_dir_path( __FILE__ ) . 'inc/settings.php';
-require_once plugin_dir_path( __FILE__ ) . 'inc/activation.php';
-require_once plugin_dir_path( __FILE__ ) . 'inc/notices.php';
-require_once plugin_dir_path( __FILE__ ) . 'inc/blocks.php';
+require_once __DIR__ . '/inc/cpt.php';
+require_once __DIR__ . '/inc/meta.php';
+require_once __DIR__ . '/inc/editor.php';
+require_once __DIR__ . '/inc/admin.php';
+require_once __DIR__ . '/inc/settings.php';
+require_once __DIR__ . '/inc/activation.php';
+require_once __DIR__ . '/inc/notices.php';
+require_once __DIR__ . '/inc/blocks.php';
 
 // Block render callbacks.
 require_once __DIR__ . '/src/blocks/full-name/render.php';

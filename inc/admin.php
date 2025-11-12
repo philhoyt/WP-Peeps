@@ -49,7 +49,7 @@ function enqueue_admin_scripts( $hook ) {
 		return;
 	}
 
-	$asset_file = include plugin_dir_path( __DIR__ ) . 'build/admin/index.asset.php';
+	$asset_file = include dirname( __DIR__ ) . '/build/admin/index.asset.php';
 
 	wp_enqueue_style(
 		'wp-peeps-admin',
