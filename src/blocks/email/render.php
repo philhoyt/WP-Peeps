@@ -44,7 +44,9 @@ function wp_peeps_render_email_block( $attributes, $block ) {
 
 	// Get and sanitize attributes.
 	$tag_name = sanitize_key( $attributes['tagName'] ?? 'p' );
-	$prefix   = ! empty( $attributes['prefix'] ) ? wp_kses_post( $attributes['prefix'] ) . ' ' : '';
+
+	// Strip all HTML from prefix - only allow plain text.
+	$prefix = ! empty( $attributes['prefix'] ) ? esc_html( wp_strip_all_tags( $attributes['prefix'] ) ) . ' ' : '';
 
 	// Get block wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes();
