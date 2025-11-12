@@ -45,3 +45,4 @@ package-lock.json
 .eslintrc
 .prettierrc
 .stylelintrc
+AUDIT.md
