@@ -9,7 +9,7 @@ WP Peeps is a WordPress plugin that helps you create and manage a directory of p
 ### Requirements
 
 -   WordPress 6.6 or higher
--   PHP 7.2 or higher
+-   PHP 8.0 or higher
 
 ### Features
 
