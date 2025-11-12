@@ -18,6 +18,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return void
  */
 function enqueue_editor_assets() {
+	// Check if user can edit posts.
+	if ( ! current_user_can( 'edit_posts' ) ) {
+		return;
+	}
+
 	// Check the current post type
 	$current_post_type = get_current_screen()->post_type;
 	if ( $current_post_type !== 'wp_peeps_people' ) {
