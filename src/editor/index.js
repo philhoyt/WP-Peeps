@@ -160,9 +160,9 @@ import {
 	Icon,
 } from '@wordpress/components';
 import { useEffect, useState, useCallback, useMemo } from '@wordpress/element';
-import { dispatch, useSelect } from '@wordpress/data';
+import { dispatch, useSelect, useDispatch } from '@wordpress/data';
 import { store as coreStore, useEntityProp } from '@wordpress/core-data';
-import { store as preferencesStore } from '@wordpress/preferences';
+import { store as editPostStore } from '@wordpress/edit-post';
 import { dragHandle } from '@wordpress/icons';
 
 // Import and register blocks
@@ -178,23 +178,38 @@ function PersonDetailsPanel() {
 		[],
 	);
 
-	// Get panel open state from preferences
-	const isPanelOpen = useSelect(
-		(select) =>
-			select(preferencesStore).get('core/edit-post', 'wp-peeps-name-panel'),
+	// Get dispatch function for edit-post store
+	const { openGeneralSidebar, toggleEditorPanelOpened } = useDispatch(editPostStore);
+
+	// Check if panel is open and get post status
+	const { isPanelOpen, isNewPost } = useSelect(
+		(select) => {
+			const editorStore = select('core/editor');
+			return {
+				isPanelOpen: select(editPostStore).isEditorPanelOpened('wp-peeps-name-panel'),
+				isNewPost: editorStore.isEditedPostNew(),
+			};
+		},
 		[],
 	);
 
-	// Set Person Name panel to be open by default (only if not already set)
+	// Open Person Name panel by default on new posts (respects user preferences once set)
 	useEffect(() => {
-		if (postType === 'wp_peeps_people' && isPanelOpen === undefined) {
-			dispatch(preferencesStore).set(
-				'core/edit-post',
-				'wp-peeps-name-panel',
-				true,
-			);
+		if (postType === 'wp_peeps_people' && isNewPost) {
+			// Ensure the document sidebar is open
+			openGeneralSidebar('edit-post/document');
+			
+			// Open the panel by default on new posts (with a small delay to ensure state is ready)
+			// This only runs once - if user closes it, their preference is saved and respected
+			const timer = setTimeout(() => {
+				if (!isPanelOpen) {
+					toggleEditorPanelOpened('wp-peeps-name-panel');
+				}
+			}, 100);
+
+			return () => clearTimeout(timer);
 		}
-	}, [postType, isPanelOpen]);
+	}, [postType, isNewPost, isPanelOpen, toggleEditorPanelOpened, openGeneralSidebar]);
 
 	const [meta, setMeta] = useEntityProp(
 		'postType',
@@ -306,7 +321,6 @@ function PersonDetailsPanel() {
 				name="wp-peeps-name-panel"
 				title={__('Person Name', 'wp-peeps')}
 				className="wp-peeps-name-panel"
-				initialOpen={true}
 			>
 				<TextControl
 					label={__('First Name', 'wp-peeps') + ' *'}
