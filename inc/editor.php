@@ -23,10 +23,10 @@ function enqueue_editor_assets() {
 		return;
 	}
 
-	// Check the current post type
+	// Check the current post type.
 	$current_post_type = get_current_screen()->post_type;
 	if ( $current_post_type !== 'wp_peeps_people' ) {
-		return; // Bail out if not editing the `wp_peeps_people` post type
+		return; // Bail out if not editing the `wp_peeps_people` post type.
 	}
 
 	$base_path  = dirname( __DIR__ );
@@ -41,14 +41,6 @@ function enqueue_editor_assets() {
 		true
 	);
 
-	// This is for UI elements OUTSIDE the content area
-	// wp_enqueue_style(
-	// 	'wp-peeps-editor-ui',
-	// 	plugins_url( 'wp-peeps/build/editor/style-index.css', $base_path ),
-	// 	array(),
-	// 	$asset_file['version']
-	// );
-	
 	// This is for styling INSIDE the editor content area.
 	add_theme_support( 'editor-styles' );
 	add_editor_style( plugins_url( 'wp-peeps/build/editor/style-index.css', $base_path ) );
