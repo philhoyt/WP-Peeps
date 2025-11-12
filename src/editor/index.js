@@ -162,6 +162,7 @@ import {
 import { useEffect, useState, useCallback, useMemo } from '@wordpress/element';
 import { dispatch, useSelect } from '@wordpress/data';
 import { store as coreStore, useEntityProp } from '@wordpress/core-data';
+import { store as preferencesStore } from '@wordpress/preferences';
 import { dragHandle } from '@wordpress/icons';
 
 // Import and register blocks
@@ -176,6 +177,24 @@ function PersonDetailsPanel() {
 		(select) => select('core/editor').getCurrentPostType(),
 		[],
 	);
+
+	// Get panel open state from preferences
+	const isPanelOpen = useSelect(
+		(select) =>
+			select(preferencesStore).get('core/edit-post', 'wp-peeps-name-panel'),
+		[],
+	);
+
+	// Set Person Name panel to be open by default (only if not already set)
+	useEffect(() => {
+		if (postType === 'wp_peeps_people' && isPanelOpen === undefined) {
+			dispatch(preferencesStore).set(
+				'core/edit-post',
+				'wp-peeps-name-panel',
+				true,
+			);
+		}
+	}, [postType, isPanelOpen]);
 
 	const [meta, setMeta] = useEntityProp(
 		'postType',
@@ -336,7 +355,7 @@ function PersonDetailsPanel() {
 					onChange={(value) =>
 						handleMetaChange(NAME_FIELDS.PHONE, value)
 					}
-					help={__('Enter between 10-15 digit phone number', 'wp-peeps')}
+					help={__('Enter between 10–15 digit phone number', 'wp-peeps')}
 					type="tel"
 				/>
 				<TextControl
