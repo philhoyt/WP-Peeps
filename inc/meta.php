@@ -249,10 +249,11 @@ function update_title_from_name( $meta_id, $post_id, $meta_key, $meta_value ) {
 	$updating[ $post_id ] = true;
 
 	try {
-		// Get all name parts.
-		$first_name  = get_post_meta( $post_id, 'wp_peeps_first_name', true );
-		$middle_name = get_post_meta( $post_id, 'wp_peeps_middle_name', true );
-		$last_name   = get_post_meta( $post_id, 'wp_peeps_last_name', true );
+		// Get all name parts in a single query (optimized).
+		$all_meta    = get_post_meta( $post_id );
+		$first_name  = isset( $all_meta['wp_peeps_first_name'][0] ) ? $all_meta['wp_peeps_first_name'][0] : '';
+		$middle_name = isset( $all_meta['wp_peeps_middle_name'][0] ) ? $all_meta['wp_peeps_middle_name'][0] : '';
+		$last_name   = isset( $all_meta['wp_peeps_last_name'][0] ) ? $all_meta['wp_peeps_last_name'][0] : '';
 
 		// Build the full name.
 		$name_parts = array_filter( array( $first_name, $middle_name, $last_name ) );
