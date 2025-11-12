@@ -4,10 +4,6 @@
  *
  * @package WP_Peeps
  * @since 0.1.0
- *
- * @param array  $attributes The block attributes.
- * @param array  $block      The block object.
- * @return string The block content.
  */
 
 namespace WP_Peeps\Blocks;
@@ -17,6 +13,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Render the Full Name block.
+ *
+ * @param array    $attributes The block attributes containing name display settings.
+ * @param WP_Block $block      Block instance.
+ * @return string             The rendered HTML for the full name block.
+ */
 function wp_peeps_render_full_name_block( $attributes, $block ) {
 
 	$post_id = isset( $block->context['postId'] ) ? $block->context['postId'] : get_the_ID();
