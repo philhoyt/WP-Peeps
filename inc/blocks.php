@@ -24,7 +24,7 @@ function register_blocks() {
 	register_block_type(
 		WP_PEEPS_PLUGIN_DIR . 'build/blocks/full-name',
 		array(
-			'render_callback' => 'wp_peeps_render_full_name_block',
+			'render_callback' => 'WP_Peeps\Blocks\wp_peeps_render_full_name_block',
 		)
 	);
 
@@ -32,7 +32,7 @@ function register_blocks() {
 	register_block_type(
 		WP_PEEPS_PLUGIN_DIR . 'build/blocks/phone',
 		array(
-			'render_callback' => 'wp_peeps_render_phone_block',
+			'render_callback' => 'WP_Peeps\Blocks\wp_peeps_render_phone_block',
 		)
 	);
 
@@ -40,7 +40,7 @@ function register_blocks() {
 	register_block_type(
 		WP_PEEPS_PLUGIN_DIR . 'build/blocks/social-links',
 		array(
-			'render_callback' => 'wp_peeps_render_social_links_block',
+			'render_callback' => 'WP_Peeps\Blocks\wp_peeps_render_social_links_block',
 		)
 	);
 
@@ -48,7 +48,7 @@ function register_blocks() {
 	register_block_type(
 		WP_PEEPS_PLUGIN_DIR . 'build/blocks/email',
 		array(
-			'render_callback' => 'wp_peeps_render_email_block',
+			'render_callback' => 'WP_Peeps\Blocks\wp_peeps_render_email_block',
 		)
 	);
 }
