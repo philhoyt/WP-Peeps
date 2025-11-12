@@ -2,7 +2,7 @@
 Contributors:      Phil Hoyt
 Tags:              directory, people, staff, team, employees
 Tested up to:      6.7
-Stable tag:        0.1.0
+Stable tag:        1.0.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,6 +40,18 @@ Yes, in People → Settings you can disable the "Make People Directory Public" o
 Go to People → Settings and update the "Phone Number Format" field. Use # symbols where you want digits to appear. For example: (###) ###-####
 
 == Changelog ==
+
+= 1.0.0 =
+* Stable release
+* Comprehensive code audit and security improvements
+* Fixed XSS vulnerabilities
+* Added proper validation and sanitization
+* Improved error handling and logging
+* Code quality improvements and documentation
+* Performance optimizations
+
+= 0.1.1 =
+* Disable post title editing
 
 = 0.1.0 =
 * Initial release

@@ -62,6 +62,19 @@ This will create 20 test people profiles in your WordPress installation.
 
 ## Changelog
 
+### 1.0.0
+
+-   Stable release
+-   Comprehensive code audit and security improvements
+-   Fixed XSS vulnerabilities in social links and prefix fields
+-   Added proper validation and sanitization for all inputs
+-   Improved error handling and logging
+-   Code quality improvements and complete PHPDoc documentation
+-   Performance optimizations (reduced database queries)
+-   Fixed infinite loop issue in title update function
+-   Added namespace declarations to all render callbacks
+-   Standardized path usage throughout the plugin
+
 ### 0.1.1
 
 -   Disable post title editing
@@ -105,6 +118,6 @@ This will create 20 test people profiles in your WordPress installation.
 Contributors: Phil Hoyt
 Tags: directory, people, staff, team, employees
 Tested up to: 6.7
-Stable tag: 0.1.0
+Stable tag: 1.0.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
