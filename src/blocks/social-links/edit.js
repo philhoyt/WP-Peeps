@@ -20,7 +20,7 @@ import {
 } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
 import { layout, share } from '@wordpress/icons';
-import { useEffect, useRef } from '@wordpress/element';
+import { useEffect, useRef, useState } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 
 /**
@@ -66,8 +66,9 @@ export default function Edit({ attributes, setAttributes }) {
 
 	const blockProps = useBlockProps();
 
-	// Track whether this is the initial load
-	const initialLoadRef = useRef(true);
+	// Track save state to force ServerSideRender update after save
+	const [renderKey, setRenderKey] = useState(0);
+	const wasSavingRef = useRef(false);
 
 	// Get meta and save status
 	const { isSaving, isDirty } = useSelect((select) => {
@@ -81,19 +82,15 @@ export default function Edit({ attributes, setAttributes }) {
 		};
 	}, []);
 
-	// Force update after save
+	// Force ServerSideRender to update after save completes
 	useEffect(() => {
-		if (initialLoadRef.current) {
-			initialLoadRef.current = false;
-			return;
+		// If we just finished saving (was saving, now not saving and not dirty)
+		if (wasSavingRef.current && !isSaving && !isDirty) {
+			// Force re-render by changing the key (doesn't mark block as dirty)
+			setRenderKey((prev) => prev + 1);
 		}
-
-		// If we were saving and now we're not, and the post is no longer dirty
-		if (!isSaving && !isDirty) {
-			// Force a re-render of ServerSideRender
-			setAttributes({ _lastUpdate: Date.now() });
-		}
-	}, [isSaving, isDirty, setAttributes]);
+		wasSavingRef.current = isSaving;
+	}, [isSaving, isDirty]);
 
 	return (
 		<>
@@ -163,8 +160,6 @@ export default function Edit({ attributes, setAttributes }) {
 					/>
 				</PanelBody>
 				<PanelColorSettings
-					__experimentalHasMultipleOrigins
-					__experimentalIsRenderedInSidebar
 					title={__('Color settings')}
 					colorSettings={[
 						{
@@ -190,6 +185,7 @@ export default function Edit({ attributes, setAttributes }) {
 			</InspectorControls>
 			<div {...blockProps}>
 				<ServerSideRender
+					key={renderKey}
 					block="wp-peeps/social-links"
 					attributes={attributes}
 					EmptyResponsePlaceholder={() => (
