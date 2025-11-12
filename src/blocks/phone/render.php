@@ -42,7 +42,9 @@ function wp_peeps_render_phone_block( $attributes, $block ) {
 
 	// Get and sanitize attributes.
 	$tag_name = sanitize_key( $attributes['tagName'] ?? 'p' );
-	$prefix   = ! empty( $attributes['prefix'] ) ? wp_kses_post( $attributes['prefix'] ) . ' ' : '';
+
+	// Strip all HTML from prefix - only allow plain text.
+	$prefix = ! empty( $attributes['prefix'] ) ? esc_html( wp_strip_all_tags( $attributes['prefix'] ) ) . ' ' : '';
 
 	// Format phone number.
 	$format = get_option( 'wp_peeps_phone_format', '(###) ###-####' );
