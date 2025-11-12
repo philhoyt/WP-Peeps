@@ -9,6 +9,13 @@
  * @return string The rendered block content.
  */
 
+namespace WP_Peeps\Blocks;
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 // Define default social links.
 const DEFAULT_SOCIAL_LINKS = [
 	[

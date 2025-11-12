@@ -9,6 +9,13 @@
  * @subpackage Blocks
  */
 
+namespace WP_Peeps\Blocks;
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Render the Email block.
  *

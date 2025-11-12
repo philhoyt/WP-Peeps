@@ -9,6 +9,14 @@
  * @param array  $block      The block object.
  * @return string The block content.
  */
+
+namespace WP_Peeps\Blocks;
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 function wp_peeps_render_full_name_block( $attributes, $block ) {
 
 	$post_id = isset( $block->context['postId'] ) ? $block->context['postId'] : get_the_ID();
