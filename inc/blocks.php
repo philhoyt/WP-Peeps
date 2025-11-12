@@ -13,6 +13,43 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Register block category
+ *
+ * Registers the "People Directory" block category.
+ *
+ * @param array    $categories Array of block categories.
+ * @param WP_Block_Editor_Context $block_editor_context The current block editor context.
+ * @return array Modified array of block categories.
+ */
+function register_block_category( $categories, $block_editor_context ) {
+	// Check if category already exists.
+	$category_exists = false;
+	foreach ( $categories as $category ) {
+		if ( isset( $category['slug'] ) && 'wp-peeps' === $category['slug'] ) {
+			$category_exists = true;
+			break;
+		}
+	}
+
+	// Add category if it doesn't exist.
+	if ( ! $category_exists ) {
+		$categories = array_merge(
+			array(
+				array(
+					'slug'  => 'wp-peeps',
+					'title' => __( 'WP Peeps', 'wp-peeps' ),
+					'icon'  => 'groups',
+				),
+			),
+			$categories
+		);
+	}
+
+	return $categories;
+}
+add_filter( 'block_categories_all', __NAMESPACE__ . '\register_block_category', 10, 2 );
+
+/**
  * Initialize blocks
  *
  * Register block types and any related functionality.
