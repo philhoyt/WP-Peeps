@@ -222,8 +222,14 @@ add_action( 'init', __NAMESPACE__ . '\register_people_meta' );
  * @return void
  */
 function update_title_from_name( $meta_id, $post_id, $meta_key, $meta_value ) {
-	// Only proceed if we're updating first or last name.
+	// Only proceed if we're updating first, middle, or last name.
 	if ( ! in_array( $meta_key, array( 'wp_peeps_first_name', 'wp_peeps_middle_name', 'wp_peeps_last_name' ), true ) ) {
+		return;
+	}
+
+	// Prevent infinite loops by checking if we're already updating.
+	static $updating = array();
+	if ( isset( $updating[ $post_id ] ) ) {
 		return;
 	}
 
@@ -234,19 +240,39 @@ function update_title_from_name( $meta_id, $post_id, $meta_key, $meta_value ) {
 		return;
 	}
 
+	// Prevent recursion during save_post.
+	if ( doing_action( 'save_post' ) || doing_action( 'wp_insert_post' ) ) {
+		return;
+	}
+
+	// Mark as updating to prevent recursion.
+	$updating[ $post_id ] = true;
+
 	try {
-		// Get both names.
+		// Get all name parts.
 		$first_name  = get_post_meta( $post_id, 'wp_peeps_first_name', true );
 		$middle_name = get_post_meta( $post_id, 'wp_peeps_middle_name', true );
 		$last_name   = get_post_meta( $post_id, 'wp_peeps_last_name', true );
 
 		// Build the full name.
-		$full_name = trim( sprintf( '%s %s %s', $first_name, $middle_name, $last_name ) );
+		$name_parts = array_filter( array( $first_name, $middle_name, $last_name ) );
+		$full_name  = trim( implode( ' ', $name_parts ) );
 
 		if ( empty( $full_name ) ) {
 			error_log( sprintf( 'WP Peeps: Empty full name for post %d', $post_id ) );
+			unset( $updating[ $post_id ] );
 			return;
 		}
+
+		// Only update if the title is different to avoid unnecessary database writes.
+		if ( $post->post_title === $full_name ) {
+			unset( $updating[ $post_id ] );
+			return;
+		}
+
+		// Temporarily remove our hooks to prevent recursion.
+		remove_action( 'updated_post_meta', __NAMESPACE__ . '\update_title_from_name', 10 );
+		remove_action( 'added_post_meta', __NAMESPACE__ . '\update_title_from_name', 10 );
 
 		// Update the post title.
 		wp_update_post(
@@ -255,8 +281,15 @@ function update_title_from_name( $meta_id, $post_id, $meta_key, $meta_value ) {
 				'post_title' => $full_name,
 			)
 		);
+
+		// Re-add our hooks.
+		add_action( 'updated_post_meta', __NAMESPACE__ . '\update_title_from_name', 10, 4 );
+		add_action( 'added_post_meta', __NAMESPACE__ . '\update_title_from_name', 10, 4 );
 	} catch ( \Exception $e ) {
 		error_log( sprintf( 'WP Peeps: Error updating title for post %d: %s', $post_id, $e->getMessage() ) );
+	} finally {
+		// Always unset the updating flag, even if an error occurred.
+		unset( $updating[ $post_id ] );
 	}
 }
 add_action( 'updated_post_meta', __NAMESPACE__ . '\update_title_from_name', 10, 4 );
