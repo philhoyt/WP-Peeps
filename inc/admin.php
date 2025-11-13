@@ -49,18 +49,18 @@ function enqueue_admin_scripts( $hook ) {
 		return;
 	}
 
-	$asset_file = include dirname( __DIR__ ) . '/build/admin/index.asset.php';
+	$asset_file = include WP_PEEPS_PLUGIN_DIR . 'build/admin/index.asset.php';
 
 	wp_enqueue_style(
 		'wp-peeps-admin',
-		plugins_url( 'build/admin/style-index.css', __DIR__ ),
+		plugins_url( 'build/admin/style-index.css', WP_PEEPS_PLUGIN_FILE ),
 		array( 'wp-components' ),
 		$asset_file['version']
 	);
 
 	wp_enqueue_script(
 		'wp-peeps-admin',
-		plugins_url( 'build/admin/index.js', __DIR__ ),
+		plugins_url( 'build/admin/index.js', WP_PEEPS_PLUGIN_FILE ),
 		array_merge(
 			$asset_file['dependencies'],
 			array( 'wp-components', 'wp-element', 'wp-data', 'wp-core-data', 'wp-api-fetch' )
