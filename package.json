@@ -17,7 +17,6 @@
 	"files": [
 		"build",
 		"inc",
-		"index.php",
 		"wp-peeps.php",
 		"src"
 	],

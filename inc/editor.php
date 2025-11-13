@@ -29,13 +29,12 @@ function enqueue_editor_assets() {
 		return; // Bail out if not editing the `wp_peeps_people` post type.
 	}
 
-	$base_path  = dirname( __DIR__ );
-	$asset_file = include $base_path . '/build/editor/index.asset.php';
+	$asset_file = include WP_PEEPS_PLUGIN_DIR . 'build/editor/index.asset.php';
 
 	// Enqueue the editor JavaScript.
 	wp_enqueue_script(
 		'wp-peeps-editor',
-		plugins_url( 'wp-peeps/build/editor/index.js', $base_path ),
+		plugins_url( 'build/editor/index.js', WP_PEEPS_PLUGIN_FILE ),
 		$asset_file['dependencies'],
 		$asset_file['version'],
 		true
@@ -43,6 +42,6 @@ function enqueue_editor_assets() {
 
 	// This is for styling INSIDE the editor content area.
 	add_theme_support( 'editor-styles' );
-	add_editor_style( plugins_url( 'wp-peeps/build/editor/style-index.css', $base_path ) );
+	add_editor_style( plugins_url( 'build/editor/style-index.css', WP_PEEPS_PLUGIN_FILE ) );
 }
 add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\enqueue_editor_assets' );
