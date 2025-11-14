@@ -1,0 +1,80 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "wp-peeps/social-links",
+  "version": "1.1.0",
+  "title": "Social Links - WP Peeps",
+  "category": "wp-peeps",
+  "icon": "share",
+  "description": "Add and customize social media links.",
+  "supports": {
+    "html": false,
+    "align": true,
+    "spacing": {
+      "blockGap": true,
+      "margin": true,
+      "padding": true,
+      "units": [
+        "px",
+        "em",
+        "rem",
+        "vh",
+        "vw"
+      ]
+    },
+    "layout": {
+      "allowSwitching": false,
+      "allowInheriting": false,
+      "allowJustification": true,
+      "allowVerticalAlignment": true,
+      "allowWrapping": true,
+      "default": {
+        "type": "flex",
+        "orientation": "horizontal",
+        "justifyContent": "left"
+      }
+    },
+    "__experimentalSelector": ".wp-block-wp-peeps-social-links"
+  },
+  "attributes": {
+    "iconColorValue": {
+      "type": "string"
+    },
+    "iconBackgroundColorValue": {
+      "type": "string"
+    },
+    "size": {
+      "type": "string",
+      "default": "has-normal-icon-size"
+    },
+    "style": {
+      "type": "object"
+    },
+    "className": {
+      "type": "string"
+    },
+    "openInNewTab": {
+      "type": "boolean",
+      "default": false
+    },
+    "showLabels": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "styles": [
+    {
+      "name": "default",
+      "label": "Default",
+      "isDefault": true
+    },
+    {
+      "name": "logos-only",
+      "label": "Logos Only"
+    }
+  ],
+  "textdomain": "wp-peeps",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "render": "file:./render.php"
+}
