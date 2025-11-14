@@ -23,7 +23,7 @@
 			"step": "importWxr",
 			"file": {
 				"resource": "url",
-				"url": "https://raw.githubusercontent.com/philhoyt/WP-Peeps/playground/_playground/demo-content.xml"
+				"url": "https://raw.githubusercontent.com/philhoyt/WP-Peeps/playground/_playground/wp-peeps-demo.xml"
 			}
 		}
 	]
