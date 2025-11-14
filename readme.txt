@@ -22,9 +22,17 @@ Features:
 
 == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/wp-peeps` directory
-2. Activate the plugin through the 'Plugins' screen in WordPress
-3. Go to People → Settings to configure the plugin options
+1. Download the latest release from GitHub
+2. Upload the plugin files to the `/wp-content/plugins/wp-peeps` directory
+3. Activate the plugin through the 'Plugins' screen in WordPress
+4. Go to People → Settings to configure the plugin options
+
+== Screenshots ==
+
+1. Example of a person post displayed on the frontend
+2. Fields available when editing a person post
+3. Available WP Peeps blocks in the block inserter
+4. WP Peeps settings page
 
 == Frequently Asked Questions ==
 
