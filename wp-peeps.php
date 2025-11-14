@@ -5,7 +5,7 @@
  * Description:       A directory of people for your WordPress site.
  * Requires at least: 6.6
  * Requires PHP:      8.0
- * Version:           1.0.0
+ * Version:           1.1.0
  * Author:            Phil Hoyt
  * Author URI:        https://philhoyt.com
  * License:           GPL-2.0-or-later
@@ -32,6 +32,7 @@ require_once __DIR__ . '/inc/settings.php';
 require_once __DIR__ . '/inc/activation.php';
 require_once __DIR__ . '/inc/notices.php';
 require_once __DIR__ . '/inc/blocks.php';
+require_once __DIR__ . '/inc/templates.php';
 
 // Block render callbacks.
 require_once __DIR__ . '/build/blocks/full-name/render.php';
