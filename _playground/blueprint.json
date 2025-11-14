@@ -6,12 +6,11 @@
 	"landingPage": "/",
 	"login": true,
 	"steps": [
-	  {
-		"step": "installPlugin",
-		"pluginData": {
-		  "resource": "url",		  "url": "https://github-proxy.com/proxy/?repo=philhoyt/WP-Peeps&branch=playground",
-		  "url": "https://github-proxy.com/proxy/?repo=philhoyt/WP-Peeps&branch=playground"
+		{
+			"step": "setSiteOptions",
+			"options": {
+				"blogname": "WP Peeps"
+			}
 		}
-	  }
 	]
   }
