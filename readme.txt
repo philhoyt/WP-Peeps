@@ -2,7 +2,7 @@
 Contributors:      Phil Hoyt
 Tags:              directory, people, staff, team, employees
 Tested up to:      6.9
-Stable tag:        1.1.0
+Stable tag:        1.2.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,11 @@ Yes, in People → Settings you can disable the "Make People Directory Public" o
 Go to People → Settings and update the "Phone Number Format" field. Use # symbols where you want digits to appear. For example: (###) ###-####
 
 == Changelog ==
+
+= 1.2.0 =
+* Automatic permalink flush on plugin activation
+* Automatic permalink flush on plugin deactivation
+* Added notice when changing settings that affect permalinks (slug, public status, archive)
 
 = 1.1.0 =
 * Added block template registration for single person posts
