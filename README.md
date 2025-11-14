@@ -62,6 +62,12 @@ This will create 20 test people profiles in your WordPress installation.
 
 ## Changelog
 
+### 1.1.0
+
+-   Added block template registration for single person posts
+-   Default template includes featured image, full name, contact information, and social links
+-   Template is customizable through the Site Editor
+
 ### 1.0.0
 
 -   Stable release
@@ -118,6 +124,6 @@ This will create 20 test people profiles in your WordPress installation.
 Contributors: Phil Hoyt
 Tags: directory, people, staff, team, employees
 Tested up to: 6.7
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
