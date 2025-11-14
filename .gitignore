@@ -33,7 +33,6 @@ node_modules/
 /vendor/
 
 # Build directory
-build/
 dist/
 
 # VS Code settings

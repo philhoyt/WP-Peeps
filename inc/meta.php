@@ -255,6 +255,12 @@ function update_title_from_name( $meta_id, $post_id, $meta_key, $meta_value ) {
 		$middle_name = isset( $all_meta['wp_peeps_middle_name'][0] ) ? $all_meta['wp_peeps_middle_name'][0] : '';
 		$last_name   = isset( $all_meta['wp_peeps_last_name'][0] ) ? $all_meta['wp_peeps_last_name'][0] : '';
 
+		// Only update title if we have at least first and last name to avoid partial updates during import.
+		if ( empty( $first_name ) || empty( $last_name ) ) {
+			unset( $updating[ $post_id ] );
+			return;
+		}
+
 		// Build the full name.
 		$name_parts = array_filter( array( $first_name, $middle_name, $last_name ) );
 		$full_name  = trim( implode( ' ', $name_parts ) );

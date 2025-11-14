@@ -1,0 +1,30 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"features": {
+	  "networking": true
+	},
+	"landingPage": "/wp-admin/edit.php?post_type=wp_peeps_people",
+	"login": true,
+	"steps": [
+		{
+			"step": "setSiteOptions",
+			"options": {
+				"blogname": "WP Peeps"
+			}
+		},
+		{
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "url",
+				"url": "https://github-proxy.com/proxy/?repo=philhoyt/WP-Peeps&branch=main"
+			}
+		},
+		{
+			"step": "importWxr",
+			"file": {
+				"resource": "url",
+				"url": "https://raw.githubusercontent.com/philhoyt/WP-Peeps/main/_playground/wp-peeps-demo.xml"
+			}
+		}
+	]
+  }
