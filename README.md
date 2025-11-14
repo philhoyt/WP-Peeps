@@ -24,18 +24,24 @@ WP Peeps is a WordPress plugin that helps you create and manage a directory of p
 
 ## Installation
 
-1. Upload the plugin files to the `/wp-content/plugins/wp-peeps` directory
-2. Activate the plugin through the 'Plugins' screen in WordPress
-3. Go to People → Settings to configure the plugin options
+1. Download the latest release from GitHub
+2. Upload the plugin files to the `/wp-content/plugins/wp-peeps` directory
+3. Activate the plugin through the 'Plugins' screen in WordPress
+4. Go to People → Settings to configure the plugin options
 
-## Beta Testing
+## Screenshots
 
-This plugin is currently in beta. To help test:
+### Person Post Frontend
+![Person Post Frontend](assets/screenshot-1.png)
 
-1. Download the latest beta release from GitHub
-2. Install and activate the plugin
-3. Report any issues on the GitHub repository
-4. Note: This is a pre-release version, not recommended for production sites
+### Person Post Editor Fields
+![Person Post Editor Fields](assets/screenshot-2.png)
+
+### Available Blocks
+![Available WP Peeps Blocks](assets/screenshot-3.png)
+
+### Settings Page
+![WP Peeps Settings Page](assets/screenshot-4.png)
 
 ## Development
 
