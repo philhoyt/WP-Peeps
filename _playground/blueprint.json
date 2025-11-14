@@ -3,13 +3,27 @@
 	"features": {
 	  "networking": true
 	},
-	"landingPage": "/",
+	"landingPage": "/wp-admin/edit.php?post_type=wp_peeps_people",
 	"login": true,
 	"steps": [
 		{
 			"step": "setSiteOptions",
 			"options": {
 				"blogname": "WP Peeps"
+			}
+		},
+		{
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "url",
+				"url": "https://github-proxy.com/proxy/?repo=philhoyt/WP-Peeps&branch=playground"
+			}
+		},
+		{
+			"step": "importWxr",
+			"file": {
+				"resource": "url",
+				"url": "https://raw.githubusercontent.com/philhoyt/WP-Peeps/playground/_playground/demo-content.xml"
 			}
 		}
 	]

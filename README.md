@@ -1,6 +1,6 @@
 # WP Peeps
 
-[![Playground Demo Link](https://img.shields.io/badge/Playground_Demo-v1.1.0-blue?logo=wordpress&logoColor=%23fff&labelColor=%233858e9&color=%233858e9)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/philhoyt/WP-Peeps/blueprint/_playground/blueprint.json)
+[![Playground Demo Link](https://img.shields.io/badge/Playground_Demo-v1.1.0-blue?logo=wordpress&logoColor=%23fff&labelColor=%233858e9&color=%233858e9)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/philhoyt/WP-Peeps/playground/_playground/blueprint.json)
 
 A WordPress plugin for managing and displaying people profiles.
 
