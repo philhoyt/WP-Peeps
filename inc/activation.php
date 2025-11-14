@@ -15,14 +15,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Plugin activation hook callback
  *
- * Sets a transient to show a permalink notice after activation.
+ * Registers the custom post type and flushes rewrite rules.
  *
  * @return void
  */
 function activation() {
-	set_transient( 'wp_peeps_show_permalink_notice', true, 5 * MINUTE_IN_SECONDS );
+	// Register the custom post type first (since init hasn't fired yet).
+	register_people_post_type();
+
+	// Flush rewrite rules to make permalinks work immediately.
+	flush_rewrite_rules();
 }
 register_activation_hook( WP_PEEPS_PLUGIN_FILE, __NAMESPACE__ . '\activation' );
+
+/**
+ * Plugin deactivation hook callback
+ *
+ * Flushes rewrite rules to clean up permalinks when the plugin is deactivated.
+ *
+ * @return void
+ */
+function deactivation() {
+	flush_rewrite_rules();
+}
+register_deactivation_hook( WP_PEEPS_PLUGIN_FILE, __NAMESPACE__ . '\deactivation' );
 
 /**
  * Add settings link to plugin action links
