@@ -2,7 +2,7 @@
 Contributors:      Phil Hoyt
 Tags:              directory, people, staff, team, employees
 Tested up to:      6.9
-Stable tag:        1.2.0
+Stable tag:        1.3.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +15,7 @@ WP Peeps is a WordPress plugin that helps you create and manage a directory of p
 Features:
 
 * Custom post type for managing people profiles
-* Block template for single person posts
+* Block templates for single person posts and archive pages
 * Configurable phone number formatting
 * Custom URL structure for people profiles
 * Public/private directory option
@@ -49,6 +49,10 @@ Yes, in People → Settings you can disable the "Make People Directory Public" o
 Go to People → Settings and update the "Phone Number Format" field. Use # symbols where you want digits to appear. For example: (###) ###-####
 
 == Changelog ==
+
+= 1.3.0 =
+* Added block template for archive pages
+* Archive template includes featured image, name, contact information, and social links
 
 = 1.2.0 =
 * Automatic permalink flush on plugin activation
