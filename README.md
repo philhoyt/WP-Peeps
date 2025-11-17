@@ -1,6 +1,6 @@
 # WP Peeps
 
-[![Playground Demo Link](https://img.shields.io/badge/Playground_Demo-v1.2.0-blue?logo=wordpress&logoColor=%23fff&labelColor=%233858e9&color=%233858e9)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/philhoyt/WP-Peeps/main/_playground/blueprint.json)
+[![Playground Demo Link](https://img.shields.io/badge/Playground_Demo-v1.3.0-blue?logo=wordpress&logoColor=%23fff&labelColor=%233858e9&color=%233858e9)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/philhoyt/WP-Peeps/main/_playground/blueprint.json)
 
 A WordPress plugin for managing and displaying people profiles.
 
@@ -16,6 +16,7 @@ WP Peeps is a WordPress plugin that helps you create and manage a directory of p
 ### Features
 
 -   Custom post type for managing people profiles
+-   Block templates for single person posts and archive pages
 -   Configurable phone number formatting
 -   Custom URL structure for people profiles
 -   Public/private directory option
@@ -69,6 +70,17 @@ wp eval-file wp-content/plugins/wp-peeps/bin/generate-test-data.php 20
 This will create 20 test people profiles in your WordPress installation.
 
 ## Changelog
+
+### 1.3.0
+
+-   Added block templatefor archive pages
+-   Archive template includes featured image, name, contact information, and social links
+
+### 1.2.0
+
+-   Automatic permalink flush on plugin activation
+-   Automatic permalink flush on plugin deactivation
+-   Added notice when changing settings that affect permalinks (slug, public status, archive)
 
 ### 1.1.0
 
@@ -131,7 +143,7 @@ This will create 20 test people profiles in your WordPress installation.
 
 Contributors: Phil Hoyt
 Tags: directory, people, staff, team, employees
-Tested up to: 6.7
-Stable tag: 1.1.0
+Tested up to: 6.9
+Stable tag: 1.3.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
