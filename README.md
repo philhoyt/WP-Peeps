@@ -73,7 +73,7 @@ This will create 20 test people profiles in your WordPress installation.
 
 ### 1.3.0
 
--   Added block templatefor archive pages
+-   Added block template for archive pages
 -   Archive template includes featured image, name, contact information, and social links
 
 ### 1.2.0
