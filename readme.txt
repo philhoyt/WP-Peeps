@@ -1,8 +1,8 @@
-=== WP Peeps ===
+=== Peeps ===
 Contributors:      Phil Hoyt
 Tags:              directory, people, staff, team, employees
 Tested up to:      6.9
-Stable tag:        1.3.0
+Stable tag:        1.3.1
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -10,7 +10,7 @@ A WordPress plugin for managing and displaying people profiles.
 
 == Description ==
 
-WP Peeps is a WordPress plugin that helps you create and manage a directory of people on your website. Perfect for displaying staff members, team rosters, or employee directories.
+Peeps is a WordPress plugin that helps you create and manage a directory of people on your website. Perfect for displaying staff members, team rosters, or employee directories.
 
 Features:
 
@@ -31,8 +31,8 @@ Features:
 
 1. Example of a person post displayed on the frontend
 2. Fields available when editing a person post
-3. Available WP Peeps blocks in the block inserter
-4. WP Peeps settings page
+3. Available Peeps blocks in the block inserter
+4. Peeps settings page
 
 == Frequently Asked Questions ==
 
@@ -49,6 +49,9 @@ Yes, in People → Settings you can disable the "Make People Directory Public" o
 Go to People → Settings and update the "Phone Number Format" field. Use # symbols where you want digits to appear. For example: (###) ###-####
 
 == Changelog ==
+
+= 1.3.1 =
+* Updated plugin name from "WP Peeps" to "Peeps" for WordPress Directory compliance
 
 = 1.3.0 =
 * Added block template for archive pages

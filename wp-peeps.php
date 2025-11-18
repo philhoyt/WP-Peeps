@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name:       WP Peeps
+ * Plugin Name:       Peeps
  * Plugin URI:        https://github.com/philhoyt/WP-Peeps
  * Description:       A directory of people for your WordPress site.
  * Requires at least: 6.6
  * Requires PHP:      8.0
- * Version:           1.3.0
+ * Version:           1.3.1
  * Author:            Phil Hoyt
  * Author URI:        https://philhoyt.com
  * License:           GPL-2.0-or-later
