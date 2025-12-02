@@ -11,7 +11,7 @@ import {
 	ToolbarGroup,
 	ToolbarDropdownMenu,
 } from '@wordpress/components';
-import { useEntityProp, store as coreStore } from '@wordpress/core-data';
+import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { paragraph, grid, tag } from '@wordpress/icons';
 

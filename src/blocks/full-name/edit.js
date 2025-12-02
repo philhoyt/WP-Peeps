@@ -3,7 +3,6 @@ import {
 	useBlockProps,
 	InspectorControls,
 	BlockControls,
-	useBlockEditContext,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -12,7 +11,6 @@ import {
 	ToolbarGroup,
 	ToolbarDropdownMenu,
 } from '@wordpress/components';
-import { useEntityProp } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import {
