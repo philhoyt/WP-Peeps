@@ -1,18 +1,18 @@
 // Constants and configurations
-const REQUIRED_FIELD_ERROR = __('This field is required', 'wp-peeps');
+const REQUIRED_FIELD_ERROR = __('This field is required', 'ph-peeps');
 const EMAIL_VALIDATION_ERROR = __(
 	'Please enter a valid email address',
-	'wp-peeps',
+	'ph-peeps',
 );
-const URL_VALIDATION_ERROR = __('Please enter a valid URL', 'wp-peeps');
+const URL_VALIDATION_ERROR = __('Please enter a valid URL', 'ph-peeps');
 
 const NAME_FIELDS = {
-	FIRST_NAME: 'wp_peeps_first_name',
-	MIDDLE_NAME: 'wp_peeps_middle_name',
-	LAST_NAME: 'wp_peeps_last_name',
-	JOB_TITLE: 'wp_peeps_job_title',
-	PHONE: 'wp_peeps_phone',
-	EMAIL: 'wp_peeps_email',
+	FIRST_NAME: 'ph_peeps_first_name',
+	MIDDLE_NAME: 'ph_peeps_middle_name',
+	LAST_NAME: 'ph_peeps_last_name',
+	JOB_TITLE: 'ph_peeps_job_title',
+	PHONE: 'ph_peeps_phone',
+	EMAIL: 'ph_peeps_email',
 };
 
 const PLATFORM_PATTERNS = {
@@ -101,7 +101,11 @@ const formatPhoneNumber = (value, format) => {
 	let formatted = format;
 
 	// Replace each # with a digit
-	for (let i = 0; i < digits.length && i < (format.match(/#/g) || []).length; i++) {
+	for (
+		let i = 0;
+		i < digits.length && i < (format.match(/#/g) || []).length;
+		i++
+	) {
 		formatted = formatted.replace('#', digits[i]);
 	}
 
@@ -179,7 +183,8 @@ function PersonDetailsPanel() {
 	);
 
 	// Get dispatch function for edit-post store
-	const { openGeneralSidebar, toggleEditorPanelOpened } = useDispatch(editPostStore);
+	const { openGeneralSidebar, toggleEditorPanelOpened } =
+		useDispatch(editPostStore);
 
 	// Check if post is new
 	const isNewPost = useSelect(
@@ -189,13 +194,13 @@ function PersonDetailsPanel() {
 
 	// Open Person Name panel by default on new posts
 	useEffect(() => {
-		if (postType === 'wp_peeps_people' && isNewPost) {
+		if (postType === 'ph_peeps_people' && isNewPost) {
 			// Ensure the document sidebar is open
 			openGeneralSidebar('edit-post/document');
-			
+
 			// Open the panel on new posts (with a small delay to ensure state is ready)
 			const timer = setTimeout(() => {
-				toggleEditorPanelOpened('wp-peeps-name-panel');
+				toggleEditorPanelOpened('ph-peeps-name-panel');
 			}, 100);
 
 			return () => clearTimeout(timer);
@@ -204,11 +209,11 @@ function PersonDetailsPanel() {
 
 	const [meta, setMeta] = useEntityProp(
 		'postType',
-		'wp_peeps_people',
+		'ph_peeps_people',
 		'meta',
 	);
-	const [, setTitle] = useEntityProp('postType', 'wp_peeps_people', 'title');
-	const [, setSlug] = useEntityProp('postType', 'wp_peeps_people', 'slug');
+	const [, setTitle] = useEntityProp('postType', 'ph_peeps_people', 'title');
+	const [, setSlug] = useEntityProp('postType', 'ph_peeps_people', 'slug');
 	const [errors, setErrors] = useState({});
 
 	const { lockPostSaving, unlockPostSaving, editPost } =
@@ -218,7 +223,7 @@ function PersonDetailsPanel() {
 	const phoneFormat = useSelect(
 		(select) =>
 			select(coreStore).getEntityRecord('root', 'site')
-				?.wp_peeps_phone_format || '(###) ###-####',
+				?.ph_peeps_phone_format || '(###) ###-####',
 		[],
 	);
 
@@ -302,19 +307,19 @@ function PersonDetailsPanel() {
 		setSlug(createSlug(fullName));
 	}, [meta, setTitle, setSlug, editPost]);
 
-	if (postType !== 'wp_peeps_people') {
+	if (postType !== 'ph_peeps_people') {
 		return null;
 	}
 
 	return (
 		<>
 			<PluginDocumentSettingPanel
-				name="wp-peeps-name-panel"
-				title={__('Person Name', 'wp-peeps')}
-				className="wp-peeps-name-panel"
+				name="ph-peeps-name-panel"
+				title={__('Person Name', 'ph-peeps')}
+				className="ph-peeps-name-panel"
 			>
 				<TextControl
-					label={__('First Name', 'wp-peeps') + ' *'}
+					label={__('First Name', 'ph-peeps') + ' *'}
 					value={meta?.[NAME_FIELDS.FIRST_NAME] || ''}
 					onChange={(value) =>
 						handleMetaChange(NAME_FIELDS.FIRST_NAME, value)
@@ -325,14 +330,14 @@ function PersonDetailsPanel() {
 					}
 				/>
 				<TextControl
-					label={__('Middle Name', 'wp-peeps')}
+					label={__('Middle Name', 'ph-peeps')}
 					value={meta?.[NAME_FIELDS.MIDDLE_NAME] || ''}
 					onChange={(value) =>
 						handleMetaChange(NAME_FIELDS.MIDDLE_NAME, value)
 					}
 				/>
 				<TextControl
-					label={__('Last Name', 'wp-peeps') + ' *'}
+					label={__('Last Name', 'ph-peeps') + ' *'}
 					value={meta?.[NAME_FIELDS.LAST_NAME] || ''}
 					onChange={(value) =>
 						handleMetaChange(NAME_FIELDS.LAST_NAME, value)
@@ -343,12 +348,12 @@ function PersonDetailsPanel() {
 			</PluginDocumentSettingPanel>
 
 			<PluginDocumentSettingPanel
-				name="wp-peeps-contact-panel"
-				title={__('Contact Information', 'wp-peeps')}
-				className="wp-peeps-contact-panel"
+				name="ph-peeps-contact-panel"
+				title={__('Contact Information', 'ph-peeps')}
+				className="ph-peeps-contact-panel"
 			>
 				<TextControl
-					label={__('Phone', 'wp-peeps')}
+					label={__('Phone', 'ph-peeps')}
 					value={
 						meta?.[NAME_FIELDS.PHONE]
 							? formatPhoneNumber(
@@ -360,12 +365,15 @@ function PersonDetailsPanel() {
 					onChange={(value) =>
 						handleMetaChange(NAME_FIELDS.PHONE, value)
 					}
-					help={__('Enter between 10–15 digit phone number', 'wp-peeps')}
+					help={__(
+						'Enter between 10–15 digit phone number',
+						'ph-peeps',
+					)}
 					type="tel"
 				/>
 				<TextControl
 					type="email"
-					label={__('Email', 'wp-peeps')}
+					label={__('Email', 'ph-peeps')}
 					value={meta?.[NAME_FIELDS.EMAIL] || ''}
 					onChange={(value) =>
 						handleMetaChange(NAME_FIELDS.EMAIL, value)
@@ -386,7 +394,7 @@ function SocialLinksPanel() {
 
 	const [meta, setMeta] = useEntityProp(
 		'postType',
-		'wp_peeps_people',
+		'ph_peeps_people',
 		'meta',
 	);
 	const [newUrl, setNewUrl] = useState('');
@@ -394,7 +402,7 @@ function SocialLinksPanel() {
 	const [draggedIndex, setDraggedIndex] = useState(null);
 
 	const socialLinks = useMemo(
-		() => meta?.wp_peeps_social_links || [],
+		() => meta?.ph_peeps_social_links || [],
 		[meta],
 	);
 
@@ -406,7 +414,7 @@ function SocialLinksPanel() {
 		(links) => {
 			setMeta({
 				...meta,
-				wp_peeps_social_links: links,
+				ph_peeps_social_links: links,
 			});
 		},
 		[meta, setMeta],
@@ -431,7 +439,7 @@ function SocialLinksPanel() {
 
 	const handleAddLink = useCallback(() => {
 		if (!newUrl) {
-			setUrlError(__('Please enter a URL', 'wp-peeps'));
+			setUrlError(__('Please enter a URL', 'ph-peeps'));
 			return;
 		}
 
@@ -492,7 +500,7 @@ function SocialLinksPanel() {
 						isDestructive
 						onClick={() => handleRemoveLink(index)}
 						icon="no-alt"
-						label={__('Remove social link', 'wp-peeps')}
+						label={__('Remove social link', 'ph-peeps')}
 					/>
 				</FlexItem>
 			</Flex>
@@ -507,22 +515,22 @@ function SocialLinksPanel() {
 		],
 	);
 
-	if (postType !== 'wp_peeps_people') {
+	if (postType !== 'ph_peeps_people') {
 		return null;
 	}
 
 	return (
 		<PluginDocumentSettingPanel
-			name="wp-peeps-social-links"
-			title={__('Social Links', 'wp-peeps')}
-			className="wp-peeps-social-links"
+			name="ph-peeps-social-links"
+			title={__('Social Links', 'ph-peeps')}
+			className="ph-peeps-social-links"
 		>
 			{socialLinks.map(renderSocialLinkItem)}
 
 			<Flex align="flex-end" gap={4} className="add-social-link">
 				<FlexItem style={{ flex: 1 }}>
 					<TextControl
-						label={__('Add Social Link', 'wp-peeps')}
+						label={__('Add Social Link', 'ph-peeps')}
 						value={newUrl}
 						onChange={(value) => {
 							setNewUrl(value);
@@ -538,7 +546,7 @@ function SocialLinksPanel() {
 						onClick={handleAddLink}
 						disabled={!newUrl}
 					>
-						{__('Add', 'wp-peeps')}
+						{__('Add', 'ph-peeps')}
 					</Button>
 				</FlexItem>
 			</Flex>
@@ -546,10 +554,10 @@ function SocialLinksPanel() {
 	);
 }
 
-registerPlugin('wp-peeps-person-details', {
+registerPlugin('ph-peeps-person-details', {
 	render: PersonDetailsPanel,
 });
 
-registerPlugin('wp-peeps-social-links-panel', {
+registerPlugin('ph-peeps-social-links-panel', {
 	render: SocialLinksPanel,
 });

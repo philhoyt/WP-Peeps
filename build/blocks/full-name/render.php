@@ -2,11 +2,11 @@
 /**
  * Render callback for the full-name block.
  *
- * @package WP_Peeps
+ * @package PH_Peeps
  * @since 1.0.0
  */
 
-namespace WP_Peeps\Blocks;
+namespace PH_Peeps\Blocks;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block $block      Block instance.
  * @return string             The rendered HTML for the full name block.
  */
-function wp_peeps_render_full_name_block( $attributes, $block ) {
+function ph_peeps_render_full_name_block( $attributes, $block ) {
 
 	$post_id = isset( $block->context['postId'] ) ? $block->context['postId'] : get_the_ID();
 
@@ -40,9 +40,9 @@ function wp_peeps_render_full_name_block( $attributes, $block ) {
 	$make_link   = ! empty( $attributes['makeLink'] );
 
 	// Get name parts from meta.
-	$first_name  = get_post_meta( $post_id, 'wp_peeps_first_name', true );
-	$middle_name = get_post_meta( $post_id, 'wp_peeps_middle_name', true );
-	$last_name   = get_post_meta( $post_id, 'wp_peeps_last_name', true );
+	$first_name  = get_post_meta( $post_id, 'ph_peeps_first_name', true );
+	$middle_name = get_post_meta( $post_id, 'ph_peeps_middle_name', true );
+	$last_name   = get_post_meta( $post_id, 'ph_peeps_last_name', true );
 
 	// Build name parts array.
 	$name_parts = array();

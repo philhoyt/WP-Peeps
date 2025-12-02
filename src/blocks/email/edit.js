@@ -27,17 +27,17 @@ const ALLOWED_FORMATS = [
 
 const HTML_TAGS = [
 	{
-		title: __('Paragraph', 'wp-peeps'),
+		title: __('Paragraph', 'ph-peeps'),
 		value: 'p',
 		icon: paragraph,
 	},
 	{
-		title: __('Div', 'wp-peeps'),
+		title: __('Div', 'ph-peeps'),
 		value: 'div',
 		icon: grid,
 	},
 	{
-		title: __('Span', 'wp-peeps'),
+		title: __('Span', 'ph-peeps'),
 		value: 'span',
 		icon: tag,
 	},
@@ -74,14 +74,14 @@ export default function Edit({
 			}
 			return select(coreStore).getEntityRecord(
 				'postType',
-				postType || 'wp_peeps_people',
+				postType || 'ph_peeps_people',
 				postId,
 			);
 		},
 		[postId, postType],
 	);
 
-	const email = post?.meta?.wp_peeps_email || 'name@domain.com';
+	const email = post?.meta?.ph_peeps_email || 'name@domain.com';
 
 	const TagName = tagName;
 
@@ -99,9 +99,9 @@ export default function Edit({
 				<RichText
 					identifier="prefix"
 					allowedFormats={ALLOWED_FORMATS}
-					className="wp-block-wp-peeps-email__prefix"
+					className="wp-block-ph-peeps-email__prefix"
 					aria-label={__('Prefix')}
-					placeholder={__('Prefix', 'wp-peeps') + ' '}
+					placeholder={__('Prefix', 'ph-peeps') + ' '}
 					value={prefix}
 					onChange={(value) => setAttributes({ prefix: value })}
 					tagName="span"
@@ -120,7 +120,7 @@ export default function Edit({
 				<ToolbarGroup>
 					<ToolbarDropdownMenu
 						icon={currentTag?.icon}
-						label={__('HTML element', 'wp-peeps')}
+						label={__('HTML element', 'ph-peeps')}
 						controls={HTML_TAGS.map(
 							({ title, value, icon: tagIcon }) => ({
 								title,
@@ -134,20 +134,20 @@ export default function Edit({
 				</ToolbarGroup>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title={__('Settings', 'wp-peeps')}>
+				<PanelBody title={__('Settings', 'ph-peeps')}>
 					<ToggleControl
-						label={__('Make Email Link', 'wp-peeps')}
+						label={__('Make Email Link', 'ph-peeps')}
 						checked={makeLink}
 						onChange={() => setAttributes({ makeLink: !makeLink })}
 						help={
 							makeLink
 								? __(
 										'Email address will be clickable',
-										'wp-peeps',
+										'ph-peeps',
 									)
 								: __(
 										'Email address will be plain text',
-										'wp-peeps',
+										'ph-peeps',
 									)
 						}
 					/>

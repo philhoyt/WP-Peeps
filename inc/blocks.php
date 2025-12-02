@@ -2,10 +2,10 @@
 /**
  * Block registration and related functionality
  *
- * @package WP_Peeps
+ * @package PH_Peeps
  */
 
-namespace WP_Peeps\Inc;
+namespace PH_Peeps\Inc;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -25,7 +25,7 @@ function register_block_category( $categories, $block_editor_context ) {
 	// Check if category already exists.
 	$category_exists = false;
 	foreach ( $categories as $category ) {
-		if ( isset( $category['slug'] ) && 'wp-peeps' === $category['slug'] ) {
+		if ( isset( $category['slug'] ) && 'ph-peeps' === $category['slug'] ) {
 			$category_exists = true;
 			break;
 		}
@@ -36,8 +36,8 @@ function register_block_category( $categories, $block_editor_context ) {
 		$categories = array_merge(
 			array(
 				array(
-					'slug'  => 'wp-peeps',
-					'title' => __( 'WP Peeps', 'wp-peeps' ),
+					'slug'  => 'ph-peeps',
+					'title' => __( 'WP Peeps', 'ph-peeps' ),
 					'icon'  => 'groups',
 				),
 			),
@@ -59,33 +59,33 @@ add_filter( 'block_categories_all', __NAMESPACE__ . '\register_block_category', 
 function register_blocks() {
 	// Register the full name block.
 	register_block_type(
-		WP_PEEPS_PLUGIN_DIR . 'build/blocks/full-name',
+		PH_PEEPS_PLUGIN_DIR . 'build/blocks/full-name',
 		array(
-			'render_callback' => 'WP_Peeps\Blocks\wp_peeps_render_full_name_block',
+			'render_callback' => 'PH_Peeps\Blocks\ph_peeps_render_full_name_block',
 		)
 	);
 
 	// Register the phone block.
 	register_block_type(
-		WP_PEEPS_PLUGIN_DIR . 'build/blocks/phone',
+		PH_PEEPS_PLUGIN_DIR . 'build/blocks/phone',
 		array(
-			'render_callback' => 'WP_Peeps\Blocks\wp_peeps_render_phone_block',
+			'render_callback' => 'PH_Peeps\Blocks\ph_peeps_render_phone_block',
 		)
 	);
 
 	// Register the social links block.
 	register_block_type(
-		WP_PEEPS_PLUGIN_DIR . 'build/blocks/social-links',
+		PH_PEEPS_PLUGIN_DIR . 'build/blocks/social-links',
 		array(
-			'render_callback' => 'WP_Peeps\Blocks\wp_peeps_render_social_links_block',
+			'render_callback' => 'PH_Peeps\Blocks\ph_peeps_render_social_links_block',
 		)
 	);
 
 	// Register the email block.
 	register_block_type(
-		WP_PEEPS_PLUGIN_DIR . 'build/blocks/email',
+		PH_PEEPS_PLUGIN_DIR . 'build/blocks/email',
 		array(
-			'render_callback' => 'WP_Peeps\Blocks\wp_peeps_render_email_block',
+			'render_callback' => 'PH_Peeps\Blocks\ph_peeps_render_email_block',
 		)
 	);
 }

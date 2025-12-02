@@ -76,7 +76,7 @@ export default function Edit({ attributes, setAttributes }) {
 		return {
 			isSaving: select('core').isSavingEntityRecord(
 				'postType',
-				'wp_peeps_people',
+				'ph_peeps_people',
 			),
 			isDirty: coreEditor ? coreEditor.isEditedPostDirty() : false,
 		};
@@ -186,7 +186,7 @@ export default function Edit({ attributes, setAttributes }) {
 			<div {...blockProps}>
 				<ServerSideRender
 					key={renderKey}
-					block="wp-peeps/social-links"
+					block="ph-peeps/social-links"
 					attributes={attributes}
 					EmptyResponsePlaceholder={() => (
 						<Placeholder

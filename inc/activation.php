@@ -2,10 +2,10 @@
 /**
  * Activation functionality
  *
- * @package WP_Peeps
+ * @package PH_Peeps
  */
 
-namespace WP_Peeps\Inc;
+namespace PH_Peeps\Inc;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -26,7 +26,7 @@ function activation() {
 	// Flush rewrite rules to make permalinks work immediately.
 	flush_rewrite_rules();
 }
-register_activation_hook( WP_PEEPS_PLUGIN_FILE, __NAMESPACE__ . '\activation' );
+register_activation_hook( PH_PEEPS_PLUGIN_FILE, __NAMESPACE__ . '\activation' );
 
 /**
  * Plugin deactivation hook callback
@@ -38,7 +38,7 @@ register_activation_hook( WP_PEEPS_PLUGIN_FILE, __NAMESPACE__ . '\activation' );
 function deactivation() {
 	flush_rewrite_rules();
 }
-register_deactivation_hook( WP_PEEPS_PLUGIN_FILE, __NAMESPACE__ . '\deactivation' );
+register_deactivation_hook( PH_PEEPS_PLUGIN_FILE, __NAMESPACE__ . '\deactivation' );
 
 /**
  * Add settings link to plugin action links
@@ -49,8 +49,8 @@ register_deactivation_hook( WP_PEEPS_PLUGIN_FILE, __NAMESPACE__ . '\deactivation
  * @return array Modified plugin action links with settings link added.
  */
 function add_settings_link( $links ) {
-	$settings_link = '<a href="' . admin_url( 'edit.php?post_type=wp_peeps_people&page=wp-peeps-settings' ) . '">' . __( 'Settings', 'wp-peeps' ) . '</a>';
+	$settings_link = '<a href="' . admin_url( 'edit.php?post_type=ph_peeps_people&page=ph-peeps-settings' ) . '">' . __( 'Settings', 'ph-peeps' ) . '</a>';
 	array_unshift( $links, $settings_link );
 	return $links;
 }
-add_filter( 'plugin_action_links_' . plugin_basename( WP_PEEPS_PLUGIN_FILE ), __NAMESPACE__ . '\add_settings_link' );
+add_filter( 'plugin_action_links_' . plugin_basename( PH_PEEPS_PLUGIN_FILE ), __NAMESPACE__ . '\add_settings_link' );

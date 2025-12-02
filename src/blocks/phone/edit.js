@@ -27,17 +27,17 @@ const ALLOWED_FORMATS = [
 
 const HTML_TAGS = [
 	{
-		title: __('Paragraph', 'wp-peeps'),
+		title: __('Paragraph', 'ph-peeps'),
 		value: 'p',
 		icon: paragraph,
 	},
 	{
-		title: __('Div', 'wp-peeps'),
+		title: __('Div', 'ph-peeps'),
 		value: 'div',
 		icon: grid,
 	},
 	{
-		title: __('Span', 'wp-peeps'),
+		title: __('Span', 'ph-peeps'),
 		value: 'span',
 		icon: tag,
 	},
@@ -101,7 +101,7 @@ export default function Edit({
 			}
 			return select(coreStore).getEntityRecord(
 				'postType',
-				postType || 'wp_peeps_people',
+				postType || 'ph_peeps_people',
 				postId,
 			);
 		},
@@ -112,11 +112,11 @@ export default function Edit({
 	const format = useSelect(
 		(select) =>
 			select(coreStore).getEntityRecord('root', 'site')
-				?.wp_peeps_phone_format || '(###) ###-####',
+				?.ph_peeps_phone_format || '(###) ###-####',
 		[],
 	);
 
-	const phoneNumber = post?.meta?.wp_peeps_phone;
+	const phoneNumber = post?.meta?.ph_peeps_phone;
 	const formattedPhone = formatPhoneNumber(phoneNumber || '', format);
 
 	// Create content elements
@@ -135,9 +135,9 @@ export default function Edit({
 				<RichText
 					identifier="prefix"
 					allowedFormats={ALLOWED_FORMATS}
-					className="wp-block-wp-peeps-phone__prefix"
+					className="wp-block-ph-peeps-phone__prefix"
 					aria-label={__('Prefix')}
-					placeholder={__('Prefix', 'wp-peeps') + ' '}
+					placeholder={__('Prefix', 'ph-peeps') + ' '}
 					value={prefix}
 					onChange={(value) => setAttributes({ prefix: value })}
 					tagName="span"
@@ -156,7 +156,7 @@ export default function Edit({
 				<ToolbarGroup>
 					<ToolbarDropdownMenu
 						icon={currentTag?.icon}
-						label={__('Change text element', 'wp-peeps')}
+						label={__('Change text element', 'ph-peeps')}
 						controls={HTML_TAGS.map((htmlTag) => ({
 							title: htmlTag.title,
 							icon: htmlTag.icon,
@@ -168,20 +168,20 @@ export default function Edit({
 				</ToolbarGroup>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title={__('Phone Settings', 'wp-peeps')}>
+				<PanelBody title={__('Phone Settings', 'ph-peeps')}>
 					<ToggleControl
-						label={__('Make Phone Link', 'wp-peeps')}
+						label={__('Make Phone Link', 'ph-peeps')}
 						checked={makeLink}
 						onChange={() => setAttributes({ makeLink: !makeLink })}
 						help={
 							makeLink
 								? __(
 										'Phone number will be clickable',
-										'wp-peeps',
+										'ph-peeps',
 									)
 								: __(
 										'Phone number will be plain text',
-										'wp-peeps',
+										'ph-peeps',
 									)
 						}
 					/>
