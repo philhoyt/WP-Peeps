@@ -2,10 +2,10 @@
 /**
  * Admin functionality
  *
- * @package WP_Peeps
+ * @package PH_Peeps
  */
 
-namespace WP_Peeps\Inc;
+namespace PH_Peeps\Inc;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -19,11 +19,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function register_admin_page() {
 	add_submenu_page(
-		'edit.php?post_type=wp_peeps_people',
-		__( 'WP Peeps Settings', 'wp-peeps' ),
-		__( 'Settings', 'wp-peeps' ),
+		'edit.php?post_type=ph_peeps_people',
+		__( 'WP Peeps Settings', 'ph-peeps' ),
+		__( 'Settings', 'ph-peeps' ),
 		'manage_options',
-		'wp-peeps-settings',
+		'ph-peeps-settings',
 		__NAMESPACE__ . '\render_admin_page'
 	);
 }
@@ -35,7 +35,7 @@ add_action( 'admin_menu', __NAMESPACE__ . '\register_admin_page' );
  * @return void
  */
 function render_admin_page() {
-	echo '<div id="wp-peeps-settings-root"></div>';
+	echo '<div id="ph-peeps-settings-root"></div>';
 }
 
 /**
@@ -45,22 +45,22 @@ function render_admin_page() {
  * @return void
  */
 function enqueue_admin_scripts( $hook ) {
-	if ( 'wp_peeps_people_page_wp-peeps-settings' !== $hook ) {
+	if ( 'ph_peeps_people_page_ph-peeps-settings' !== $hook ) {
 		return;
 	}
 
-	$asset_file = include WP_PEEPS_PLUGIN_DIR . 'build/admin/index.asset.php';
+	$asset_file = include PH_PEEPS_PLUGIN_DIR . 'build/admin/index.asset.php';
 
 	wp_enqueue_style(
-		'wp-peeps-admin',
-		plugins_url( 'build/admin/style-index.css', WP_PEEPS_PLUGIN_FILE ),
+		'ph-peeps-admin',
+		plugins_url( 'build/admin/style-index.css', PH_PEEPS_PLUGIN_FILE ),
 		array( 'wp-components' ),
 		$asset_file['version']
 	);
 
 	wp_enqueue_script(
-		'wp-peeps-admin',
-		plugins_url( 'build/admin/index.js', WP_PEEPS_PLUGIN_FILE ),
+		'ph-peeps-admin',
+		plugins_url( 'build/admin/index.js', PH_PEEPS_PLUGIN_FILE ),
 		array_merge(
 			$asset_file['dependencies'],
 			array( 'wp-components', 'wp-element', 'wp-data', 'wp-core-data', 'wp-api-fetch' )

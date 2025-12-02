@@ -2,9 +2,9 @@
 /**
  * Admin notices functionality
  *
- * @package WP_Peeps
+ * @package PH_Peeps
  */
-namespace WP_Peeps\Inc;
+namespace PH_Peeps\Inc;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {

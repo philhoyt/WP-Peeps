@@ -1,18 +1,18 @@
 <?php
 /**
- * Plugin Name:       Peeps
+ * Plugin Name:       Peeps – People Directory
  * Plugin URI:        https://github.com/philhoyt/WP-Peeps
  * Description:       A directory of people for your WordPress site.
  * Requires at least: 6.7
  * Requires PHP:      8.0
- * Version:           1.3.1
+ * Version:           2.0.0
  * Author:            Phil Hoyt
  * Author URI:        https://philhoyt.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       wp-peeps
+ * Text Domain:       ph-peeps
  *
- * @package WP-Peeps
+ * @package PH_Peeps
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,8 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // At the top of the file, after the ABSPATH check.
-define( 'WP_PEEPS_PLUGIN_FILE', __FILE__ );
-define( 'WP_PEEPS_PLUGIN_DIR', __DIR__ . '/' );
+define( 'PH_PEEPS_PLUGIN_FILE', __FILE__ );
+define( 'PH_PEEPS_PLUGIN_DIR', __DIR__ . '/' );
 
 // Core includes.
 require_once __DIR__ . '/inc/cpt.php';

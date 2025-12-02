@@ -1,4 +1,4 @@
-.wp-peeps-admin {
+.ph-peeps-admin {
 	max-width: 800px;
 	width: 100%;
 	margin: 20px 0;
@@ -6,49 +6,49 @@
 	box-sizing: border-box;
 }
 
-.wp-peeps-header {
+.ph-peeps-header {
 	margin-bottom: 20px;
 }
 
-.wp-peeps-notice {
+.ph-peeps-notice {
 	margin: 20px 0;
 }
 
-.wp-peeps-card {
+.ph-peeps-card {
 	background: #fff;
 	border: 1px solid #e2e4e7;
 }
 
-.wp-peeps-card__title {
+.ph-peeps-card__title {
 	margin: 0;
 	font-size: 1.2em;
 }
 
-.wp-peeps-setting-row {
+.ph-peeps-setting-row {
 	padding: 16px 0;
 	border-bottom: 1px solid #f0f0f0;
 }
 
-.wp-peeps-setting-row:last-child {
+.ph-peeps-setting-row:last-child {
 	border-bottom: none;
 }
 
-.wp-peeps-settings__footer {
+.ph-peeps-settings__footer {
 	margin-top: 24px;
 	padding-top: 16px;
 	border-top: 1px solid #f0f0f0;
 }
 
-.wp-peeps-admin .components-base-control {
+.ph-peeps-admin .components-base-control {
 	margin-bottom: 0;
 }
 
-.wp-peeps-admin .components-base-control__help {
+.ph-peeps-admin .components-base-control__help {
 	margin-top: 4px;
 	color: #757575;
 }
 
-.wp-peeps-admin .button-link {
+.ph-peeps-admin .button-link {
 	color: #2271b1;
 	text-decoration: underline;
 	background: none;

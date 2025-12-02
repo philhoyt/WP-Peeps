@@ -2,10 +2,10 @@
 /**
  * Register custom post types for the plugin
  *
- * @package WP_Peeps
+ * @package PH_Peeps
  */
 
-namespace WP_Peeps\Inc;
+namespace PH_Peeps\Inc;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,30 +18,30 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return void
  */
 function register_people_post_type() {
-	$is_public = get_option( 'wp_peeps_public_cpt', true );
+	$is_public = get_option( 'ph_peeps_public_cpt', true );
 	$is_public = filter_var( $is_public, FILTER_VALIDATE_BOOLEAN );
-	$has_archive = get_option( 'wp_peeps_has_archive', true );
+	$has_archive = get_option( 'ph_peeps_has_archive', true );
 	$has_archive = filter_var( $has_archive, FILTER_VALIDATE_BOOLEAN );
-	$slug = get_option( 'wp_peeps_cpt_slug', 'people' );
-	$menu_position = get_option( 'wp_peeps_menu_position', 25 );
+	$slug = get_option( 'ph_peeps_cpt_slug', 'people' );
+	$menu_position = get_option( 'ph_peeps_menu_position', 25 );
 
 	$labels = array(
-		'name'                  => _x( 'People', 'Post type general name', 'wp-peeps' ),
-		'singular_name'         => _x( 'Person', 'Post type singular name', 'wp-peeps' ),
-		'menu_name'             => _x( 'People', 'Admin Menu text', 'wp-peeps' ),
-		'add_new'               => __( 'Add New', 'wp-peeps' ),
-		'add_new_item'          => __( 'Add New Person', 'wp-peeps' ),
-		'edit_item'             => __( 'Edit Person', 'wp-peeps' ),
-		'new_item'              => __( 'New Person', 'wp-peeps' ),
-		'view_item'             => __( 'View Person', 'wp-peeps' ),
-		'view_items'            => __( 'View People', 'wp-peeps' ),
-		'search_items'          => __( 'Search People', 'wp-peeps' ),
-		'not_found'             => __( 'No people found', 'wp-peeps' ),
-		'not_found_in_trash'    => __( 'No people found in Trash', 'wp-peeps' ),
-		'all_items'             => __( 'All People', 'wp-peeps' ),
-		'featured_image'        => __( 'Profile Picture', 'wp-peeps' ),
-		'set_featured_image'    => __( 'Set profile picture', 'wp-peeps' ),
-		'remove_featured_image' => __( 'Remove profile picture', 'wp-peeps' ),
+		'name'                  => _x( 'People', 'Post type general name', 'ph-peeps' ),
+		'singular_name'         => _x( 'Person', 'Post type singular name', 'ph-peeps' ),
+		'menu_name'             => _x( 'People', 'Admin Menu text', 'ph-peeps' ),
+		'add_new'               => __( 'Add New', 'ph-peeps' ),
+		'add_new_item'          => __( 'Add New Person', 'ph-peeps' ),
+		'edit_item'             => __( 'Edit Person', 'ph-peeps' ),
+		'new_item'              => __( 'New Person', 'ph-peeps' ),
+		'view_item'             => __( 'View Person', 'ph-peeps' ),
+		'view_items'            => __( 'View People', 'ph-peeps' ),
+		'search_items'          => __( 'Search People', 'ph-peeps' ),
+		'not_found'             => __( 'No people found', 'ph-peeps' ),
+		'not_found_in_trash'    => __( 'No people found in Trash', 'ph-peeps' ),
+		'all_items'             => __( 'All People', 'ph-peeps' ),
+		'featured_image'        => __( 'Profile Picture', 'ph-peeps' ),
+		'set_featured_image'    => __( 'Set profile picture', 'ph-peeps' ),
+		'remove_featured_image' => __( 'Remove profile picture', 'ph-peeps' ),
 	);
 
 	$args = array(
@@ -67,6 +67,6 @@ function register_people_post_type() {
 		'show_in_rest'       => true,
 	);
 
-	register_post_type( 'wp_peeps_people', $args );
+	register_post_type( 'ph_peeps_people', $args );
 }
 add_action( 'init', __NAMESPACE__ . '\register_people_post_type' );

@@ -5,11 +5,11 @@
  * This file provides the rendering logic for the Email block in the WP Peeps plugin.
  * It handles retrieving and displaying email information for a specific post.
  *
- * @package WP_Peeps
+ * @package PH_Peeps
  * @subpackage Blocks
  */
 
-namespace WP_Peeps\Blocks;
+namespace PH_Peeps\Blocks;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block $block      Block instance.
  * @return string             The rendered HTML for the email block.
  */
-function wp_peeps_render_email_block( $attributes, $block ) {
+function ph_peeps_render_email_block( $attributes, $block ) {
 	$post_id = isset( $block->context['postId'] ) ? $block->context['postId'] : get_the_ID();
 
 	// Bail early if no post ID.
@@ -35,7 +35,7 @@ function wp_peeps_render_email_block( $attributes, $block ) {
 	}
 
 	// Get email from post meta.
-	$email = get_post_meta( $post_id, 'wp_peeps_email', true );
+	$email = get_post_meta( $post_id, 'ph_peeps_email', true );
 
 	// Return early if no email exists.
 	if ( empty( $email ) ) {

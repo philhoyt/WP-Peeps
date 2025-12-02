@@ -2,10 +2,10 @@
 /**
  * Register plugin settings
  *
- * @package WP_Peeps
+ * @package PH_Peeps
  */
 
-namespace WP_Peeps\Inc;
+namespace PH_Peeps\Inc;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -35,6 +35,18 @@ function sanitize_phone_format( $format ) {
 	}
 
 	return $format;
+}
+
+/**
+ * Sanitize boolean setting
+ *
+ * Converts the value to a proper boolean.
+ *
+ * @param mixed $value The value to sanitize.
+ * @return bool The sanitized boolean value.
+ */
+function sanitize_boolean( $value ) {
+	return filter_var( $value, FILTER_VALIDATE_BOOLEAN );
 }
 
 /**
@@ -70,71 +82,73 @@ function sanitize_menu_position( $position ) {
  */
 function register_plugin_settings() {
 	register_setting(
-		'wp_peeps',
-		'wp_peeps_public_cpt',
+		'ph_peeps',
+		'ph_peeps_public_cpt',
 		array(
-			'type'         => 'boolean',
-			'default'      => true,
-			'show_in_rest' => array(
-				'name'   => 'wp_peeps_public_cpt',
+			'type'              => 'boolean',
+			'default'           => true,
+			'show_in_rest'      => array(
+				'name'   => 'ph_peeps_public_cpt',
 				'schema' => array(
 					'type'    => 'boolean',
 					'default' => true,
 				),
 			),
-			'description'  => __( 'Whether the People CPT is public', 'wp-peeps' ),
+			'description'       => __( 'Whether the People CPT is public', 'ph-peeps' ),
+			'sanitize_callback' => __NAMESPACE__ . '\sanitize_boolean',
 		)
 	);
 
 	register_setting(
-		'wp_peeps',
-		'wp_peeps_has_archive',
+		'ph_peeps',
+		'ph_peeps_has_archive',
 		array(
-			'type'         => 'boolean',
-			'default'      => true,
-			'show_in_rest' => array(
-				'name'   => 'wp_peeps_has_archive',
+			'type'              => 'boolean',
+			'default'           => true,
+			'show_in_rest'      => array(
+				'name'   => 'ph_peeps_has_archive',
 				'schema' => array(
 					'type'    => 'boolean',
 					'default' => true,
 				),
 			),
-			'description'  => __( 'Whether to enable the archive page for people', 'wp-peeps' ),
+			'description'       => __( 'Whether to enable the archive page for people', 'ph-peeps' ),
+			'sanitize_callback' => __NAMESPACE__ . '\sanitize_boolean',
 		)
 	);
 
 	register_setting(
-		'wp_peeps',
-		'wp_peeps_phone_format',
+		'ph_peeps',
+		'ph_peeps_phone_format',
 		array(
 			'type'              => 'string',
 			'default'           => '(###) ###-####',
 			'show_in_rest'      => array(
-				'name'   => 'wp_peeps_phone_format',
+				'name'   => 'ph_peeps_phone_format',
 				'schema' => array(
 					'type'    => 'string',
 					'default' => '(###) ###-####',
 				),
 			),
-			'description'       => __( 'Phone number format (use # for digits, must contain 10-15 # symbols)', 'wp-peeps' ),
+			'description'       => __( 'Phone number format (use # for digits, must contain 10-15 # symbols)', 'ph-peeps' ),
 			'sanitize_callback' => __NAMESPACE__ . '\sanitize_phone_format',
 		)
 	);
 
 	register_setting(
-		'wp_peeps',
-		'wp_peeps_cpt_slug',
+		'ph_peeps',
+		'ph_peeps_cpt_slug',
 		array(
 			'type'              => 'string',
 			'default'           => 'people',
 			'show_in_rest'      => array(
-				'name'   => 'wp_peeps_cpt_slug',
+				'name'   => 'ph_peeps_cpt_slug',
 				'schema' => array(
 					'type'    => 'string',
 					'default' => 'people',
 				),
 			),
-			'description'       => __( 'Custom post type slug for People directory', 'wp-peeps' ),
+			'description'       => __( 'Custom post type slug for People directory', 'ph-peeps' ),
 			'sanitize_callback' => function ( $slug ) {
 				return empty( $slug ) ? 'people' : sanitize_title( $slug );
 			},
@@ -142,13 +156,13 @@ function register_plugin_settings() {
 	);
 
 	register_setting(
-		'wp_peeps',
-		'wp_peeps_menu_position',
+		'ph_peeps',
+		'ph_peeps_menu_position',
 		array(
 			'type'              => 'integer',
 			'default'           => 25,
 			'show_in_rest'      => array(
-				'name'   => 'wp_peeps_menu_position',
+				'name'   => 'ph_peeps_menu_position',
 				'schema' => array(
 					'type'    => 'integer',
 					'default' => 25,
@@ -156,7 +170,7 @@ function register_plugin_settings() {
 					'maximum' => 999,
 				),
 			),
-			'description'       => __( 'Position in admin menu where People should appear (0-999)', 'wp-peeps' ),
+			'description'       => __( 'Position in admin menu where People should appear (0-999)', 'ph-peeps' ),
 			'sanitize_callback' => __NAMESPACE__ . '\sanitize_menu_position',
 		)
 	);

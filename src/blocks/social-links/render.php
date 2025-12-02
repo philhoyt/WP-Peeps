@@ -2,14 +2,14 @@
 /**
  * Render callback for the social-links block.
  *
- * @package WP_Peeps
+ * @package PH_Peeps
  * @since 1.1.0
  *
  * @param array $attributes The block attributes.
  * @return string The rendered block content.
  */
 
-namespace WP_Peeps\Blocks;
+namespace PH_Peeps\Blocks;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -38,9 +38,9 @@ const DEFAULT_SOCIAL_LINKS = [
  * @param array $attributes The block attributes.
  * @return string The rendered block content.
  */
-function wp_peeps_render_social_links_block( $attributes ) {
+function ph_peeps_render_social_links_block( $attributes ) {
 	// Get social links based on context.
-	$social_links = wp_peeps_get_social_links();
+	$social_links = ph_peeps_get_social_links();
 
 	// Only return empty on frontend when no social links exist.
 	$is_editor = defined( 'REST_REQUEST' ) && REST_REQUEST;
@@ -49,11 +49,11 @@ function wp_peeps_render_social_links_block( $attributes ) {
 	}
 
 	// Extract and sanitize block attributes.
-	$block_attrs = wp_peeps_get_social_block_attributes( $attributes );
+	$block_attrs = ph_peeps_get_social_block_attributes( $attributes );
 
 	// Build block classes and styles.
-	$classes = wp_peeps_get_social_block_classes( $block_attrs );
-	$styles  = wp_peeps_get_social_block_styles( $block_attrs );
+	$classes = ph_peeps_get_social_block_classes( $block_attrs );
+	$styles  = ph_peeps_get_social_block_styles( $block_attrs );
 
 	// Get block wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
@@ -64,7 +64,7 @@ function wp_peeps_render_social_links_block( $attributes ) {
 	);
 
 	// Build block content.
-	$block_content = wp_peeps_build_social_block_content(
+	$block_content = ph_peeps_build_social_block_content(
 		$social_links,
 		$block_attrs,
 		$wrapper_attributes,
@@ -80,10 +80,10 @@ function wp_peeps_render_social_links_block( $attributes ) {
  *
  * @return array|null Array of social links or null if no links exist on frontend.
  */
-function wp_peeps_get_social_links() {
+function ph_peeps_get_social_links() {
 	// Get social links from post meta.
 	$post_id = get_the_ID();
-	$social_links = get_post_meta( $post_id, 'wp_peeps_social_links', true );
+	$social_links = get_post_meta( $post_id, 'ph_peeps_social_links', true );
 	$has_social_links = ! empty( $social_links ) && is_array( $social_links );
 
 	// Check if we're in the editor context.
@@ -109,7 +109,7 @@ function wp_peeps_get_social_links() {
  * @param array $attributes Raw block attributes.
  * @return array Sanitized attributes.
  */
-function wp_peeps_get_social_block_attributes( $attributes ) {
+function ph_peeps_get_social_block_attributes( $attributes ) {
 	return [
 		'size'          => sanitize_html_class( $attributes['size'] ?? 'has-normal-icon-size' ),
 		'iconColor'    => sanitize_hex_color( $attributes['iconColorValue'] ?? '' ),
@@ -131,10 +131,10 @@ function wp_peeps_get_social_block_attributes( $attributes ) {
  * @param array $block_attrs Sanitized block attributes.
  * @return array Block classes.
  */
-function wp_peeps_get_social_block_classes( $block_attrs ) {
+function ph_peeps_get_social_block_classes( $block_attrs ) {
 	$classes = [
 		'wp-block-social-links',
-		'wp-peeps-social-links',
+		'ph-peeps-social-links',
 		$block_attrs['size'],
 		$block_attrs['className'],
 		'is-style-default',
@@ -176,16 +176,16 @@ function wp_peeps_get_social_block_classes( $block_attrs ) {
  * @param array $block_attrs Sanitized block attributes.
  * @return array Block styles.
  */
-function wp_peeps_get_social_block_styles( $block_attrs ) {
+function ph_peeps_get_social_block_styles( $block_attrs ) {
 	$styles = [];
 
 	if ( $block_attrs['orientation'] === 'vertical' ) {
-		$styles = array_merge( $styles, wp_peeps_get_vertical_styles( $block_attrs ) );
+		$styles = array_merge( $styles, ph_peeps_get_vertical_styles( $block_attrs ) );
 	} else {
-		$styles = array_merge( $styles, wp_peeps_get_horizontal_styles( $block_attrs ) );
+		$styles = array_merge( $styles, ph_peeps_get_horizontal_styles( $block_attrs ) );
 	}
 
-	$gap_style = wp_peeps_get_gap_style( $block_attrs['gap'] );
+	$gap_style = ph_peeps_get_gap_style( $block_attrs['gap'] );
 	if ( $gap_style ) {
 		$styles[] = $gap_style;
 	}
@@ -199,7 +199,7 @@ function wp_peeps_get_social_block_styles( $block_attrs ) {
  * @param array $block_attrs Block attributes.
  * @return array Array of CSS styles.
  */
-function wp_peeps_get_vertical_styles( $block_attrs ) {
+function ph_peeps_get_vertical_styles( $block_attrs ) {
 	$styles = [];
 
 	$vertical_align_map = [
@@ -241,7 +241,7 @@ function wp_peeps_get_vertical_styles( $block_attrs ) {
  * @param array $block_attrs Block attributes.
  * @return array Array of CSS styles.
  */
-function wp_peeps_get_horizontal_styles( $block_attrs ) {
+function ph_peeps_get_horizontal_styles( $block_attrs ) {
 	$styles = [];
 
 	$justify_map = [
@@ -276,7 +276,7 @@ function wp_peeps_get_horizontal_styles( $block_attrs ) {
  * @param string $gap Gap value.
  * @return string|null Gap style or null if not set.
  */
-function wp_peeps_get_gap_style( $gap ) {
+function ph_peeps_get_gap_style( $gap ) {
 	if ( empty( $gap ) ) {
 		return null;
 	}
@@ -300,12 +300,12 @@ function wp_peeps_get_gap_style( $gap ) {
  * @param string $wrapper_attributes Block wrapper attributes.
  * @return string Block content.
  */
-function wp_peeps_build_social_block_content( $social_links, $block_attrs, $wrapper_attributes ) {
+function ph_peeps_build_social_block_content( $social_links, $block_attrs, $wrapper_attributes ) {
 	$block_content = sprintf(
 		'<!-- wp:social-links {"openInNewTab":%s,"showLabels":%s,"className":"%s","iconColorValue":"%s","iconBackgroundColorValue":"%s","layout":{"type":"flex","orientation":"%s","justifyContent":"%s","verticalAlignment":"%s","flexWrap":"%s"}} -->',
 		$block_attrs['openInNewTab'] ? 'true' : 'false',
 		$block_attrs['showLabels'] ? 'true' : 'false',
-		implode( ' ', array_filter( wp_peeps_get_social_block_classes( $block_attrs ) ) ),
+		implode( ' ', array_filter( ph_peeps_get_social_block_classes( $block_attrs ) ) ),
 		esc_attr( $block_attrs['iconColor'] ),
 		esc_attr( $block_attrs['iconBackgroundColor'] ),
 		esc_attr( $block_attrs['orientation'] ),

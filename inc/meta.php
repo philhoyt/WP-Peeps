@@ -2,10 +2,10 @@
 /**
  * Register custom meta fields for the plugin
  *
- * @package WP_Peeps
+ * @package PH_Peeps
  */
 
-namespace WP_Peeps\Inc;
+namespace PH_Peeps\Inc;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -32,7 +32,7 @@ function validate_phone( $phone ) {
 	if ( $length < 10 || $length > 15 ) {
 		return new \WP_Error(
 			'invalid_phone',
-			__( 'Phone number must be empty or contain between 10 and 15 digits.', 'wp-peeps' )
+			__( 'Phone number must be empty or contain between 10 and 15 digits.', 'ph-peeps' )
 		);
 	}
 
@@ -54,7 +54,7 @@ function validate_email( $email ) {
 	if ( ! is_email( $email ) ) {
 		return new \WP_Error(
 			'invalid_email',
-			__( 'Please enter a valid email address or leave empty.', 'wp-peeps' )
+			__( 'Please enter a valid email address or leave empty.', 'ph-peeps' )
 		);
 	}
 	return sanitize_email( $email );
@@ -74,7 +74,7 @@ function validate_social_links( $links ) {
 	if ( ! is_array( $links ) ) {
 		return new \WP_Error(
 			'invalid_social_links',
-			__( 'Social links must be an array.', 'wp-peeps' )
+			__( 'Social links must be an array.', 'ph-peeps' )
 		);
 	}
 
@@ -106,13 +106,13 @@ function validate_social_links( $links ) {
  */
 function register_people_meta() {
 	register_post_meta(
-		'wp_peeps_people',
-		'wp_peeps_first_name',
+		'ph_peeps_people',
+		'ph_peeps_first_name',
 		array(
 			'show_in_rest'      => true,
 			'single'            => true,
 			'type'              => 'string',
-			'label'             => __( 'First Name', 'wp-peeps' ),
+			'label'             => __( 'First Name', 'ph-peeps' ),
 			'sanitize_callback' => 'sanitize_text_field',
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
@@ -121,13 +121,13 @@ function register_people_meta() {
 	);
 
 	register_post_meta(
-		'wp_peeps_people',
-		'wp_peeps_middle_name',
+		'ph_peeps_people',
+		'ph_peeps_middle_name',
 		array(
 			'show_in_rest'      => true,
 			'single'            => true,
 			'type'              => 'string',
-			'label'             => __( 'Middle Name', 'wp-peeps' ),
+			'label'             => __( 'Middle Name', 'ph-peeps' ),
 			'sanitize_callback' => 'sanitize_text_field',
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
@@ -136,13 +136,13 @@ function register_people_meta() {
 	);
 
 	register_post_meta(
-		'wp_peeps_people',
-		'wp_peeps_last_name',
+		'ph_peeps_people',
+		'ph_peeps_last_name',
 		array(
 			'show_in_rest'      => true,
 			'single'            => true,
 			'type'              => 'string',
-			'label'             => __( 'Last Name', 'wp-peeps' ),
+			'label'             => __( 'Last Name', 'ph-peeps' ),
 			'sanitize_callback' => 'sanitize_text_field',
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
@@ -151,13 +151,13 @@ function register_people_meta() {
 	);
 
 	register_post_meta(
-		'wp_peeps_people',
-		'wp_peeps_phone',
+		'ph_peeps_people',
+		'ph_peeps_phone',
 		array(
 			'show_in_rest'      => true,
 			'single'            => true,
 			'type'              => 'string',
-			'label'             => __( 'Phone Number', 'wp-peeps' ),
+			'label'             => __( 'Phone Number', 'ph-peeps' ),
 			'sanitize_callback' => __NAMESPACE__ . '\validate_phone',
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
@@ -166,13 +166,13 @@ function register_people_meta() {
 	);
 
 	register_post_meta(
-		'wp_peeps_people',
-		'wp_peeps_email',
+		'ph_peeps_people',
+		'ph_peeps_email',
 		array(
 			'show_in_rest'      => true,
 			'single'            => true,
 			'type'              => 'string',
-			'label'             => __( 'Email Address', 'wp-peeps' ),
+			'label'             => __( 'Email Address', 'ph-peeps' ),
 			'sanitize_callback' => __NAMESPACE__ . '\validate_email',
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
@@ -181,8 +181,8 @@ function register_people_meta() {
 	);
 
 	register_post_meta(
-		'wp_peeps_people',
-		'wp_peeps_social_links',
+		'ph_peeps_people',
+		'ph_peeps_social_links',
 		array(
 			'show_in_rest'      => array(
 				'schema' => array(
@@ -202,7 +202,7 @@ function register_people_meta() {
 			),
 			'single'            => true,
 			'type'              => 'array',
-			'label'             => __( 'Social Links', 'wp-peeps' ),
+			'label'             => __( 'Social Links', 'ph-peeps' ),
 			'sanitize_callback' => __NAMESPACE__ . '\validate_social_links',
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
@@ -223,7 +223,7 @@ add_action( 'init', __NAMESPACE__ . '\register_people_meta' );
  */
 function update_title_from_name( $meta_id, $post_id, $meta_key, $meta_value ) {
 	// Only proceed if we're updating first, middle, or last name.
-	if ( ! in_array( $meta_key, array( 'wp_peeps_first_name', 'wp_peeps_middle_name', 'wp_peeps_last_name' ), true ) ) {
+	if ( ! in_array( $meta_key, array( 'ph_peeps_first_name', 'ph_peeps_middle_name', 'ph_peeps_last_name' ), true ) ) {
 		return;
 	}
 
@@ -236,7 +236,7 @@ function update_title_from_name( $meta_id, $post_id, $meta_key, $meta_value ) {
 	// Get the post.
 	$post = get_post( $post_id );
 
-	if ( ! $post || 'wp_peeps_people' !== $post->post_type ) {
+	if ( ! $post || 'ph_peeps_people' !== $post->post_type ) {
 		return;
 	}
 
@@ -251,9 +251,9 @@ function update_title_from_name( $meta_id, $post_id, $meta_key, $meta_value ) {
 	try {
 		// Get all name parts in a single query (optimized).
 		$all_meta    = get_post_meta( $post_id );
-		$first_name  = isset( $all_meta['wp_peeps_first_name'][0] ) ? $all_meta['wp_peeps_first_name'][0] : '';
-		$middle_name = isset( $all_meta['wp_peeps_middle_name'][0] ) ? $all_meta['wp_peeps_middle_name'][0] : '';
-		$last_name   = isset( $all_meta['wp_peeps_last_name'][0] ) ? $all_meta['wp_peeps_last_name'][0] : '';
+		$first_name  = isset( $all_meta['ph_peeps_first_name'][0] ) ? $all_meta['ph_peeps_first_name'][0] : '';
+		$middle_name = isset( $all_meta['ph_peeps_middle_name'][0] ) ? $all_meta['ph_peeps_middle_name'][0] : '';
+		$last_name   = isset( $all_meta['ph_peeps_last_name'][0] ) ? $all_meta['ph_peeps_last_name'][0] : '';
 
 		// Only update title if we have at least first and last name to avoid partial updates during import.
 		if ( empty( $first_name ) || empty( $last_name ) ) {
