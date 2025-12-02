@@ -6,7 +6,7 @@ A WordPress plugin for managing and displaying people profiles.
 
 ## Description
 
-WP Peeps is a WordPress plugin that helps you create and manage a directory of people on your website. Perfect for displaying leadership, team rosters, or employee directories.
+Peeps – People Directory is a WordPress plugin that helps you create and manage a directory of people on your website. Perfect for displaying leadership, team rosters, or employee directories.
 
 ### Requirements
 
@@ -41,10 +41,10 @@ WP Peeps is a WordPress plugin that helps you create and manage a directory of p
 ![Person Post Editor Fields](assets/screenshot-2.png)
 
 ### Available Blocks
-![Available WP Peeps Blocks](assets/screenshot-3.png)
+![Available Peeps Blocks](assets/screenshot-3.png)
 
 ### Settings Page
-![WP Peeps Settings Page](assets/screenshot-4.png)
+![Peeps – People Directory Settings Page](assets/screenshot-4.png)
 
 ## Development
 
@@ -64,12 +64,29 @@ WP Peeps is a WordPress plugin that helps you create and manage a directory of p
 To generate test data for development:
 
 ```bash
-wp eval-file wp-content/plugins/wp-peeps/bin/generate-test-data.php 20
+wp eval-file wp-content/plugins/peeps/bin/generate-test-data.php 20
 ```
 
 This will create 20 test people profiles in your WordPress installation.
 
 ## Changelog
+
+### 2.0.0
+
+-   **BREAKING:** Updated all prefixes from "wp_peeps" to "ph_peeps" for WordPress Directory compliance
+-   **BREAKING:** Post type changed from "wp_peeps_people" to "ph_peeps_people"
+-   **BREAKING:** All meta keys changed from "wp_peeps_*" to "ph_peeps_*"
+-   **BREAKING:** All option names changed from "wp_peeps_*" to "ph_peeps_*"
+-   **BREAKING:** Block names changed from "wp-peeps/*" to "ph-peeps/*"
+-   Updated plugin name to "Peeps – People Directory"
+-   Updated namespaces from "WP_Peeps" to "PH_Peeps"
+-   Updated text domain from "wp-peeps" to "ph-peeps"
+-   Added sanitization callbacks for boolean settings
+-   **Note:** Existing posts and settings will need to be migrated or re-entered
+
+### 1.3.1
+
+-   Updated plugin name from "WP Peeps" to "Peeps" for WordPress Directory compliance
 
 ### 1.3.0
 
@@ -144,6 +161,6 @@ This will create 20 test people profiles in your WordPress installation.
 Contributors: Phil Hoyt
 Tags: directory, people, staff, team, employees
 Tested up to: 6.9
-Stable tag: 1.3.0
+Stable tag: 2.0.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
