@@ -5,11 +5,11 @@
  * This file contains rendering logic for the Phone block in the WP Peeps plugin.
  * It handles retrieving and formatting phone information for a specific post.
  *
- * @package WP_Peeps
+ * @package PH_Peeps
  * @subpackage Blocks
  */
 
-namespace WP_Peeps\Blocks;
+namespace PH_Peeps\Blocks;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block $block      Block instance.
  * @return string             The rendered HTML for the phone block.
  */
-function wp_peeps_render_phone_block( $attributes, $block ) {
+function ph_peeps_render_phone_block( $attributes, $block ) {
 	$post_id = isset( $block->context['postId'] ) ? $block->context['postId'] : get_the_ID();
 
 	// Bail early if no post ID or user can't read the post.
@@ -35,7 +35,7 @@ function wp_peeps_render_phone_block( $attributes, $block ) {
 	}
 
 	// Get and sanitize phone number.
-	$phone = get_post_meta( $post_id, 'wp_peeps_phone', true );
+	$phone = get_post_meta( $post_id, 'ph_peeps_phone', true );
 	if ( empty( $phone ) ) {
 		return '';
 	}
@@ -47,8 +47,8 @@ function wp_peeps_render_phone_block( $attributes, $block ) {
 	$prefix = ! empty( $attributes['prefix'] ) ? esc_html( wp_strip_all_tags( $attributes['prefix'] ) ) . ' ' : '';
 
 	// Format phone number.
-	$format = get_option( 'wp_peeps_phone_format', '(###) ###-####' );
-	$formatted_phone = wp_peeps_format_phone_number( $phone, $format );
+	$format = get_option( 'ph_peeps_phone_format', '(###) ###-####' );
+	$formatted_phone = ph_peeps_format_phone_number( $phone, $format );
 
 	// Get block wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes();
@@ -81,7 +81,7 @@ function wp_peeps_render_phone_block( $attributes, $block ) {
  * @param string $format The format template.
  * @return string       The formatted phone number.
  */
-function wp_peeps_format_phone_number( $phone, $format ) {
+function ph_peeps_format_phone_number( $phone, $format ) {
 	if ( empty( $phone ) || empty( $format ) ) {
 		return '';
 	}

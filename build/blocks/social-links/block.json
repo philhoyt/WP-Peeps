@@ -1,10 +1,10 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "wp-peeps/social-links",
+  "name": "ph-peeps/social-links",
   "version": "1.1.0",
   "title": "Social Links - WP Peeps",
-  "category": "wp-peeps",
+  "category": "ph-peeps",
   "icon": "share",
   "description": "Add and customize social media links.",
   "supports": {
@@ -34,7 +34,7 @@
         "justifyContent": "left"
       }
     },
-    "__experimentalSelector": ".wp-block-wp-peeps-social-links"
+    "__experimentalSelector": ".wp-block-ph-peeps-social-links"
   },
   "attributes": {
     "iconColorValue": {
@@ -73,7 +73,7 @@
       "label": "Logos Only"
     }
   ],
-  "textdomain": "wp-peeps",
+  "textdomain": "ph-peeps",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "render": "file:./render.php"

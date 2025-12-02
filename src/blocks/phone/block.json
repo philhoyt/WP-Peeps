@@ -1,10 +1,10 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "wp-peeps/phone",
+	"name": "ph-peeps/phone",
 	"version": "1.1.0",
 	"title": "Phone Number",
-	"category": "wp-peeps",
+	"category": "ph-peeps",
 	"icon": "phone",
 	"description": "Display a person's phone number",
 	"attributes": {
@@ -55,7 +55,7 @@
 		}
 	},
 	"usesContext": ["postId", "postType"],
-	"textdomain": "wp-peeps",
+	"textdomain": "ph-peeps",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"render": "file:./render.php"

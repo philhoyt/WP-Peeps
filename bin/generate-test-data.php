@@ -10,8 +10,8 @@ if ( ! defined( 'WP_CLI' ) ) {
 }
 
 // Check if the post type exists
-if ( ! post_type_exists( 'wp_peeps_people' ) ) {
-	WP_CLI::error( 'Post type wp_peeps_people does not exist. Make sure the WP Peeps plugin is activated.' );
+if ( ! post_type_exists( 'ph_peeps_people' ) ) {
+	WP_CLI::error( 'Post type ph_peeps_people does not exist. Make sure the WP Peeps plugin is activated.' );
 	exit;
 }
 
@@ -143,7 +143,7 @@ try {
 
 		// Create the post
 		$post_id = wp_insert_post([
-			'post_type' => 'wp_peeps_people',
+			'post_type' => 'ph_peeps_people',
 			'post_status' => 'publish',
 			'post_title' => sprintf('%s %s %s', $first_name, $middle_name, $last_name),
 			'post_content' => $content,
@@ -159,14 +159,14 @@ try {
 		}
 
 		// Set meta data
-		update_post_meta( $post_id, 'wp_peeps_first_name', $first_name );
-		update_post_meta( $post_id, 'wp_peeps_middle_name', $middle_name );
-		update_post_meta( $post_id, 'wp_peeps_last_name', $last_name );
-		update_post_meta( $post_id, 'wp_peeps_email', $email );
-		update_post_meta( $post_id, 'wp_peeps_phone', preg_replace('/[^0-9]/', '', $phone) );
+		update_post_meta( $post_id, 'ph_peeps_first_name', $first_name );
+		update_post_meta( $post_id, 'ph_peeps_middle_name', $middle_name );
+		update_post_meta( $post_id, 'ph_peeps_last_name', $last_name );
+		update_post_meta( $post_id, 'ph_peeps_email', $email );
+		update_post_meta( $post_id, 'ph_peeps_phone', preg_replace('/[^0-9]/', '', $phone) );
 		if (isset($job_term_id)) {
 			wp_set_post_terms($post_id, [$job_term_id], 'job-title');
-			update_post_meta($post_id, 'wp_peeps_job_title', $job_title);
+			update_post_meta($post_id, 'ph_peeps_job_title', $job_title);
 		}
 
 		// Generate random social links
@@ -186,7 +186,7 @@ try {
 			];
 		}
 		
-		update_post_meta($post_id, 'wp_peeps_social_links', $social_links);
+		update_post_meta($post_id, 'ph_peeps_social_links', $social_links);
 
 		// Add featured image
 		$image_url = "https://avatar.iran.liara.run/public/{$gender}";

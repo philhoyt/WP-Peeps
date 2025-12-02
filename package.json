@@ -1,6 +1,6 @@
 {
 	"name": "peeps",
-	"version": "1.3.0",
+	"version": "2.0.0",
 	"description": "A directory of people for your WordPress site.",
 	"author": "Phil Hoyt",
 	"license": "GPL-2.0-or-later",
@@ -17,7 +17,7 @@
 	"files": [
 		"build",
 		"inc",
-		"wp-peeps.php",
+		"peeps.php",
 		"src"
 	],
 	"devDependencies": {

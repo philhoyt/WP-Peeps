@@ -28,7 +28,7 @@ WP Peeps is a WordPress plugin that helps you create and manage a directory of p
 ## Installation
 
 1. Download the latest release from GitHub
-2. Upload the plugin files to the `/wp-content/plugins/wp-peeps` directory
+2. Upload the plugin files to the `/wp-content/plugins/peeps` directory
 3. Activate the plugin through the 'Plugins' screen in WordPress
 4. Go to People → Settings to configure the plugin options
 
