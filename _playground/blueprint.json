@@ -1,9 +1,9 @@
 {
 	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
 	"features": {
-	  "networking": true
+		"networking": true
 	},
-	"landingPage": "/wp-admin/edit.php?post_type=wp_peeps_people",
+	"landingPage": "/wp-admin/edit.php?post_type=ph_peeps_people",
 	"login": true,
 	"steps": [
 		{
@@ -27,4 +27,4 @@
 			}
 		}
 	]
-  }
+}

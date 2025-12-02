@@ -3,7 +3,6 @@ import {
 	useBlockProps,
 	InspectorControls,
 	BlockControls,
-	useBlockEditContext,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -12,7 +11,6 @@ import {
 	ToolbarGroup,
 	ToolbarDropdownMenu,
 } from '@wordpress/components';
-import { useEntityProp } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import {
@@ -28,48 +26,48 @@ import {
 
 const HTML_TAGS = [
 	{
-		title: __('Heading 1', 'wp-peeps'),
+		title: __('Heading 1', 'ph-peeps'),
 		value: 'h1',
 		icon: headingLevel1,
 		isHeading: true,
 	},
 	{
-		title: __('Heading 2', 'wp-peeps'),
+		title: __('Heading 2', 'ph-peeps'),
 		value: 'h2',
 		icon: headingLevel2,
 		isHeading: true,
 	},
 	{
-		title: __('Heading 3', 'wp-peeps'),
+		title: __('Heading 3', 'ph-peeps'),
 		value: 'h3',
 		icon: headingLevel3,
 		isHeading: true,
 	},
 	{
-		title: __('Heading 4', 'wp-peeps'),
+		title: __('Heading 4', 'ph-peeps'),
 		value: 'h4',
 		icon: headingLevel4,
 		isHeading: true,
 	},
 	{
-		title: __('Heading 5', 'wp-peeps'),
+		title: __('Heading 5', 'ph-peeps'),
 		value: 'h5',
 		icon: headingLevel5,
 		isHeading: true,
 	},
 	{
-		title: __('Heading 6', 'wp-peeps'),
+		title: __('Heading 6', 'ph-peeps'),
 		value: 'h6',
 		icon: headingLevel6,
 		isHeading: true,
 	},
 	{
-		title: __('Paragraph', 'wp-peeps'),
+		title: __('Paragraph', 'ph-peeps'),
 		value: 'p',
 		icon: paragraph,
 	},
 	{
-		title: __('Div', 'wp-peeps'),
+		title: __('Div', 'ph-peeps'),
 		value: 'div',
 		icon: grid,
 	},
@@ -105,7 +103,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 			}
 			return select(coreStore).getEntityRecord(
 				'postType',
-				postType || 'wp_peeps_people',
+				postType || 'ph_peeps_people',
 				postId,
 			);
 		},
@@ -113,9 +111,9 @@ export default function Edit({ attributes, setAttributes, context }) {
 	);
 
 	// Get meta values either from context post or current post
-	const firstName = post?.meta?.wp_peeps_first_name || 'First';
-	const middleName = post?.meta?.wp_peeps_middle_name || 'Middle';
-	const lastName = post?.meta?.wp_peeps_last_name || 'Last';
+	const firstName = post?.meta?.ph_peeps_first_name || 'First';
+	const middleName = post?.meta?.ph_peeps_middle_name || 'Middle';
+	const lastName = post?.meta?.ph_peeps_last_name || 'Last';
 
 	// Build the preview text based on toggle settings
 	const nameParts = [
@@ -128,7 +126,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 	const fullName =
 		nameParts.length > 0
 			? nameParts.join(' ')
-			: __('Select name parts to display', 'wp-peeps');
+			: __('Select name parts to display', 'ph-peeps');
 
 	const TagName = tagName;
 
@@ -141,7 +139,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 				<ToolbarGroup>
 					<ToolbarDropdownMenu
 						icon={currentTag?.icon}
-						label={__('Change text element', 'wp-peeps')}
+						label={__('Change text element', 'ph-peeps')}
 						controls={HTML_TAGS.map((tag) => ({
 							title: tag.title,
 							icon: tag.icon,
@@ -153,42 +151,42 @@ export default function Edit({ attributes, setAttributes, context }) {
 				</ToolbarGroup>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title={__('Name Settings', 'wp-peeps')}>
+				<PanelBody title={__('Name Settings', 'ph-peeps')}>
 					<ToggleControl
-						label={__('Show First Name', 'wp-peeps')}
+						label={__('Show First Name', 'ph-peeps')}
 						checked={showFirst}
 						onChange={() =>
 							setAttributes({ showFirst: !showFirst })
 						}
 					/>
 					<ToggleControl
-						label={__('Show Middle Name', 'wp-peeps')}
+						label={__('Show Middle Name', 'ph-peeps')}
 						checked={showMiddle}
 						onChange={() =>
 							setAttributes({ showMiddle: !showMiddle })
 						}
 					/>
 					<ToggleControl
-						label={__('Show Last Name', 'wp-peeps')}
+						label={__('Show Last Name', 'ph-peeps')}
 						checked={showLast}
 						onChange={() => setAttributes({ showLast: !showLast })}
 					/>
 				</PanelBody>
-				<PanelBody title={__('Link Settings', 'wp-peeps')}>
+				<PanelBody title={__('Link Settings', 'ph-peeps')}>
 					<ToggleControl
-						label={__('Make a Link', 'wp-peeps')}
+						label={__('Make a Link', 'ph-peeps')}
 						checked={makeLink}
 						onChange={() => setAttributes({ makeLink: !makeLink })}
 						help={
 							makeLink
-								? __('Name will be clickable', 'wp-peeps')
-								: __('Name will be plain text', 'wp-peeps')
+								? __('Name will be clickable', 'ph-peeps')
+								: __('Name will be plain text', 'ph-peeps')
 						}
 					/>
 					{makeLink && (
 						<>
 							<ToggleControl
-								label={__('Open in New Tab', 'wp-peeps')}
+								label={__('Open in New Tab', 'ph-peeps')}
 								checked={openInNewTab}
 								onChange={() =>
 									setAttributes({
@@ -197,14 +195,14 @@ export default function Edit({ attributes, setAttributes, context }) {
 								}
 							/>
 							<TextControl
-								label={__('Link Rel', 'wp-peeps')}
+								label={__('Link Rel', 'ph-peeps')}
 								value={linkRel}
 								onChange={(value) =>
 									setAttributes({ linkRel: value })
 								}
 								help={__(
 									'Add rel attributes for the link',
-									'wp-peeps',
+									'ph-peeps',
 								)}
 							/>
 						</>

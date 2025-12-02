@@ -25,37 +25,42 @@ function SettingsPage() {
 	const [error, setError] = useState(null);
 	const [phoneFormatError, setPhoneFormatError] = useState('');
 
-	const { isPublic, hasArchive, phoneFormat, cptSlug, menuPosition, isSaving } = useSelect(
-		(select) => {
-			const record = select(coreStore).getEditedEntityRecord(
-				'root',
-				'site',
-				undefined,
-			);
-			return {
-				isPublic: record.wp_peeps_public_cpt,
-				hasArchive: record.wp_peeps_has_archive,
-				phoneFormat: record.wp_peeps_phone_format,
-				cptSlug: record.wp_peeps_cpt_slug,
-				menuPosition: record.wp_peeps_menu_position,
-				isSaving: select(coreStore).isSavingEntityRecord('root', 'site'),
-			};
-		},
-	);
+	const {
+		isPublic,
+		hasArchive,
+		phoneFormat,
+		cptSlug,
+		menuPosition,
+		isSaving,
+	} = useSelect((select) => {
+		const record = select(coreStore).getEditedEntityRecord(
+			'root',
+			'site',
+			undefined,
+		);
+		return {
+			isPublic: record.ph_peeps_public_cpt,
+			hasArchive: record.ph_peeps_has_archive,
+			phoneFormat: record.ph_peeps_phone_format,
+			cptSlug: record.ph_peeps_cpt_slug,
+			menuPosition: record.ph_peeps_menu_position,
+			isSaving: select(coreStore).isSavingEntityRecord('root', 'site'),
+		};
+	});
 
 	// Menu position options
 	const menuPositions = [
-		{ value: '5', label: __('Below Posts (5)', 'wp-peeps') },
-		{ value: '10', label: __('Below Media (10)', 'wp-peeps') },
-		{ value: '15', label: __('Below Links (15)', 'wp-peeps') },
-		{ value: '20', label: __('Below Pages (20)', 'wp-peeps') },
-		{ value: '25', label: __('Below Comments (25)', 'wp-peeps') },
-		{ value: '60', label: __('Below First Separator (60)', 'wp-peeps') },
-		{ value: '65', label: __('Below Plugins (65)', 'wp-peeps') },
-		{ value: '70', label: __('Below Users (70)', 'wp-peeps') },
-		{ value: '75', label: __('Below Tools (75)', 'wp-peeps') },
-		{ value: '80', label: __('Below Settings (80)', 'wp-peeps') },
-		{ value: '100', label: __('Below Second Separator (100)', 'wp-peeps') },
+		{ value: '5', label: __('Below Posts (5)', 'ph-peeps') },
+		{ value: '10', label: __('Below Media (10)', 'ph-peeps') },
+		{ value: '15', label: __('Below Links (15)', 'ph-peeps') },
+		{ value: '20', label: __('Below Pages (20)', 'ph-peeps') },
+		{ value: '25', label: __('Below Comments (25)', 'ph-peeps') },
+		{ value: '60', label: __('Below First Separator (60)', 'ph-peeps') },
+		{ value: '65', label: __('Below Plugins (65)', 'ph-peeps') },
+		{ value: '70', label: __('Below Users (70)', 'ph-peeps') },
+		{ value: '75', label: __('Below Tools (75)', 'ph-peeps') },
+		{ value: '80', label: __('Below Settings (80)', 'ph-peeps') },
+		{ value: '100', label: __('Below Second Separator (100)', 'ph-peeps') },
 	];
 
 	const updateLocalSetting = (value, setting) => {
@@ -74,11 +79,23 @@ function SettingsPage() {
 		}
 
 		// Only validate phone format if it's being changed
-		if (localSettings.wp_peeps_phone_format !== undefined) {
-			const formatPlaceholders = (localSettings.wp_peeps_phone_format.match(/#/g) || []).length;
+		if (localSettings.ph_peeps_phone_format !== undefined) {
+			const formatPlaceholders = (
+				localSettings.ph_peeps_phone_format.match(/#/g) || []
+			).length;
 			if (formatPlaceholders < 10 || formatPlaceholders > 15) {
-				setPhoneFormatError(__('Format must contain between 10 and 15 # symbols.', 'wp-peeps'));
-				setError(__('Phone format must contain between 10 and 15 # symbols.', 'wp-peeps'));
+				setPhoneFormatError(
+					__(
+						'Format must contain between 10 and 15 # symbols.',
+						'ph-peeps',
+					),
+				);
+				setError(
+					__(
+						'Phone format must contain between 10 and 15 # symbols.',
+						'ph-peeps',
+					),
+				);
 				return;
 			}
 		}
@@ -89,9 +106,9 @@ function SettingsPage() {
 			setError(null); // Clear any existing errors
 			// Show notice if slug or public status was changed
 			if (
-				localSettings.wp_peeps_cpt_slug ||
-				localSettings.wp_peeps_public_cpt !== undefined ||
-				localSettings.wp_peeps_has_archive !== undefined
+				localSettings.ph_peeps_cpt_slug ||
+				localSettings.ph_peeps_public_cpt !== undefined ||
+				localSettings.ph_peeps_has_archive !== undefined
 			) {
 				setShowRewriteNotice(true);
 			}
@@ -118,125 +135,127 @@ function SettingsPage() {
 					status="warning"
 					isDismissible={true}
 					onDismiss={() => setShowRewriteNotice(false)}
-					className="wp-peeps-notice"
+					className="ph-peeps-notice"
 				>
 					{__(
 						'You changed the directory slug or public status. Please visit the Permalinks page and click "Save Changes" to update your URLs.',
-						'wp-peeps',
+						'ph-peeps',
 					)}
 					<p>
 						<a
 							href="options-permalink.php"
 							className="button button-secondary"
 						>
-							{__('Visit Permalinks Page', 'wp-peeps')}
+							{__('Visit Permalinks Page', 'ph-peeps')}
 						</a>
 					</p>
 				</Notice>
 			)}
-			<div className="wrap wp-peeps-admin">
-				<div className="wp-peeps-header">
-					<h1>{__('WP Peeps Settings', 'wp-peeps')}</h1>
+			<div className="wrap ph-peeps-admin">
+				<div className="ph-peeps-header">
+					<h1>{__('WP Peeps Settings', 'ph-peeps')}</h1>
 				</div>
 
-				<Card className="wp-peeps-card">
+				<Card className="ph-peeps-card">
 					<CardHeader>
-						<h2 className="wp-peeps-card__title">
-							{__('Directory Settings', 'wp-peeps')}
+						<h2 className="ph-peeps-card__title">
+							{__('Directory Settings', 'ph-peeps')}
 						</h2>
 					</CardHeader>
 					<CardBody>
-						<div className="wp-peeps-settings">
-							<div className="wp-peeps-setting-row">
+						<div className="ph-peeps-settings">
+							<div className="ph-peeps-setting-row">
 								<ToggleControl
 									__nextHasNoMarginBottom
 									label={__(
 										'Make People Directory Public',
-										'wp-peeps',
+										'ph-peeps',
 									)}
 									help={__(
 										'When enabled, the people directory will be visible to the public.',
-										'wp-peeps',
+										'ph-peeps',
 									)}
 									checked={
-										localSettings.wp_peeps_public_cpt ??
+										localSettings.ph_peeps_public_cpt ??
 										isPublic
 									}
 									onChange={(value) =>
 										updateLocalSetting(
 											value,
-											'wp_peeps_public_cpt',
+											'ph_peeps_public_cpt',
 										)
 									}
 									disabled={isSaving}
 								/>
 							</div>
 
-							<div className="wp-peeps-setting-row">
+							<div className="ph-peeps-setting-row">
 								<ToggleControl
 									__nextHasNoMarginBottom
 									label={__(
 										'Enable People Archive Page',
-										'wp-peeps',
+										'ph-peeps',
 									)}
 									help={__(
 										'When enabled, a page listing all people will be available.',
-										'wp-peeps',
+										'ph-peeps',
 									)}
 									checked={
-										(localSettings.wp_peeps_public_cpt ??
+										(localSettings.ph_peeps_public_cpt ??
 										isPublic)
-											? (localSettings.wp_peeps_has_archive ??
+											? (localSettings.ph_peeps_has_archive ??
 												hasArchive)
 											: false
 									}
 									onChange={(value) =>
 										updateLocalSetting(
 											value,
-											'wp_peeps_has_archive',
+											'ph_peeps_has_archive',
 										)
 									}
 									disabled={
 										isSaving ||
-										!(localSettings.wp_peeps_public_cpt ??
-										isPublic)
+										!(
+											localSettings.ph_peeps_public_cpt ??
+											isPublic
+										)
 									}
 								/>
 							</div>
-	
-							<div className="wp-peeps-setting-row">
+
+							<div className="ph-peeps-setting-row">
 								<SelectControl
 									__nextHasNoMarginBottom
-									label={__('Menu Position', 'wp-peeps')}
+									label={__('Menu Position', 'ph-peeps')}
 									help={__(
 										'Choose where the People menu appears in the admin sidebar.',
-										'wp-peeps',
+										'ph-peeps',
 									)}
 									value={String(
-										localSettings.wp_peeps_menu_position ??
-										menuPosition ??
-										'25'
+										localSettings.ph_peeps_menu_position ??
+											menuPosition ??
+											'25',
 									)}
 									options={menuPositions}
 									onChange={(value) =>
 										updateLocalSetting(
 											parseInt(value, 10),
-											'wp_peeps_menu_position',
+											'ph_peeps_menu_position',
 										)
 									}
 									disabled={isSaving}
 								/>
 							</div>
 
-							<div className="wp-peeps-setting-row">
+							<div className="ph-peeps-setting-row">
 								<TextControl
 									__nextHasNoMarginBottom
-									label={__('Directory Slug', 'wp-peeps')}
+									label={__('Directory Slug', 'ph-peeps')}
 									help={
 										<>
 											{__(
 												'The URL slug for the people directory (e.g., "staff" would make URLs like /staff/john-doe). Defaults to "',
-												'wp-peeps',
+												'ph-peeps',
 											)}
 											<button
 												type="button"
@@ -244,41 +263,41 @@ function SettingsPage() {
 												onClick={() =>
 													updateLocalSetting(
 														'people',
-														'wp_peeps_cpt_slug',
+														'ph_peeps_cpt_slug',
 													)
 												}
 											>
 												people
 											</button>
-											{__('"', 'wp-peeps')} .
+											{__('"', 'ph-peeps')} .
 										</>
 									}
 									value={
-										localSettings.wp_peeps_cpt_slug ??
+										localSettings.ph_peeps_cpt_slug ??
 										cptSlug
 									}
 									onChange={(value) =>
 										updateLocalSetting(
 											value,
-											'wp_peeps_cpt_slug',
+											'ph_peeps_cpt_slug',
 										)
 									}
 									disabled={isSaving}
 								/>
 							</div>
 
-							<div className="wp-peeps-setting-row">
+							<div className="ph-peeps-setting-row">
 								<TextControl
 									__nextHasNoMarginBottom
 									label={__(
 										'Phone Number Format',
-										'wp-peeps',
+										'ph-peeps',
 									)}
 									help={
 										<>
 											{__(
 												'Use # for digits (10–15 digits). Example:',
-												'wp-peeps',
+												'ph-peeps',
 											)}
 											<button
 												type="button"
@@ -286,7 +305,7 @@ function SettingsPage() {
 												onClick={() =>
 													updateLocalSetting(
 														'(###) ###-####',
-														'wp_peeps_phone_format',
+														'ph_peeps_phone_format',
 													)
 												}
 											>
@@ -295,21 +314,29 @@ function SettingsPage() {
 										</>
 									}
 									value={
-										localSettings.wp_peeps_phone_format ??
+										localSettings.ph_peeps_phone_format ??
 										phoneFormat
 									}
 									onChange={(value) => {
-										const placeholderCount = (value.match(/#/g) || []).length;
-										if (placeholderCount < 10 || placeholderCount > 15) {
+										const placeholderCount = (
+											value.match(/#/g) || []
+										).length;
+										if (
+											placeholderCount < 10 ||
+											placeholderCount > 15
+										) {
 											setPhoneFormatError(
-												__('Format must contain between 10 and 15 # symbols.', 'wp-peeps')
+												__(
+													'Format must contain between 10 and 15 # symbols.',
+													'ph-peeps',
+												),
 											);
 										} else {
 											setPhoneFormatError('');
 										}
 										updateLocalSetting(
 											value,
-											'wp_peeps_phone_format',
+											'ph_peeps_phone_format',
 										);
 									}}
 									disabled={isSaving}
@@ -318,7 +345,7 @@ function SettingsPage() {
 									<Notice
 										status="error"
 										isDismissible={false}
-										className="wp-peeps-field-error"
+										className="ph-peeps-field-error"
 									>
 										{phoneFormatError}
 									</Notice>
@@ -326,7 +353,7 @@ function SettingsPage() {
 							</div>
 						</div>
 
-						<div className="wp-peeps-settings__footer">
+						<div className="ph-peeps-settings__footer">
 							<Button
 								variant="primary"
 								onClick={saveSettings}
@@ -334,8 +361,8 @@ function SettingsPage() {
 								isBusy={isSaving}
 							>
 								{isSaving
-									? __('Saving…', 'wp-peeps')
-									: __('Save Changes', 'wp-peeps')}
+									? __('Saving…', 'ph-peeps')
+									: __('Save Changes', 'ph-peeps')}
 							</Button>
 						</div>
 					</CardBody>
