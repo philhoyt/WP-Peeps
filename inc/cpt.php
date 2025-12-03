@@ -26,22 +26,22 @@ function register_people_post_type() {
 	$menu_position = get_option( 'ph_peeps_menu_position', 25 );
 
 	$labels = array(
-		'name'                  => _x( 'People', 'Post type general name', 'ph-peeps' ),
-		'singular_name'         => _x( 'Person', 'Post type singular name', 'ph-peeps' ),
-		'menu_name'             => _x( 'People', 'Admin Menu text', 'ph-peeps' ),
-		'add_new'               => __( 'Add New', 'ph-peeps' ),
-		'add_new_item'          => __( 'Add New Person', 'ph-peeps' ),
-		'edit_item'             => __( 'Edit Person', 'ph-peeps' ),
-		'new_item'              => __( 'New Person', 'ph-peeps' ),
-		'view_item'             => __( 'View Person', 'ph-peeps' ),
-		'view_items'            => __( 'View People', 'ph-peeps' ),
-		'search_items'          => __( 'Search People', 'ph-peeps' ),
-		'not_found'             => __( 'No people found', 'ph-peeps' ),
-		'not_found_in_trash'    => __( 'No people found in Trash', 'ph-peeps' ),
-		'all_items'             => __( 'All People', 'ph-peeps' ),
-		'featured_image'        => __( 'Profile Picture', 'ph-peeps' ),
-		'set_featured_image'    => __( 'Set profile picture', 'ph-peeps' ),
-		'remove_featured_image' => __( 'Remove profile picture', 'ph-peeps' ),
+		'name'                  => _x( 'People', 'Post type general name', 'peeps-people-directory' ),
+		'singular_name'         => _x( 'Person', 'Post type singular name', 'peeps-people-directory' ),
+		'menu_name'             => _x( 'People', 'Admin Menu text', 'peeps-people-directory' ),
+		'add_new'               => __( 'Add New', 'peeps-people-directory' ),
+		'add_new_item'          => __( 'Add New Person', 'peeps-people-directory' ),
+		'edit_item'             => __( 'Edit Person', 'peeps-people-directory' ),
+		'new_item'              => __( 'New Person', 'peeps-people-directory' ),
+		'view_item'             => __( 'View Person', 'peeps-people-directory' ),
+		'view_items'            => __( 'View People', 'peeps-people-directory' ),
+		'search_items'          => __( 'Search People', 'peeps-people-directory' ),
+		'not_found'             => __( 'No people found', 'peeps-people-directory' ),
+		'not_found_in_trash'    => __( 'No people found in Trash', 'peeps-people-directory' ),
+		'all_items'             => __( 'All People', 'peeps-people-directory' ),
+		'featured_image'        => __( 'Profile Picture', 'peeps-people-directory' ),
+		'set_featured_image'    => __( 'Set profile picture', 'peeps-people-directory' ),
+		'remove_featured_image' => __( 'Remove profile picture', 'peeps-people-directory' ),
 	);
 
 	$args = array(

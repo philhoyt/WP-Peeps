@@ -4,7 +4,7 @@
 	"name": "ph-peeps/social-links",
 	"version": "1.1.0",
 	"title": "Social Links - WP Peeps",
-	"category": "ph-peeps",
+	"category": "peeps-people-directory",
 	"icon": "share",
 	"description": "Add and customize social media links.",
 	"supports": {
@@ -60,7 +60,7 @@
 		{ "name": "default", "label": "Default", "isDefault": true },
 		{ "name": "logos-only", "label": "Logos Only" }
 	],
-	"textdomain": "ph-peeps",
+	"textdomain": "peeps-people-directory",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"render": "file:./render.php"

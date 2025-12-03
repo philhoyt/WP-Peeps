@@ -80,7 +80,7 @@ This will create 20 test people profiles in your WordPress installation.
 -   **BREAKING:** Block names changed from "wp-peeps/*" to "ph-peeps/*"
 -   Updated plugin name to "Peeps – People Directory"
 -   Updated namespaces from "WP_Peeps" to "PH_Peeps"
--   Updated text domain from "wp-peeps" to "ph-peeps"
+-   Updated text domain from "wp-peeps" to "peeps-people-directory"
 -   Added sanitization callbacks for boolean settings
 -   **Note:** Existing posts and settings will need to be migrated or re-entered
 

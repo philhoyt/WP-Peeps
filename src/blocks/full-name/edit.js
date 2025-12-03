@@ -26,48 +26,48 @@ import {
 
 const HTML_TAGS = [
 	{
-		title: __('Heading 1', 'ph-peeps'),
+		title: __('Heading 1', 'peeps-people-directory'),
 		value: 'h1',
 		icon: headingLevel1,
 		isHeading: true,
 	},
 	{
-		title: __('Heading 2', 'ph-peeps'),
+		title: __('Heading 2', 'peeps-people-directory'),
 		value: 'h2',
 		icon: headingLevel2,
 		isHeading: true,
 	},
 	{
-		title: __('Heading 3', 'ph-peeps'),
+		title: __('Heading 3', 'peeps-people-directory'),
 		value: 'h3',
 		icon: headingLevel3,
 		isHeading: true,
 	},
 	{
-		title: __('Heading 4', 'ph-peeps'),
+		title: __('Heading 4', 'peeps-people-directory'),
 		value: 'h4',
 		icon: headingLevel4,
 		isHeading: true,
 	},
 	{
-		title: __('Heading 5', 'ph-peeps'),
+		title: __('Heading 5', 'peeps-people-directory'),
 		value: 'h5',
 		icon: headingLevel5,
 		isHeading: true,
 	},
 	{
-		title: __('Heading 6', 'ph-peeps'),
+		title: __('Heading 6', 'peeps-people-directory'),
 		value: 'h6',
 		icon: headingLevel6,
 		isHeading: true,
 	},
 	{
-		title: __('Paragraph', 'ph-peeps'),
+		title: __('Paragraph', 'peeps-people-directory'),
 		value: 'p',
 		icon: paragraph,
 	},
 	{
-		title: __('Div', 'ph-peeps'),
+		title: __('Div', 'peeps-people-directory'),
 		value: 'div',
 		icon: grid,
 	},
@@ -126,7 +126,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 	const fullName =
 		nameParts.length > 0
 			? nameParts.join(' ')
-			: __('Select name parts to display', 'ph-peeps');
+			: __('Select name parts to display', 'peeps-people-directory');
 
 	const TagName = tagName;
 
@@ -139,7 +139,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 				<ToolbarGroup>
 					<ToolbarDropdownMenu
 						icon={currentTag?.icon}
-						label={__('Change text element', 'ph-peeps')}
+						label={__('Change text element', 'peeps-people-directory')}
 						controls={HTML_TAGS.map((tag) => ({
 							title: tag.title,
 							icon: tag.icon,
@@ -151,42 +151,42 @@ export default function Edit({ attributes, setAttributes, context }) {
 				</ToolbarGroup>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title={__('Name Settings', 'ph-peeps')}>
+				<PanelBody title={__('Name Settings', 'peeps-people-directory')}>
 					<ToggleControl
-						label={__('Show First Name', 'ph-peeps')}
+						label={__('Show First Name', 'peeps-people-directory')}
 						checked={showFirst}
 						onChange={() =>
 							setAttributes({ showFirst: !showFirst })
 						}
 					/>
 					<ToggleControl
-						label={__('Show Middle Name', 'ph-peeps')}
+						label={__('Show Middle Name', 'peeps-people-directory')}
 						checked={showMiddle}
 						onChange={() =>
 							setAttributes({ showMiddle: !showMiddle })
 						}
 					/>
 					<ToggleControl
-						label={__('Show Last Name', 'ph-peeps')}
+						label={__('Show Last Name', 'peeps-people-directory')}
 						checked={showLast}
 						onChange={() => setAttributes({ showLast: !showLast })}
 					/>
 				</PanelBody>
-				<PanelBody title={__('Link Settings', 'ph-peeps')}>
+				<PanelBody title={__('Link Settings', 'peeps-people-directory')}>
 					<ToggleControl
-						label={__('Make a Link', 'ph-peeps')}
+						label={__('Make a Link', 'peeps-people-directory')}
 						checked={makeLink}
 						onChange={() => setAttributes({ makeLink: !makeLink })}
 						help={
 							makeLink
-								? __('Name will be clickable', 'ph-peeps')
-								: __('Name will be plain text', 'ph-peeps')
+								? __('Name will be clickable', 'peeps-people-directory')
+								: __('Name will be plain text', 'peeps-people-directory')
 						}
 					/>
 					{makeLink && (
 						<>
 							<ToggleControl
-								label={__('Open in New Tab', 'ph-peeps')}
+								label={__('Open in New Tab', 'peeps-people-directory')}
 								checked={openInNewTab}
 								onChange={() =>
 									setAttributes({
@@ -195,14 +195,14 @@ export default function Edit({ attributes, setAttributes, context }) {
 								}
 							/>
 							<TextControl
-								label={__('Link Rel', 'ph-peeps')}
+								label={__('Link Rel', 'peeps-people-directory')}
 								value={linkRel}
 								onChange={(value) =>
 									setAttributes({ linkRel: value })
 								}
 								help={__(
 									'Add rel attributes for the link',
-									'ph-peeps',
+									'peeps-people-directory',
 								)}
 							/>
 						</>

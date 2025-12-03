@@ -4,7 +4,7 @@
   "name": "ph-peeps/full-name",
   "version": "1.1.0",
   "title": "Full Name",
-  "category": "ph-peeps",
+  "category": "peeps-people-directory",
   "icon": "id",
   "description": "Display a person's full name with configurable parts",
   "attributes": {
@@ -79,7 +79,7 @@
     "postId",
     "postType"
   ],
-  "textdomain": "ph-peeps",
+  "textdomain": "peeps-people-directory",
   "editorScript": "file:./index.js",
   "render": "file:./render.php"
 }

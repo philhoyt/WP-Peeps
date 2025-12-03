@@ -94,7 +94,7 @@ function register_plugin_settings() {
 					'default' => true,
 				),
 			),
-			'description'       => __( 'Whether the People CPT is public', 'ph-peeps' ),
+			'description'       => __( 'Whether the People CPT is public', 'peeps-people-directory' ),
 			'sanitize_callback' => __NAMESPACE__ . '\sanitize_boolean',
 		)
 	);
@@ -112,7 +112,7 @@ function register_plugin_settings() {
 					'default' => true,
 				),
 			),
-			'description'       => __( 'Whether to enable the archive page for people', 'ph-peeps' ),
+			'description'       => __( 'Whether to enable the archive page for people', 'peeps-people-directory' ),
 			'sanitize_callback' => __NAMESPACE__ . '\sanitize_boolean',
 		)
 	);
@@ -130,7 +130,7 @@ function register_plugin_settings() {
 					'default' => '(###) ###-####',
 				),
 			),
-			'description'       => __( 'Phone number format (use # for digits, must contain 10-15 # symbols)', 'ph-peeps' ),
+			'description'       => __( 'Phone number format (use # for digits, must contain 10-15 # symbols)', 'peeps-people-directory' ),
 			'sanitize_callback' => __NAMESPACE__ . '\sanitize_phone_format',
 		)
 	);
@@ -148,7 +148,7 @@ function register_plugin_settings() {
 					'default' => 'people',
 				),
 			),
-			'description'       => __( 'Custom post type slug for People directory', 'ph-peeps' ),
+			'description'       => __( 'Custom post type slug for People directory', 'peeps-people-directory' ),
 			'sanitize_callback' => function ( $slug ) {
 				return empty( $slug ) ? 'people' : sanitize_title( $slug );
 			},
@@ -170,7 +170,7 @@ function register_plugin_settings() {
 					'maximum' => 999,
 				),
 			),
-			'description'       => __( 'Position in admin menu where People should appear (0-999)', 'ph-peeps' ),
+			'description'       => __( 'Position in admin menu where People should appear (0-999)', 'peeps-people-directory' ),
 			'sanitize_callback' => __NAMESPACE__ . '\sanitize_menu_position',
 		)
 	);

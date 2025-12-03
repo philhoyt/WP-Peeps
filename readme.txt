@@ -2,7 +2,7 @@
 Contributors:      Phil Hoyt
 Tags:              directory, people, staff, team, employees
 Tested up to:      6.9
-Stable tag:        2.0.0
+Stable tag:        2.0.1
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,7 +58,7 @@ Go to People → Settings and update the "Phone Number Format" field. Use # symb
 * BREAKING: Block names changed from "wp-peeps/*" to "ph-peeps/*"
 * Updated plugin name to "Peeps – People Directory"
 * Updated namespaces from "WP_Peeps" to "PH_Peeps"
-* Updated text domain from "wp-peeps" to "ph-peeps"
+* Updated text domain from "wp-peeps" to "peeps-people-directory"
 * Added sanitization callbacks for boolean settings
 * Note: Existing posts and settings will need to be migrated or re-entered
 

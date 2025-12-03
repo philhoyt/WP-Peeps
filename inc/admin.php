@@ -20,8 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 function register_admin_page() {
 	add_submenu_page(
 		'edit.php?post_type=ph_peeps_people',
-		__( 'WP Peeps Settings', 'ph-peeps' ),
-		__( 'Settings', 'ph-peeps' ),
+		__( 'WP Peeps Settings', 'peeps-people-directory' ),
+		__( 'Settings', 'peeps-people-directory' ),
 		'manage_options',
 		'ph-peeps-settings',
 		__NAMESPACE__ . '\render_admin_page'
