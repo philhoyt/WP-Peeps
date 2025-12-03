@@ -27,17 +27,17 @@ const ALLOWED_FORMATS = [
 
 const HTML_TAGS = [
 	{
-		title: __('Paragraph', 'ph-peeps'),
+		title: __('Paragraph', 'peeps-people-directory'),
 		value: 'p',
 		icon: paragraph,
 	},
 	{
-		title: __('Div', 'ph-peeps'),
+		title: __('Div', 'peeps-people-directory'),
 		value: 'div',
 		icon: grid,
 	},
 	{
-		title: __('Span', 'ph-peeps'),
+		title: __('Span', 'peeps-people-directory'),
 		value: 'span',
 		icon: tag,
 	},
@@ -137,7 +137,7 @@ export default function Edit({
 					allowedFormats={ALLOWED_FORMATS}
 					className="wp-block-ph-peeps-phone__prefix"
 					aria-label={__('Prefix')}
-					placeholder={__('Prefix', 'ph-peeps') + ' '}
+					placeholder={__('Prefix', 'peeps-people-directory') + ' '}
 					value={prefix}
 					onChange={(value) => setAttributes({ prefix: value })}
 					tagName="span"
@@ -156,7 +156,7 @@ export default function Edit({
 				<ToolbarGroup>
 					<ToolbarDropdownMenu
 						icon={currentTag?.icon}
-						label={__('Change text element', 'ph-peeps')}
+						label={__('Change text element', 'peeps-people-directory')}
 						controls={HTML_TAGS.map((htmlTag) => ({
 							title: htmlTag.title,
 							icon: htmlTag.icon,
@@ -168,20 +168,20 @@ export default function Edit({
 				</ToolbarGroup>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title={__('Phone Settings', 'ph-peeps')}>
+				<PanelBody title={__('Phone Settings', 'peeps-people-directory')}>
 					<ToggleControl
-						label={__('Make Phone Link', 'ph-peeps')}
+						label={__('Make Phone Link', 'peeps-people-directory')}
 						checked={makeLink}
 						onChange={() => setAttributes({ makeLink: !makeLink })}
 						help={
 							makeLink
 								? __(
 										'Phone number will be clickable',
-										'ph-peeps',
+										'peeps-people-directory',
 									)
 								: __(
 										'Phone number will be plain text',
-										'ph-peeps',
+										'peeps-people-directory',
 									)
 						}
 					/>

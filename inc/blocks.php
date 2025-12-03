@@ -25,7 +25,7 @@ function register_block_category( $categories, $block_editor_context ) {
 	// Check if category already exists.
 	$category_exists = false;
 	foreach ( $categories as $category ) {
-		if ( isset( $category['slug'] ) && 'ph-peeps' === $category['slug'] ) {
+		if ( isset( $category['slug'] ) && 'peeps-people-directory' === $category['slug'] ) {
 			$category_exists = true;
 			break;
 		}
@@ -36,8 +36,8 @@ function register_block_category( $categories, $block_editor_context ) {
 		$categories = array_merge(
 			array(
 				array(
-					'slug'  => 'ph-peeps',
-					'title' => __( 'WP Peeps', 'ph-peeps' ),
+					'slug'  => 'peeps-people-directory',
+					'title' => __( 'WP Peeps', 'peeps-people-directory' ),
 					'icon'  => 'groups',
 				),
 			),

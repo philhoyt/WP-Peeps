@@ -1,10 +1,10 @@
 // Constants and configurations
-const REQUIRED_FIELD_ERROR = __('This field is required', 'ph-peeps');
+const REQUIRED_FIELD_ERROR = __('This field is required', 'peeps-people-directory');
 const EMAIL_VALIDATION_ERROR = __(
 	'Please enter a valid email address',
-	'ph-peeps',
+	'peeps-people-directory',
 );
-const URL_VALIDATION_ERROR = __('Please enter a valid URL', 'ph-peeps');
+const URL_VALIDATION_ERROR = __('Please enter a valid URL', 'peeps-people-directory');
 
 const NAME_FIELDS = {
 	FIRST_NAME: 'ph_peeps_first_name',
@@ -315,11 +315,11 @@ function PersonDetailsPanel() {
 		<>
 			<PluginDocumentSettingPanel
 				name="ph-peeps-name-panel"
-				title={__('Person Name', 'ph-peeps')}
+				title={__('Person Name', 'peeps-people-directory')}
 				className="ph-peeps-name-panel"
 			>
 				<TextControl
-					label={__('First Name', 'ph-peeps') + ' *'}
+					label={__('First Name', 'peeps-people-directory') + ' *'}
 					value={meta?.[NAME_FIELDS.FIRST_NAME] || ''}
 					onChange={(value) =>
 						handleMetaChange(NAME_FIELDS.FIRST_NAME, value)
@@ -330,14 +330,14 @@ function PersonDetailsPanel() {
 					}
 				/>
 				<TextControl
-					label={__('Middle Name', 'ph-peeps')}
+					label={__('Middle Name', 'peeps-people-directory')}
 					value={meta?.[NAME_FIELDS.MIDDLE_NAME] || ''}
 					onChange={(value) =>
 						handleMetaChange(NAME_FIELDS.MIDDLE_NAME, value)
 					}
 				/>
 				<TextControl
-					label={__('Last Name', 'ph-peeps') + ' *'}
+					label={__('Last Name', 'peeps-people-directory') + ' *'}
 					value={meta?.[NAME_FIELDS.LAST_NAME] || ''}
 					onChange={(value) =>
 						handleMetaChange(NAME_FIELDS.LAST_NAME, value)
@@ -349,11 +349,11 @@ function PersonDetailsPanel() {
 
 			<PluginDocumentSettingPanel
 				name="ph-peeps-contact-panel"
-				title={__('Contact Information', 'ph-peeps')}
+				title={__('Contact Information', 'peeps-people-directory')}
 				className="ph-peeps-contact-panel"
 			>
 				<TextControl
-					label={__('Phone', 'ph-peeps')}
+					label={__('Phone', 'peeps-people-directory')}
 					value={
 						meta?.[NAME_FIELDS.PHONE]
 							? formatPhoneNumber(
@@ -367,13 +367,13 @@ function PersonDetailsPanel() {
 					}
 					help={__(
 						'Enter between 10–15 digit phone number',
-						'ph-peeps',
+						'peeps-people-directory',
 					)}
 					type="tel"
 				/>
 				<TextControl
 					type="email"
-					label={__('Email', 'ph-peeps')}
+					label={__('Email', 'peeps-people-directory')}
 					value={meta?.[NAME_FIELDS.EMAIL] || ''}
 					onChange={(value) =>
 						handleMetaChange(NAME_FIELDS.EMAIL, value)
@@ -439,7 +439,7 @@ function SocialLinksPanel() {
 
 	const handleAddLink = useCallback(() => {
 		if (!newUrl) {
-			setUrlError(__('Please enter a URL', 'ph-peeps'));
+			setUrlError(__('Please enter a URL', 'peeps-people-directory'));
 			return;
 		}
 
@@ -500,7 +500,7 @@ function SocialLinksPanel() {
 						isDestructive
 						onClick={() => handleRemoveLink(index)}
 						icon="no-alt"
-						label={__('Remove social link', 'ph-peeps')}
+						label={__('Remove social link', 'peeps-people-directory')}
 					/>
 				</FlexItem>
 			</Flex>
@@ -522,7 +522,7 @@ function SocialLinksPanel() {
 	return (
 		<PluginDocumentSettingPanel
 			name="ph-peeps-social-links"
-			title={__('Social Links', 'ph-peeps')}
+			title={__('Social Links', 'peeps-people-directory')}
 			className="ph-peeps-social-links"
 		>
 			{socialLinks.map(renderSocialLinkItem)}
@@ -530,7 +530,7 @@ function SocialLinksPanel() {
 			<Flex align="flex-end" gap={4} className="add-social-link">
 				<FlexItem style={{ flex: 1 }}>
 					<TextControl
-						label={__('Add Social Link', 'ph-peeps')}
+						label={__('Add Social Link', 'peeps-people-directory')}
 						value={newUrl}
 						onChange={(value) => {
 							setNewUrl(value);
@@ -546,7 +546,7 @@ function SocialLinksPanel() {
 						onClick={handleAddLink}
 						disabled={!newUrl}
 					>
-						{__('Add', 'ph-peeps')}
+						{__('Add', 'peeps-people-directory')}
 					</Button>
 				</FlexItem>
 			</Flex>

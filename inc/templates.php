@@ -28,8 +28,8 @@ function register_block_templates() {
 	register_block_template(
 		'ph-peeps//single-ph_peeps_people',
 		array(
-			'title'       => __( 'Single Person', 'ph-peeps' ),
-			'description' => __( 'Default template for displaying a single person profile.', 'ph-peeps' ),
+			'title'       => __( 'Single Person', 'peeps-people-directory' ),
+			'description' => __( 'Default template for displaying a single person profile.', 'peeps-people-directory' ),
 			'content'     => '
 				<!-- wp:template-part {"slug":"header","tagName":"header","area":"header"} /-->
 				
@@ -68,8 +68,8 @@ function register_block_templates() {
 	register_block_template(
 		'ph-peeps//archive-ph_peeps_people',
 		array(
-			'title'       => __( 'People Archive', 'ph-peeps' ),
-			'description' => __( 'Default template for displaying the people archive page.', 'ph-peeps' ),
+			'title'       => __( 'People Archive', 'peeps-people-directory' ),
+			'description' => __( 'Default template for displaying the people archive page.', 'peeps-people-directory' ),
 			'content'     => '
 				<!-- wp:template-part {"slug":"header","tagName":"header","area":"header"} /-->
 				
@@ -107,7 +107,7 @@ function register_block_templates() {
 				
 				<!-- wp:query-no-results -->
 				<!-- wp:paragraph {"placeholder":"Add text or blocks that will display when a query returns no results."} -->
-				<p>' . esc_html__( 'No people found.', 'ph-peeps' ) . '</p>
+				<p>' . esc_html__( 'No people found.', 'peeps-people-directory' ) . '</p>
 				<!-- /wp:paragraph -->
 				<!-- /wp:query-no-results --></div>
 				<!-- /wp:query --></main>

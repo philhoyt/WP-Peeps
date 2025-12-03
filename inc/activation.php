@@ -49,7 +49,7 @@ register_deactivation_hook( PH_PEEPS_PLUGIN_FILE, __NAMESPACE__ . '\deactivation
  * @return array Modified plugin action links with settings link added.
  */
 function add_settings_link( $links ) {
-	$settings_link = '<a href="' . admin_url( 'edit.php?post_type=ph_peeps_people&page=ph-peeps-settings' ) . '">' . __( 'Settings', 'ph-peeps' ) . '</a>';
+	$settings_link = '<a href="' . admin_url( 'edit.php?post_type=ph_peeps_people&page=ph-peeps-settings' ) . '">' . __( 'Settings', 'peeps-people-directory' ) . '</a>';
 	array_unshift( $links, $settings_link );
 	return $links;
 }

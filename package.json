@@ -1,6 +1,6 @@
 {
-	"name": "peeps",
-	"version": "2.0.0",
+	"name": "peeps-people-directory",
+	"version": "2.0.1",
 	"description": "A directory of people for your WordPress site.",
 	"author": "Phil Hoyt",
 	"license": "GPL-2.0-or-later",

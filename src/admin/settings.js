@@ -50,17 +50,17 @@ function SettingsPage() {
 
 	// Menu position options
 	const menuPositions = [
-		{ value: '5', label: __('Below Posts (5)', 'ph-peeps') },
-		{ value: '10', label: __('Below Media (10)', 'ph-peeps') },
-		{ value: '15', label: __('Below Links (15)', 'ph-peeps') },
-		{ value: '20', label: __('Below Pages (20)', 'ph-peeps') },
-		{ value: '25', label: __('Below Comments (25)', 'ph-peeps') },
-		{ value: '60', label: __('Below First Separator (60)', 'ph-peeps') },
-		{ value: '65', label: __('Below Plugins (65)', 'ph-peeps') },
-		{ value: '70', label: __('Below Users (70)', 'ph-peeps') },
-		{ value: '75', label: __('Below Tools (75)', 'ph-peeps') },
-		{ value: '80', label: __('Below Settings (80)', 'ph-peeps') },
-		{ value: '100', label: __('Below Second Separator (100)', 'ph-peeps') },
+		{ value: '5', label: __('Below Posts (5)', 'peeps-people-directory') },
+		{ value: '10', label: __('Below Media (10)', 'peeps-people-directory') },
+		{ value: '15', label: __('Below Links (15)', 'peeps-people-directory') },
+		{ value: '20', label: __('Below Pages (20)', 'peeps-people-directory') },
+		{ value: '25', label: __('Below Comments (25)', 'peeps-people-directory') },
+		{ value: '60', label: __('Below First Separator (60)', 'peeps-people-directory') },
+		{ value: '65', label: __('Below Plugins (65)', 'peeps-people-directory') },
+		{ value: '70', label: __('Below Users (70)', 'peeps-people-directory') },
+		{ value: '75', label: __('Below Tools (75)', 'peeps-people-directory') },
+		{ value: '80', label: __('Below Settings (80)', 'peeps-people-directory') },
+		{ value: '100', label: __('Below Second Separator (100)', 'peeps-people-directory') },
 	];
 
 	const updateLocalSetting = (value, setting) => {
@@ -87,13 +87,13 @@ function SettingsPage() {
 				setPhoneFormatError(
 					__(
 						'Format must contain between 10 and 15 # symbols.',
-						'ph-peeps',
+						'peeps-people-directory',
 					),
 				);
 				setError(
 					__(
 						'Phone format must contain between 10 and 15 # symbols.',
-						'ph-peeps',
+						'peeps-people-directory',
 					),
 				);
 				return;
@@ -139,27 +139,27 @@ function SettingsPage() {
 				>
 					{__(
 						'You changed the directory slug or public status. Please visit the Permalinks page and click "Save Changes" to update your URLs.',
-						'ph-peeps',
+						'peeps-people-directory',
 					)}
 					<p>
 						<a
 							href="options-permalink.php"
 							className="button button-secondary"
 						>
-							{__('Visit Permalinks Page', 'ph-peeps')}
+							{__('Visit Permalinks Page', 'peeps-people-directory')}
 						</a>
 					</p>
 				</Notice>
 			)}
 			<div className="wrap ph-peeps-admin">
 				<div className="ph-peeps-header">
-					<h1>{__('WP Peeps Settings', 'ph-peeps')}</h1>
+					<h1>{__('WP Peeps Settings', 'peeps-people-directory')}</h1>
 				</div>
 
 				<Card className="ph-peeps-card">
 					<CardHeader>
 						<h2 className="ph-peeps-card__title">
-							{__('Directory Settings', 'ph-peeps')}
+							{__('Directory Settings', 'peeps-people-directory')}
 						</h2>
 					</CardHeader>
 					<CardBody>
@@ -169,11 +169,11 @@ function SettingsPage() {
 									__nextHasNoMarginBottom
 									label={__(
 										'Make People Directory Public',
-										'ph-peeps',
+										'peeps-people-directory',
 									)}
 									help={__(
 										'When enabled, the people directory will be visible to the public.',
-										'ph-peeps',
+										'peeps-people-directory',
 									)}
 									checked={
 										localSettings.ph_peeps_public_cpt ??
@@ -194,11 +194,11 @@ function SettingsPage() {
 									__nextHasNoMarginBottom
 									label={__(
 										'Enable People Archive Page',
-										'ph-peeps',
+										'peeps-people-directory',
 									)}
 									help={__(
 										'When enabled, a page listing all people will be available.',
-										'ph-peeps',
+										'peeps-people-directory',
 									)}
 									checked={
 										(localSettings.ph_peeps_public_cpt ??
@@ -226,10 +226,10 @@ function SettingsPage() {
 							<div className="ph-peeps-setting-row">
 								<SelectControl
 									__nextHasNoMarginBottom
-									label={__('Menu Position', 'ph-peeps')}
+									label={__('Menu Position', 'peeps-people-directory')}
 									help={__(
 										'Choose where the People menu appears in the admin sidebar.',
-										'ph-peeps',
+										'peeps-people-directory',
 									)}
 									value={String(
 										localSettings.ph_peeps_menu_position ??
@@ -250,12 +250,12 @@ function SettingsPage() {
 							<div className="ph-peeps-setting-row">
 								<TextControl
 									__nextHasNoMarginBottom
-									label={__('Directory Slug', 'ph-peeps')}
+									label={__('Directory Slug', 'peeps-people-directory')}
 									help={
 										<>
 											{__(
 												'The URL slug for the people directory (e.g., "staff" would make URLs like /staff/john-doe). Defaults to "',
-												'ph-peeps',
+												'peeps-people-directory',
 											)}
 											<button
 												type="button"
@@ -269,7 +269,7 @@ function SettingsPage() {
 											>
 												people
 											</button>
-											{__('"', 'ph-peeps')} .
+											{__('"', 'peeps-people-directory')} .
 										</>
 									}
 									value={
@@ -291,13 +291,13 @@ function SettingsPage() {
 									__nextHasNoMarginBottom
 									label={__(
 										'Phone Number Format',
-										'ph-peeps',
+										'peeps-people-directory',
 									)}
 									help={
 										<>
 											{__(
 												'Use # for digits (10–15 digits). Example:',
-												'ph-peeps',
+												'peeps-people-directory',
 											)}
 											<button
 												type="button"
@@ -328,7 +328,7 @@ function SettingsPage() {
 											setPhoneFormatError(
 												__(
 													'Format must contain between 10 and 15 # symbols.',
-													'ph-peeps',
+													'peeps-people-directory',
 												),
 											);
 										} else {
@@ -361,8 +361,8 @@ function SettingsPage() {
 								isBusy={isSaving}
 							>
 								{isSaving
-									? __('Saving…', 'ph-peeps')
-									: __('Save Changes', 'ph-peeps')}
+									? __('Saving…', 'peeps-people-directory')
+									: __('Save Changes', 'peeps-people-directory')}
 							</Button>
 						</div>
 					</CardBody>

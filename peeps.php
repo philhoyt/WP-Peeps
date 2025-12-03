@@ -5,12 +5,12 @@
  * Description:       A directory of people for your WordPress site.
  * Requires at least: 6.7
  * Requires PHP:      8.0
- * Version:           2.0.0
+ * Version:           2.0.1
  * Author:            Phil Hoyt
  * Author URI:        https://philhoyt.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       ph-peeps
+ * Text Domain:       peeps-people-directory
  *
  * @package PH_Peeps
  */

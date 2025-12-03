@@ -32,7 +32,7 @@ function validate_phone( $phone ) {
 	if ( $length < 10 || $length > 15 ) {
 		return new \WP_Error(
 			'invalid_phone',
-			__( 'Phone number must be empty or contain between 10 and 15 digits.', 'ph-peeps' )
+			__( 'Phone number must be empty or contain between 10 and 15 digits.', 'peeps-people-directory' )
 		);
 	}
 
@@ -54,7 +54,7 @@ function validate_email( $email ) {
 	if ( ! is_email( $email ) ) {
 		return new \WP_Error(
 			'invalid_email',
-			__( 'Please enter a valid email address or leave empty.', 'ph-peeps' )
+			__( 'Please enter a valid email address or leave empty.', 'peeps-people-directory' )
 		);
 	}
 	return sanitize_email( $email );
@@ -74,7 +74,7 @@ function validate_social_links( $links ) {
 	if ( ! is_array( $links ) ) {
 		return new \WP_Error(
 			'invalid_social_links',
-			__( 'Social links must be an array.', 'ph-peeps' )
+			__( 'Social links must be an array.', 'peeps-people-directory' )
 		);
 	}
 
@@ -112,7 +112,7 @@ function register_people_meta() {
 			'show_in_rest'      => true,
 			'single'            => true,
 			'type'              => 'string',
-			'label'             => __( 'First Name', 'ph-peeps' ),
+			'label'             => __( 'First Name', 'peeps-people-directory' ),
 			'sanitize_callback' => 'sanitize_text_field',
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
@@ -127,7 +127,7 @@ function register_people_meta() {
 			'show_in_rest'      => true,
 			'single'            => true,
 			'type'              => 'string',
-			'label'             => __( 'Middle Name', 'ph-peeps' ),
+			'label'             => __( 'Middle Name', 'peeps-people-directory' ),
 			'sanitize_callback' => 'sanitize_text_field',
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
@@ -142,7 +142,7 @@ function register_people_meta() {
 			'show_in_rest'      => true,
 			'single'            => true,
 			'type'              => 'string',
-			'label'             => __( 'Last Name', 'ph-peeps' ),
+			'label'             => __( 'Last Name', 'peeps-people-directory' ),
 			'sanitize_callback' => 'sanitize_text_field',
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
@@ -157,7 +157,7 @@ function register_people_meta() {
 			'show_in_rest'      => true,
 			'single'            => true,
 			'type'              => 'string',
-			'label'             => __( 'Phone Number', 'ph-peeps' ),
+			'label'             => __( 'Phone Number', 'peeps-people-directory' ),
 			'sanitize_callback' => __NAMESPACE__ . '\validate_phone',
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
@@ -172,7 +172,7 @@ function register_people_meta() {
 			'show_in_rest'      => true,
 			'single'            => true,
 			'type'              => 'string',
-			'label'             => __( 'Email Address', 'ph-peeps' ),
+			'label'             => __( 'Email Address', 'peeps-people-directory' ),
 			'sanitize_callback' => __NAMESPACE__ . '\validate_email',
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
@@ -202,7 +202,7 @@ function register_people_meta() {
 			),
 			'single'            => true,
 			'type'              => 'array',
-			'label'             => __( 'Social Links', 'ph-peeps' ),
+			'label'             => __( 'Social Links', 'peeps-people-directory' ),
 			'sanitize_callback' => __NAMESPACE__ . '\validate_social_links',
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
