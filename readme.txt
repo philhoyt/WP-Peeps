@@ -1,8 +1,8 @@
 === Peeps – People Directory ===
-Contributors:      Phil Hoyt
+Contributors:      philhoyt
 Tags:              directory, people, staff, team, employees
 Tested up to:      6.9
-Stable tag:        2.0.1
+Stable tag:        2.0.2
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 

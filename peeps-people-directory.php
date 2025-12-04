@@ -5,7 +5,7 @@
  * Description:       A directory of people for your WordPress site.
  * Requires at least: 6.7
  * Requires PHP:      8.0
- * Version:           2.0.1
+ * Version:           2.0.2
  * Author:            Phil Hoyt
  * Author URI:        https://philhoyt.com
  * License:           GPL-2.0-or-later
