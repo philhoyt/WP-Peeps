@@ -195,6 +195,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 								}
 							/>
 							<TextControl
+								__next40pxDefaultSize
 								label={__('Link Rel', 'peeps-people-directory')}
 								value={linkRel}
 								onChange={(value) =>

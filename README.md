@@ -71,6 +71,11 @@ This will create 20 test people profiles in your WordPress installation.
 
 ## Changelog
 
+### 2.1.0
+
+-   People post type is now always available in the Query Loop block, regardless of the "Make People Directory Public" setting
+-   Single person profile pages return 404 when the directory is set to private
+
 ### 2.0.0
 
 -   **BREAKING:** Updated all prefixes from "wp_peeps" to "ph_peeps" for WordPress Directory compliance
@@ -161,6 +166,6 @@ This will create 20 test people profiles in your WordPress installation.
 Contributors: Phil Hoyt
 Tags: directory, people, staff, team, employees
 Tested up to: 6.9
-Stable tag: 2.0.0
+Stable tag: 2.1.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
