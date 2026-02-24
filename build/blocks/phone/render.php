@@ -50,19 +50,27 @@ function ph_peeps_render_phone_block( $attributes, $block ) {
 	$format = get_option( 'ph_peeps_phone_format', '(###) ###-####' );
 	$formatted_phone = ph_peeps_format_phone_number( $phone, $format );
 
+	// Get extension.
+	$ext = sanitize_text_field( get_post_meta( $post_id, 'ph_peeps_phone_ext', true ) );
+	$ext_suffix = ! empty( $ext ) ? ' x' . esc_html( $ext ) : '';
+
 	// Get block wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes();
+
+	// Build the tel: href (RFC 3966 extension format).
+	$tel_digits = preg_replace( '/[^0-9+]/', '', $phone );
+	$tel_href   = ! empty( $ext ) ? $tel_digits . ';ext=' . rawurlencode( $ext ) : $tel_digits;
 
 	// Build phone content.
 	if ( ! empty( $attributes['makeLink'] ) ) {
 		$phone_content = sprintf(
 			'%1$s<a href="tel:%2$s">%3$s</a>',
 			$prefix,
-			esc_attr( preg_replace( '/[^0-9+]/', '', $phone ) ),
-			esc_html( $formatted_phone )
+			esc_attr( $tel_href ),
+			esc_html( $formatted_phone . $ext_suffix )
 		);
 	} else {
-		$phone_content = $prefix . esc_html( $formatted_phone );
+		$phone_content = $prefix . esc_html( $formatted_phone . $ext_suffix );
 	}
 
 	// Build and return the final HTML.

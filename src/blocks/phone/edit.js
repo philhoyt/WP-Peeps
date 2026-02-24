@@ -117,14 +117,17 @@ export default function Edit({
 	);
 
 	const phoneNumber = post?.meta?.ph_peeps_phone;
+	const phoneExt = post?.meta?.ph_peeps_phone_ext;
 	const formattedPhone = formatPhoneNumber(phoneNumber || '', format);
+	const extSuffix = phoneExt ? ` x${phoneExt}` : '';
 
 	// Create content elements
 	const TagName = tagName;
+	const telHref = phoneNumber
+		? `tel:${phoneNumber.replace(/[^0-9+]/g, '')}${phoneExt ? `;ext=${phoneExt}` : ''}`
+		: '';
 	const phoneLink = phoneNumber ? (
-		<a href={`tel:${phoneNumber.replace(/[^0-9+]/g, '')}`}>
-			{formattedPhone}
-		</a>
+		<a href={telHref}>{formattedPhone + extSuffix}</a>
 	) : (
 		formattedPhone
 	);
@@ -143,7 +146,7 @@ export default function Edit({
 					tagName="span"
 				/>
 			)}
-			{makeLink ? phoneLink : formattedPhone}
+			{makeLink ? phoneLink : formattedPhone + extSuffix}
 		</>
 	);
 
