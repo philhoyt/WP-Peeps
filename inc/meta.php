@@ -167,6 +167,21 @@ function register_people_meta() {
 
 	register_post_meta(
 		'ph_peeps_people',
+		'ph_peeps_phone_ext',
+		array(
+			'show_in_rest'      => true,
+			'single'            => true,
+			'type'              => 'string',
+			'label'             => __( 'Phone Extension', 'peeps-people-directory' ),
+			'sanitize_callback' => 'sanitize_text_field',
+			'auth_callback'     => function () {
+				return current_user_can( 'edit_posts' );
+			},
+		)
+	);
+
+	register_post_meta(
+		'ph_peeps_people',
 		'ph_peeps_email',
 		array(
 			'show_in_rest'      => true,
