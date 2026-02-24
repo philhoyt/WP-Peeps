@@ -1,13 +1,6 @@
 /*!******************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/@wordpress/scripts/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/editor/style.scss ***!
   \******************************************************************************************************************************************************************************************************************************************************************************/
-/* Add spacing between fields in editor panels */
-.components-panel__body.ph-peeps-name-panel .components-base-control + .components-base-control,
-.components-panel__body.ph-peeps-contact-panel .components-base-control + .components-base-control,
-.components-panel__body.ph-peeps-social-links .components-base-control + .components-base-control {
-  margin-top: 16px;
-}
-
 /* Disable the post title field completely */
 .wp-block-post-title {
   pointer-events: none !important;

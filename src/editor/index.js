@@ -163,7 +163,7 @@ import {
 	FlexItem,
 	Icon,
 } from '@wordpress/components';
-import { useEffect, useState, useCallback, useMemo } from '@wordpress/element';
+import { useEffect, useRef, useState, useCallback, useMemo } from '@wordpress/element';
 import { dispatch, useSelect, useDispatch } from '@wordpress/data';
 import { store as coreStore, useEntityProp } from '@wordpress/core-data';
 import { store as editPostStore } from '@wordpress/edit-post';
@@ -392,8 +392,11 @@ function PersonDetailsPanel() {
 }
 
 function SocialLinksPanel() {
-	const postType = useSelect(
-		(select) => select('core/editor').getCurrentPostType(),
+	const { postType, postId } = useSelect(
+		(select) => ({
+			postType: select('core/editor').getCurrentPostType(),
+			postId: select('core/editor').getCurrentPostId(),
+		}),
 		[],
 	);
 
@@ -402,6 +405,7 @@ function SocialLinksPanel() {
 		'ph_peeps_people',
 		'meta',
 	);
+	const { saveEntityRecord } = useDispatch('core');
 	const [newUrl, setNewUrl] = useState('');
 	const [urlError, setUrlError] = useState('');
 	const [draggedIndex, setDraggedIndex] = useState(null);
@@ -411,9 +415,23 @@ function SocialLinksPanel() {
 		[meta],
 	);
 
+	// Ref so handleDragEnd always reads the latest order, not a stale closure.
+	const socialLinksRef = useRef(socialLinks);
+	useEffect(() => {
+		socialLinksRef.current = socialLinks;
+	}, [socialLinks]);
+
 	const handleDragStart = useCallback((index) => {
 		setDraggedIndex(index);
 	}, []);
+
+	const handleDragEnd = useCallback(() => {
+		setDraggedIndex(null);
+		saveEntityRecord('postType', 'ph_peeps_people', {
+			id: postId,
+			meta: { ph_peeps_social_links: socialLinksRef.current },
+		});
+	}, [saveEntityRecord, postId]);
 
 	const updateSocialLinks = useCallback(
 		(links) => {
@@ -421,8 +439,12 @@ function SocialLinksPanel() {
 				...meta,
 				ph_peeps_social_links: links,
 			});
+			saveEntityRecord('postType', 'ph_peeps_people', {
+				id: postId,
+				meta: { ph_peeps_social_links: links },
+			});
 		},
-		[meta, setMeta],
+		[meta, setMeta, saveEntityRecord, postId],
 	);
 
 	const handleDragOver = useCallback(
@@ -484,7 +506,7 @@ function SocialLinksPanel() {
 				draggable
 				onDragStart={() => handleDragStart(index)}
 				onDragOver={(e) => handleDragOver(e, index)}
-				onDragEnd={() => setDraggedIndex(null)}
+				onDragEnd={handleDragEnd}
 			>
 				<FlexItem>
 					<Icon icon={dragHandle} />
@@ -515,6 +537,7 @@ function SocialLinksPanel() {
 			draggedIndex,
 			handleDragStart,
 			handleDragOver,
+			handleDragEnd,
 			socialLinks,
 			updateSocialLinks,
 			handleRemoveLink,
