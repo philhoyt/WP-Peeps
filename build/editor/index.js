@@ -1531,33 +1531,30 @@ function PersonDetailsPanel() {
     return null;
   }
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_wordpress_editor__WEBPACK_IMPORTED_MODULE_2__.PluginDocumentSettingPanel, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_wordpress_editor__WEBPACK_IMPORTED_MODULE_2__.PluginDocumentSettingPanel, {
       name: "ph-peeps-name-panel",
       title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Person Name', 'peeps-people-directory'),
       className: "ph-peeps-name-panel",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.VStack, {
-        spacing: 4,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-          __next40pxDefaultSize: true,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('First Name', 'peeps-people-directory') + ' *',
-          value: meta?.[NAME_FIELDS.FIRST_NAME] || '',
-          onChange: value => handleMetaChange(NAME_FIELDS.FIRST_NAME, value),
-          help: errors[NAME_FIELDS.FIRST_NAME] || '',
-          className: errors[NAME_FIELDS.FIRST_NAME] ? 'has-error' : ''
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-          __next40pxDefaultSize: true,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Middle Name', 'peeps-people-directory'),
-          value: meta?.[NAME_FIELDS.MIDDLE_NAME] || '',
-          onChange: value => handleMetaChange(NAME_FIELDS.MIDDLE_NAME, value)
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-          __next40pxDefaultSize: true,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Last Name', 'peeps-people-directory') + ' *',
-          value: meta?.[NAME_FIELDS.LAST_NAME] || '',
-          onChange: value => handleMetaChange(NAME_FIELDS.LAST_NAME, value),
-          help: errors[NAME_FIELDS.LAST_NAME] || '',
-          className: errors[NAME_FIELDS.LAST_NAME] ? 'has-error' : ''
-        })]
-      })
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+        __next40pxDefaultSize: true,
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('First Name', 'peeps-people-directory') + ' *',
+        value: meta?.[NAME_FIELDS.FIRST_NAME] || '',
+        onChange: value => handleMetaChange(NAME_FIELDS.FIRST_NAME, value),
+        help: errors[NAME_FIELDS.FIRST_NAME] || '',
+        className: errors[NAME_FIELDS.FIRST_NAME] ? 'has-error' : ''
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+        __next40pxDefaultSize: true,
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Middle Name', 'peeps-people-directory'),
+        value: meta?.[NAME_FIELDS.MIDDLE_NAME] || '',
+        onChange: value => handleMetaChange(NAME_FIELDS.MIDDLE_NAME, value)
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+        __next40pxDefaultSize: true,
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Last Name', 'peeps-people-directory') + ' *',
+        value: meta?.[NAME_FIELDS.LAST_NAME] || '',
+        onChange: value => handleMetaChange(NAME_FIELDS.LAST_NAME, value),
+        help: errors[NAME_FIELDS.LAST_NAME] || '',
+        className: errors[NAME_FIELDS.LAST_NAME] ? 'has-error' : ''
+      })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_wordpress_editor__WEBPACK_IMPORTED_MODULE_2__.PluginDocumentSettingPanel, {
       name: "ph-peeps-contact-panel",
       title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Contact Information', 'peeps-people-directory'),

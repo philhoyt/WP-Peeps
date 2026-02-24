@@ -40,7 +40,15 @@ function enqueue_editor_assets() {
 		true
 	);
 
-	// This is for styling INSIDE the editor content area.
+	// Load styles in the admin page DOM (sidebar panels, toolbar, etc).
+	wp_enqueue_style(
+		'ph-peeps-editor-ui',
+		plugins_url( 'build/editor/style-index.css', PH_PEEPS_PLUGIN_FILE ),
+		array(),
+		$asset_file['version']
+	);
+
+	// Also load styles inside the editor canvas iframe (block styles, post title, etc).
 	add_theme_support( 'editor-styles' );
 	add_editor_style( plugins_url( 'build/editor/style-index.css', PH_PEEPS_PLUGIN_FILE ) );
 }

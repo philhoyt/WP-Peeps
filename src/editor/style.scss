@@ -1,3 +1,12 @@
+/* Add spacing between fields in editor panels */
+.components-panel__body.ph-peeps-name-panel,
+.components-panel__body.ph-peeps-contact-panel,
+.components-panel__body.ph-peeps-social-links {
+	.components-base-control + .components-base-control {
+		margin-top: 16px;
+	}
+}
+
 /* Disable the post title field completely */
 .wp-block-post-title {
 	pointer-events: none !important;
