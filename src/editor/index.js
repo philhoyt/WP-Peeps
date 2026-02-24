@@ -36,6 +36,7 @@ const NAME_FIELDS = {
 	LAST_NAME: 'ph_peeps_last_name',
 	JOB_TITLE: 'ph_peeps_job_title',
 	PHONE: 'ph_peeps_phone',
+	PHONE_EXT: 'ph_peeps_phone_ext',
 	EMAIL: 'ph_peeps_email',
 };
 
@@ -238,6 +239,15 @@ function PersonDetailsPanel() {
 						'peeps-people-directory',
 					)}
 					type="tel"
+				/>
+				<TextControl
+					__next40pxDefaultSize
+					label={__('Extension', 'peeps-people-directory')}
+					value={meta?.[NAME_FIELDS.PHONE_EXT] || ''}
+					onChange={(value) =>
+						handleMetaChange(NAME_FIELDS.PHONE_EXT, value)
+					}
+					placeholder={__('e.g. 100', 'peeps-people-directory')}
 				/>
 				<TextControl
 					__next40pxDefaultSize
