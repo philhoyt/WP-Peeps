@@ -1,1 +1,67 @@
-.ph-peeps-admin{box-sizing:border-box;margin:20px 0;max-width:800px;padding:0 20px 0 10px;width:100%}.ph-peeps-header{margin-bottom:20px}.ph-peeps-notice{margin:20px 0}.ph-peeps-card{background:#fff;border:1px solid #e2e4e7}.ph-peeps-card__title{font-size:1.2em;margin:0}.ph-peeps-setting-row{border-bottom:1px solid #f0f0f0;padding:16px 0}.ph-peeps-setting-row:last-child{border-bottom:none}.ph-peeps-settings__footer{border-top:1px solid #f0f0f0;margin-top:24px;padding-top:16px}.ph-peeps-admin .components-base-control{margin-bottom:0}.ph-peeps-admin .components-base-control__help{color:#757575;margin-top:4px}.ph-peeps-admin .button-link{background:none;border:none;color:#2271b1;cursor:pointer;font-size:inherit;padding:0;text-decoration:underline}.ph-peeps-admin .button-link:hover{color:#135e96}
+/*!*****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/@wordpress/scripts/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/admin/style.scss ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************/
+.ph-peeps-admin {
+  max-width: 800px;
+  width: 100%;
+  margin: 20px 0;
+  padding: 0 20px 0 10px;
+  box-sizing: border-box;
+}
+
+.ph-peeps-header {
+  margin-bottom: 20px;
+}
+
+.ph-peeps-notice {
+  margin: 20px 0;
+}
+
+.ph-peeps-card {
+  background: #fff;
+  border: 1px solid #e2e4e7;
+}
+
+.ph-peeps-card__title {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.ph-peeps-setting-row {
+  padding: 16px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.ph-peeps-setting-row:last-child {
+  border-bottom: none;
+}
+
+.ph-peeps-settings__footer {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.ph-peeps-admin .components-base-control {
+  margin-bottom: 0;
+}
+
+.ph-peeps-admin .components-base-control__help {
+  margin-top: 4px;
+  color: #757575;
+}
+
+.ph-peeps-admin .button-link {
+  color: #2271b1;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: inherit;
+}
+.ph-peeps-admin .button-link:hover {
+  color: #135e96;
+}
+
+/*# sourceMappingURL=style-index.css.map*/

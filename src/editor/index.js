@@ -162,6 +162,7 @@ import {
 	Flex,
 	FlexItem,
 	Icon,
+	VStack,
 } from '@wordpress/components';
 import { useEffect, useState, useCallback, useMemo } from '@wordpress/element';
 import { dispatch, useSelect, useDispatch } from '@wordpress/data';
@@ -318,33 +319,38 @@ function PersonDetailsPanel() {
 				title={__('Person Name', 'peeps-people-directory')}
 				className="ph-peeps-name-panel"
 			>
-				<TextControl
-					label={__('First Name', 'peeps-people-directory') + ' *'}
-					value={meta?.[NAME_FIELDS.FIRST_NAME] || ''}
-					onChange={(value) =>
-						handleMetaChange(NAME_FIELDS.FIRST_NAME, value)
-					}
-					help={errors[NAME_FIELDS.FIRST_NAME] || ''}
-					className={
-						errors[NAME_FIELDS.FIRST_NAME] ? 'has-error' : ''
-					}
-				/>
-				<TextControl
-					label={__('Middle Name', 'peeps-people-directory')}
-					value={meta?.[NAME_FIELDS.MIDDLE_NAME] || ''}
-					onChange={(value) =>
-						handleMetaChange(NAME_FIELDS.MIDDLE_NAME, value)
-					}
-				/>
-				<TextControl
-					label={__('Last Name', 'peeps-people-directory') + ' *'}
-					value={meta?.[NAME_FIELDS.LAST_NAME] || ''}
-					onChange={(value) =>
-						handleMetaChange(NAME_FIELDS.LAST_NAME, value)
-					}
-					help={errors[NAME_FIELDS.LAST_NAME] || ''}
-					className={errors[NAME_FIELDS.LAST_NAME] ? 'has-error' : ''}
-				/>
+				<VStack spacing={4}>
+					<TextControl
+						__next40pxDefaultSize
+						label={__('First Name', 'peeps-people-directory') + ' *'}
+						value={meta?.[NAME_FIELDS.FIRST_NAME] || ''}
+						onChange={(value) =>
+							handleMetaChange(NAME_FIELDS.FIRST_NAME, value)
+						}
+						help={errors[NAME_FIELDS.FIRST_NAME] || ''}
+						className={
+							errors[NAME_FIELDS.FIRST_NAME] ? 'has-error' : ''
+						}
+					/>
+					<TextControl
+						__next40pxDefaultSize
+						label={__('Middle Name', 'peeps-people-directory')}
+						value={meta?.[NAME_FIELDS.MIDDLE_NAME] || ''}
+						onChange={(value) =>
+							handleMetaChange(NAME_FIELDS.MIDDLE_NAME, value)
+						}
+					/>
+					<TextControl
+						__next40pxDefaultSize
+						label={__('Last Name', 'peeps-people-directory') + ' *'}
+						value={meta?.[NAME_FIELDS.LAST_NAME] || ''}
+						onChange={(value) =>
+							handleMetaChange(NAME_FIELDS.LAST_NAME, value)
+						}
+						help={errors[NAME_FIELDS.LAST_NAME] || ''}
+						className={errors[NAME_FIELDS.LAST_NAME] ? 'has-error' : ''}
+					/>
+				</VStack>
 			</PluginDocumentSettingPanel>
 
 			<PluginDocumentSettingPanel
@@ -353,6 +359,7 @@ function PersonDetailsPanel() {
 				className="ph-peeps-contact-panel"
 			>
 				<TextControl
+					__next40pxDefaultSize
 					label={__('Phone', 'peeps-people-directory')}
 					value={
 						meta?.[NAME_FIELDS.PHONE]
@@ -372,6 +379,7 @@ function PersonDetailsPanel() {
 					type="tel"
 				/>
 				<TextControl
+					__next40pxDefaultSize
 					type="email"
 					label={__('Email', 'peeps-people-directory')}
 					value={meta?.[NAME_FIELDS.EMAIL] || ''}
@@ -486,6 +494,7 @@ function SocialLinksPanel() {
 				</FlexItem>
 				<FlexItem style={{ flex: 1 }}>
 					<TextControl
+						__next40pxDefaultSize
 						value={link.url}
 						onChange={(url) => {
 							const platform = detectPlatform(url);
@@ -530,6 +539,7 @@ function SocialLinksPanel() {
 			<Flex align="flex-end" gap={4} className="add-social-link">
 				<FlexItem style={{ flex: 1 }}>
 					<TextControl
+						__next40pxDefaultSize
 						label={__('Add Social Link', 'peeps-people-directory')}
 						value={newUrl}
 						onChange={(value) => {

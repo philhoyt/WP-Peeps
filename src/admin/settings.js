@@ -249,6 +249,7 @@ function SettingsPage() {
 
 							<div className="ph-peeps-setting-row">
 								<TextControl
+									__next40pxDefaultSize
 									__nextHasNoMarginBottom
 									label={__('Directory Slug', 'peeps-people-directory')}
 									help={
@@ -288,6 +289,7 @@ function SettingsPage() {
 
 							<div className="ph-peeps-setting-row">
 								<TextControl
+									__next40pxDefaultSize
 									__nextHasNoMarginBottom
 									label={__(
 										'Phone Number Format',

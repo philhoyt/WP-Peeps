@@ -47,7 +47,7 @@ function register_people_post_type() {
 	$args = array(
 		'labels'             => $labels,
 		'public'             => $is_public,
-		'publicly_queryable' => $is_public,
+		'publicly_queryable' => true,
 		'show_ui'            => true,
 		'show_in_menu'       => true,
 		'query_var'          => true,
@@ -70,3 +70,32 @@ function register_people_post_type() {
 	register_post_type( 'ph_peeps_people', $args );
 }
 add_action( 'init', __NAMESPACE__ . '\register_people_post_type' );
+
+/**
+ * Block access to single person profiles when the CPT is not public.
+ *
+ * The CPT is always registered with publicly_queryable: true so it remains
+ * available in the Query Loop block regardless of the public setting. This
+ * function enforces the "Make People Directory Public" toggle by returning
+ * a 404 for any direct request to a single person profile when the toggle
+ * is off.
+ *
+ * @return void
+ */
+function block_single_profile_access() {
+	if ( ! is_singular( 'ph_peeps_people' ) ) {
+		return;
+	}
+
+	$is_public = filter_var( get_option( 'ph_peeps_public_cpt', true ), FILTER_VALIDATE_BOOLEAN );
+
+	if ( $is_public ) {
+		return;
+	}
+
+	global $wp_query;
+	$wp_query->set_404();
+	status_header( 404 );
+	nocache_headers();
+}
+add_action( 'template_redirect', __NAMESPACE__ . '\block_single_profile_access' );

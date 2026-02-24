@@ -2,7 +2,7 @@
 Contributors:      philhoyt
 Tags:              directory, people, staff, team, employees
 Tested up to:      6.9
-Stable tag:        2.0.2
+Stable tag:        2.1.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,10 @@ Yes, in People → Settings you can disable the "Make People Directory Public" o
 Go to People → Settings and update the "Phone Number Format" field. Use # symbols where you want digits to appear. For example: (###) ###-####
 
 == Changelog ==
+
+= 2.1.0 =
+* People post type is now always available in the Query Loop block, regardless of the "Make People Directory Public" setting
+* Single person profile pages return 404 when the directory is set to private
 
 = 2.0.0 =
 * BREAKING: Updated all prefixes from "wp_peeps" to "ph_peeps" for WordPress Directory compliance
