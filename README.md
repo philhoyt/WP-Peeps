@@ -75,6 +75,10 @@ This will create 20 test people profiles in your WordPress installation.
 
 -   People post type is now always available in the Query Loop block, regardless of the "Make People Directory Public" setting
 -   Single person profile pages return 404 when the directory is set to private
+-   Social links block preview now updates immediately when links are added, removed, or reordered without requiring a post save
+-   Fixed editor sidebar styles not applying correctly in the admin page
+-   Fixed spacing between fields in the Person Name, Contact Information, and Social Links editor panels
+-   Fixed TextControl deprecation warnings for WordPress 7 compatibility
 
 ### 2.0.0
 
