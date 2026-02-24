@@ -1,1 +1,0 @@
-{"version":3,"file":"blocks/social-links/index.css","mappings":";;;AAEC;EACC;EACA;AADF,C","sources":["webpack://peeps-people-directory/./src/blocks/social-links/editor.scss"],"sourcesContent":[".ph-peeps-social-links {\n\n\ta {\n\t\tcursor: not-allowed;\n\t\tpointer-events: none;\n\t}\n}"],"names":[],"sourceRoot":""}
