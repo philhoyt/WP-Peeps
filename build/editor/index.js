@@ -1040,8 +1040,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/share.js");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./editor.scss */ "./src/blocks/social-links/editor.scss");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__);
@@ -1096,31 +1096,17 @@ function Edit({
   } = attributes;
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)();
 
-  // Track save state to force ServerSideRender update after save
+  // Force ServerSideRender to re-fetch when social links meta changes
   const [renderKey, setRenderKey] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(0);
-  const wasSavingRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useRef)(false);
-
-  // Get meta and save status
-  const {
-    isSaving,
-    isDirty
-  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => {
-    const coreEditor = select('core/editor');
-    return {
-      isSaving: select('core').isSavingEntityRecord('postType', 'ph_peeps_people'),
-      isDirty: coreEditor ? coreEditor.isEditedPostDirty() : false
-    };
-  }, []);
-
-  // Force ServerSideRender to update after save completes
+  const [meta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.useEntityProp)('postType', 'ph_peeps_people', 'meta');
+  const socialLinksJson = JSON.stringify(meta?.ph_peeps_social_links);
+  const prevSocialLinksJsonRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useRef)(socialLinksJson);
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useEffect)(() => {
-    // If we just finished saving (was saving, now not saving and not dirty)
-    if (wasSavingRef.current && !isSaving && !isDirty) {
-      // Force re-render by changing the key (doesn't mark block as dirty)
+    if (prevSocialLinksJsonRef.current !== socialLinksJson) {
       setRenderKey(prev => prev + 1);
+      prevSocialLinksJsonRef.current = socialLinksJson;
     }
-    wasSavingRef.current = isSaving;
-  }, [isSaving, isDirty]);
+  }, [socialLinksJson]);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.BlockControls, {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToolbarGroup, {
@@ -1579,21 +1565,51 @@ function PersonDetailsPanel() {
   });
 }
 function SocialLinksPanel() {
-  const postType = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => select('core/editor').getCurrentPostType(), []);
+  const {
+    postType,
+    postId
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => ({
+    postType: select('core/editor').getCurrentPostType(),
+    postId: select('core/editor').getCurrentPostId()
+  }), []);
   const [meta, setMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_6__.useEntityProp)('postType', 'ph_peeps_people', 'meta');
+  const {
+    saveEntityRecord
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useDispatch)('core');
   const [newUrl, setNewUrl] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)('');
   const [urlError, setUrlError] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)('');
   const [draggedIndex, setDraggedIndex] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(null);
   const socialLinks = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(() => meta?.ph_peeps_social_links || [], [meta]);
+
+  // Ref so handleDragEnd always reads the latest order, not a stale closure.
+  const socialLinksRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useRef)(socialLinks);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useEffect)(() => {
+    socialLinksRef.current = socialLinks;
+  }, [socialLinks]);
   const handleDragStart = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useCallback)(index => {
     setDraggedIndex(index);
   }, []);
+  const handleDragEnd = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useCallback)(() => {
+    setDraggedIndex(null);
+    saveEntityRecord('postType', 'ph_peeps_people', {
+      id: postId,
+      meta: {
+        ph_peeps_social_links: socialLinksRef.current
+      }
+    });
+  }, [saveEntityRecord, postId]);
   const updateSocialLinks = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useCallback)(links => {
     setMeta({
       ...meta,
       ph_peeps_social_links: links
     });
-  }, [meta, setMeta]);
+    saveEntityRecord('postType', 'ph_peeps_people', {
+      id: postId,
+      meta: {
+        ph_peeps_social_links: links
+      }
+    });
+  }, [meta, setMeta, saveEntityRecord, postId]);
   const handleDragOver = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useCallback)((e, index) => {
     e.preventDefault();
     if (draggedIndex === null || draggedIndex === index) {
@@ -1643,7 +1659,7 @@ function SocialLinksPanel() {
     draggable: true,
     onDragStart: () => handleDragStart(index),
     onDragOver: e => handleDragOver(e, index),
-    onDragEnd: () => setDraggedIndex(null),
+    onDragEnd: handleDragEnd,
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.FlexItem, {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
         icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_11__["default"]
@@ -1673,7 +1689,7 @@ function SocialLinksPanel() {
         label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Remove social link', 'peeps-people-directory')
       })
     })]
-  }, index), [draggedIndex, handleDragStart, handleDragOver, socialLinks, updateSocialLinks, handleRemoveLink]);
+  }, index), [draggedIndex, handleDragStart, handleDragOver, handleDragEnd, socialLinks, updateSocialLinks, handleRemoveLink]);
   if (postType !== 'ph_peeps_people') {
     return null;
   }

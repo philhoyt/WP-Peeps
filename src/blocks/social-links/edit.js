@@ -21,7 +21,7 @@ import {
 import ServerSideRender from '@wordpress/server-side-render';
 import { layout, share } from '@wordpress/icons';
 import { useEffect, useRef, useState } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
+import { useEntityProp } from '@wordpress/core-data';
 
 /**
  * Internal dependencies
@@ -66,31 +66,18 @@ export default function Edit({ attributes, setAttributes }) {
 
 	const blockProps = useBlockProps();
 
-	// Track save state to force ServerSideRender update after save
+	// Force ServerSideRender to re-fetch when social links meta changes
 	const [renderKey, setRenderKey] = useState(0);
-	const wasSavingRef = useRef(false);
+	const [meta] = useEntityProp('postType', 'ph_peeps_people', 'meta');
+	const socialLinksJson = JSON.stringify(meta?.ph_peeps_social_links);
+	const prevSocialLinksJsonRef = useRef(socialLinksJson);
 
-	// Get meta and save status
-	const { isSaving, isDirty } = useSelect((select) => {
-		const coreEditor = select('core/editor');
-		return {
-			isSaving: select('core').isSavingEntityRecord(
-				'postType',
-				'ph_peeps_people',
-			),
-			isDirty: coreEditor ? coreEditor.isEditedPostDirty() : false,
-		};
-	}, []);
-
-	// Force ServerSideRender to update after save completes
 	useEffect(() => {
-		// If we just finished saving (was saving, now not saving and not dirty)
-		if (wasSavingRef.current && !isSaving && !isDirty) {
-			// Force re-render by changing the key (doesn't mark block as dirty)
+		if (prevSocialLinksJsonRef.current !== socialLinksJson) {
 			setRenderKey((prev) => prev + 1);
+			prevSocialLinksJsonRef.current = socialLinksJson;
 		}
-		wasSavingRef.current = isSaving;
-	}, [isSaving, isDirty]);
+	}, [socialLinksJson]);
 
 	return (
 		<>
