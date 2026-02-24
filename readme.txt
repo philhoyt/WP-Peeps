@@ -57,6 +57,7 @@ Go to People → Settings and update the "Phone Number Format" field. Use # symb
 * Fixed editor sidebar styles not applying correctly in the admin page
 * Fixed spacing between fields in the Person Name, Contact Information, and Social Links editor panels
 * Fixed TextControl deprecation warnings for WordPress 7 compatibility
+* Added phone extension field to the Contact Information panel
 
 = 2.0.0 =
 * BREAKING: Updated all prefixes from "wp_peeps" to "ph_peeps" for WordPress Directory compliance
