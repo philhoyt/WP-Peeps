@@ -30,7 +30,6 @@ require_once __DIR__ . '/inc/editor.php';
 require_once __DIR__ . '/inc/admin.php';
 require_once __DIR__ . '/inc/settings.php';
 require_once __DIR__ . '/inc/activation.php';
-require_once __DIR__ . '/inc/notices.php';
 require_once __DIR__ . '/inc/blocks.php';
 require_once __DIR__ . '/inc/templates.php';
 
