@@ -13,62 +13,8 @@ import {
 } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
-import { paragraph, grid, tag } from '@wordpress/icons';
-
-// Allowed formats for the prefix field
-const ALLOWED_FORMATS = [
-	'core/bold',
-	'core/image',
-	'core/italic',
-	'core/link',
-	'core/strikethrough',
-	'core/text-color',
-];
-
-const HTML_TAGS = [
-	{
-		title: __('Paragraph', 'peeps-people-directory'),
-		value: 'p',
-		icon: paragraph,
-	},
-	{
-		title: __('Div', 'peeps-people-directory'),
-		value: 'div',
-		icon: grid,
-	},
-	{
-		title: __('Span', 'peeps-people-directory'),
-		value: 'span',
-		icon: tag,
-	},
-];
-
-/**
- * Format a phone number according to the given format.
- *
- * @param {string} phoneNumber The phone number to format.
- * @param {string} format      The format template.
- * @return {string}          The formatted phone number.
- */
-const formatPhoneNumber = (phoneNumber, format) => {
-	if (!phoneNumber || !format) {
-		return format || '';
-	}
-
-	const digits = phoneNumber.replace(/[^0-9]/g, '');
-	let formattedPhone = format;
-
-	for (
-		let i = 0;
-		i < digits.length && i < (format.match(/#/g) || []).length;
-		i++
-	) {
-		formattedPhone = formattedPhone.replace('#', digits[i]);
-	}
-
-	// Remove any remaining placeholders
-	return formattedPhone.replace(/#/g, '');
-};
+import { ALLOWED_FORMATS, HTML_TAGS } from '../constants';
+import { formatPhoneNumber } from '../../editor/utils';
 
 /**
  * Phone block edit component.

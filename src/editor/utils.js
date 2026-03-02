@@ -81,19 +81,16 @@ export const formatPhoneNumber = (value, format) => {
 	}
 
 	const digits = value.replace(/\D/g, '');
+	const placeholderCount = (format.match(/#/g) || []).length;
 
 	let formatted = format;
 
-	for (
-		let i = 0;
-		i < digits.length && i < (format.match(/#/g) || []).length;
-		i++
-	) {
+	for (let i = 0; i < digits.length && i < placeholderCount; i++) {
 		formatted = formatted.replace('#', digits[i]);
 	}
 
-	if (digits.length > (format.match(/#/g) || []).length) {
-		formatted += digits.slice((format.match(/#/g) || []).length);
+	if (digits.length > placeholderCount) {
+		formatted += digits.slice(placeholderCount);
 	}
 
 	return formatted.replace(/#/g, '');
