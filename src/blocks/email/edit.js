@@ -136,6 +136,7 @@ export default function Edit({
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'peeps-people-directory')}>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Make Email Link', 'peeps-people-directory')}
 						checked={makeLink}
 						onChange={() => setAttributes({ makeLink: !makeLink })}

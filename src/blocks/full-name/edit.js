@@ -153,6 +153,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 			<InspectorControls>
 				<PanelBody title={__('Name Settings', 'peeps-people-directory')}>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Show First Name', 'peeps-people-directory')}
 						checked={showFirst}
 						onChange={() =>
@@ -160,6 +161,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 						}
 					/>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Show Middle Name', 'peeps-people-directory')}
 						checked={showMiddle}
 						onChange={() =>
@@ -167,6 +169,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 						}
 					/>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Show Last Name', 'peeps-people-directory')}
 						checked={showLast}
 						onChange={() => setAttributes({ showLast: !showLast })}
@@ -174,6 +177,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 				</PanelBody>
 				<PanelBody title={__('Link Settings', 'peeps-people-directory')}>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Make a Link', 'peeps-people-directory')}
 						checked={makeLink}
 						onChange={() => setAttributes({ makeLink: !makeLink })}
@@ -186,6 +190,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 					{makeLink && (
 						<>
 							<ToggleControl
+								__nextHasNoMarginBottom
 								label={__('Open in New Tab', 'peeps-people-directory')}
 								checked={openInNewTab}
 								onChange={() =>
@@ -196,6 +201,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 							/>
 							<TextControl
 								__next40pxDefaultSize
+								__nextHasNoMarginBottom
 								label={__('Link Rel', 'peeps-people-directory')}
 								value={linkRel}
 								onChange={(value) =>
