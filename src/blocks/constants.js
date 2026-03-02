@@ -2,6 +2,13 @@ import { __ } from '@wordpress/i18n';
 import { paragraph, grid, tag } from '@wordpress/icons';
 
 /**
+ * Default setting values — keep in sync with inc/defaults.php.
+ */
+export const DEFAULT_PHONE_FORMAT = '(###) ###-####';
+export const DEFAULT_CPT_SLUG = 'people';
+export const DEFAULT_MENU_POSITION = 25;
+
+/**
  * Allowed RichText formats for prefix fields.
  */
 export const ALLOWED_FORMATS = [

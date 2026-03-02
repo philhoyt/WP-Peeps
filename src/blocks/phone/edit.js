@@ -13,7 +13,7 @@ import {
 } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
-import { ALLOWED_FORMATS, HTML_TAGS } from '../constants';
+import { ALLOWED_FORMATS, HTML_TAGS, DEFAULT_PHONE_FORMAT } from '../constants';
 import { formatPhoneNumber } from '../../editor/utils';
 
 /**
@@ -58,7 +58,7 @@ export default function Edit({
 	const format = useSelect(
 		(select) =>
 			select(coreStore).getEntityRecord('root', 'site')
-				?.ph_peeps_phone_format || '(###) ###-####',
+				?.ph_peeps_phone_format || DEFAULT_PHONE_FORMAT,
 		[],
 	);
 

@@ -31,7 +31,7 @@ function sanitize_phone_format( $format ) {
 	// Validate that we have between 10 and 15 placeholders.
 	if ( $placeholder_count < 10 || $placeholder_count > 15 ) {
 		// Return the default format if validation fails.
-		return '(###) ###-####';
+		return PH_PEEPS_DEFAULT_PHONE_FORMAT;
 	}
 
 	return $format;
@@ -66,7 +66,7 @@ function sanitize_menu_position( $position ) {
 	// Validate range: 0-999 (WordPress menu positions are typically 0-100, but allow more flexibility).
 	if ( $position < 0 || $position > 999 ) {
 		// Return the default position if validation fails.
-		return 25;
+		return PH_PEEPS_DEFAULT_MENU_POSITION;
 	}
 
 	return $position;
@@ -122,12 +122,12 @@ function register_plugin_settings() {
 		'ph_peeps_phone_format',
 		array(
 			'type'              => 'string',
-			'default'           => '(###) ###-####',
+			'default'           => PH_PEEPS_DEFAULT_PHONE_FORMAT,
 			'show_in_rest'      => array(
 				'name'   => 'ph_peeps_phone_format',
 				'schema' => array(
 					'type'    => 'string',
-					'default' => '(###) ###-####',
+					'default' => PH_PEEPS_DEFAULT_PHONE_FORMAT,
 				),
 			),
 			'description'       => __( 'Phone number format (use # for digits, must contain 10-15 # symbols)', 'peeps-people-directory' ),
@@ -140,17 +140,17 @@ function register_plugin_settings() {
 		'ph_peeps_cpt_slug',
 		array(
 			'type'              => 'string',
-			'default'           => 'people',
+			'default'           => PH_PEEPS_DEFAULT_CPT_SLUG,
 			'show_in_rest'      => array(
 				'name'   => 'ph_peeps_cpt_slug',
 				'schema' => array(
 					'type'    => 'string',
-					'default' => 'people',
+					'default' => PH_PEEPS_DEFAULT_CPT_SLUG,
 				),
 			),
 			'description'       => __( 'Custom post type slug for People directory', 'peeps-people-directory' ),
 			'sanitize_callback' => function ( $slug ) {
-				return empty( $slug ) ? 'people' : sanitize_title( $slug );
+				return empty( $slug ) ? PH_PEEPS_DEFAULT_CPT_SLUG : sanitize_title( $slug );
 			},
 		)
 	);
@@ -160,12 +160,12 @@ function register_plugin_settings() {
 		'ph_peeps_menu_position',
 		array(
 			'type'              => 'integer',
-			'default'           => 25,
+			'default'           => PH_PEEPS_DEFAULT_MENU_POSITION,
 			'show_in_rest'      => array(
 				'name'   => 'ph_peeps_menu_position',
 				'schema' => array(
 					'type'    => 'integer',
-					'default' => 25,
+					'default' => PH_PEEPS_DEFAULT_MENU_POSITION,
 					'minimum' => 0,
 					'maximum' => 999,
 				),

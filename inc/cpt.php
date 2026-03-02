@@ -22,8 +22,8 @@ function register_people_post_type() {
 	$is_public     = filter_var( $is_public, FILTER_VALIDATE_BOOLEAN );
 	$has_archive   = get_option( 'ph_peeps_has_archive', true );
 	$has_archive   = filter_var( $has_archive, FILTER_VALIDATE_BOOLEAN );
-	$slug          = get_option( 'ph_peeps_cpt_slug', 'people' );
-	$menu_position = get_option( 'ph_peeps_menu_position', 25 );
+	$slug          = get_option( 'ph_peeps_cpt_slug', PH_PEEPS_DEFAULT_CPT_SLUG );
+	$menu_position = get_option( 'ph_peeps_menu_position', PH_PEEPS_DEFAULT_MENU_POSITION );
 
 	$labels = array(
 		'name'                  => _x( 'People', 'Post type general name', 'peeps-people-directory' ),

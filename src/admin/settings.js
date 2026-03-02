@@ -11,8 +11,12 @@ import {
 } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-
 import { useState } from '@wordpress/element';
+import {
+	DEFAULT_PHONE_FORMAT,
+	DEFAULT_CPT_SLUG,
+	DEFAULT_MENU_POSITION,
+} from '../blocks/constants';
 import './style.scss';
 
 function SettingsPage() {
@@ -234,7 +238,7 @@ function SettingsPage() {
 									value={String(
 										localSettings.ph_peeps_menu_position ??
 											menuPosition ??
-											'25',
+											DEFAULT_MENU_POSITION,
 									)}
 									options={menuPositions}
 									onChange={(value) =>
@@ -263,7 +267,7 @@ function SettingsPage() {
 												className="button-link"
 												onClick={() =>
 													updateLocalSetting(
-														'people',
+														DEFAULT_CPT_SLUG,
 														'ph_peeps_cpt_slug',
 													)
 												}
@@ -306,7 +310,7 @@ function SettingsPage() {
 												className="button-link"
 												onClick={() =>
 													updateLocalSetting(
-														'(###) ###-####',
+														DEFAULT_PHONE_FORMAT,
 														'ph_peeps_phone_format',
 													)
 												}

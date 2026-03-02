@@ -46,6 +46,8 @@ function validate_phone( $phone ) {
  * @return string|WP_Error
  */
 function validate_email( $email ) {
+	$email = trim( $email );
+
 	// Allow empty values.
 	if ( empty( $email ) ) {
 		return '';

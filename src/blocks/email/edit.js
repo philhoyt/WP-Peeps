@@ -53,17 +53,17 @@ export default function Edit({
 		[postId, postType],
 	);
 
-	const email = post?.meta?.ph_peeps_email || 'name@domain.com';
+	const rawEmail = post?.meta?.ph_peeps_email;
+	const email = rawEmail || 'name@domain.com';
 
 	const TagName = tagName;
 
-	// Create content elements
-	const emailLink =
-		email && email !== 'name@domain.com' ? (
-			<a href={`mailto:${email}`}>{email}</a>
-		) : (
-			email
-		);
+	// Create content elements — only linkify when a real email address is stored.
+	const emailLink = rawEmail ? (
+		<a href={`mailto:${email}`}>{email}</a>
+	) : (
+		email
+	);
 
 	const content = (
 		<>

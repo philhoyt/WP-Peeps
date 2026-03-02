@@ -20,6 +20,7 @@ import {
 	detectPlatform,
 	createSlug,
 } from './utils';
+import { DEFAULT_PHONE_FORMAT } from '../blocks/constants';
 
 // Import and register blocks
 import '../blocks';
@@ -41,21 +42,17 @@ const NAME_FIELDS = {
 };
 
 function PersonDetailsPanel() {
-	// Check if we're on the people post type
-	const postType = useSelect(
-		(select) => select('core/editor').getCurrentPostType(),
-		[],
-	);
-
 	// Get dispatch function for edit-post store
 	const { openGeneralSidebar, toggleEditorPanelOpened } =
 		useDispatch(editPostStore);
 
-	// Check if post is new
-	const isNewPost = useSelect(
-		(select) => select('core/editor').isEditedPostNew(),
-		[],
-	);
+	const { postType, isNewPost, phoneFormat } = useSelect((select) => ({
+		postType: select('core/editor').getCurrentPostType(),
+		isNewPost: select('core/editor').isEditedPostNew(),
+		phoneFormat:
+			select(coreStore).getEntityRecord('root', 'site')
+				?.ph_peeps_phone_format || DEFAULT_PHONE_FORMAT,
+	}), []);
 
 	const firstNameRef = useRef(null);
 
@@ -89,14 +86,6 @@ function PersonDetailsPanel() {
 	const [errors, setErrors] = useState({});
 
 	const { lockPostSaving, unlockPostSaving } = useDispatch('core/editor');
-
-	// Get phone format from settings
-	const phoneFormat = useSelect(
-		(select) =>
-			select(coreStore).getEntityRecord('root', 'site')
-				?.ph_peeps_phone_format || '(###) ###-####',
-		[],
-	);
 
 	// Move this outside of the component if possible, or memoize if it needs component scope
 	const handleMetaChange = useCallback(
