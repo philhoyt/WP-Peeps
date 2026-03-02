@@ -197,6 +197,7 @@ function PersonDetailsPanel() {
 				<div ref={firstNameRef}>
 					<TextControl
 						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('First Name', 'peeps-people-directory') + ' *'}
 						value={meta?.[NAME_FIELDS.FIRST_NAME] || ''}
 						onChange={(value) =>
@@ -210,6 +211,7 @@ function PersonDetailsPanel() {
 				</div>
 				<TextControl
 					__next40pxDefaultSize
+					__nextHasNoMarginBottom
 					label={__('Middle Name', 'peeps-people-directory')}
 					value={meta?.[NAME_FIELDS.MIDDLE_NAME] || ''}
 					onChange={(value) =>
@@ -218,6 +220,7 @@ function PersonDetailsPanel() {
 				/>
 				<TextControl
 					__next40pxDefaultSize
+					__nextHasNoMarginBottom
 					label={__('Last Name', 'peeps-people-directory') + ' *'}
 					value={meta?.[NAME_FIELDS.LAST_NAME] || ''}
 					onChange={(value) =>
@@ -235,6 +238,7 @@ function PersonDetailsPanel() {
 			>
 				<TextControl
 					__next40pxDefaultSize
+					__nextHasNoMarginBottom
 					label={__('Phone', 'peeps-people-directory')}
 					value={
 						meta?.[NAME_FIELDS.PHONE]
@@ -255,6 +259,7 @@ function PersonDetailsPanel() {
 				/>
 				<TextControl
 					__next40pxDefaultSize
+					__nextHasNoMarginBottom
 					label={__('Extension', 'peeps-people-directory')}
 					value={meta?.[NAME_FIELDS.PHONE_EXT] || ''}
 					onChange={(value) =>
@@ -264,6 +269,7 @@ function PersonDetailsPanel() {
 				/>
 				<TextControl
 					__next40pxDefaultSize
+					__nextHasNoMarginBottom
 					type="email"
 					label={__('Email', 'peeps-people-directory')}
 					value={meta?.[NAME_FIELDS.EMAIL] || ''}
@@ -401,6 +407,7 @@ function SocialLinksPanel() {
 				<FlexItem style={{ flex: 1 }}>
 					<TextControl
 						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						value={link.url}
 						onChange={(url) => {
 							const platform = detectPlatform(url);
@@ -447,6 +454,7 @@ function SocialLinksPanel() {
 				<FlexItem style={{ flex: 1 }}>
 					<TextControl
 						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Add Social Link', 'peeps-people-directory')}
 						value={newUrl}
 						onChange={(value) => {

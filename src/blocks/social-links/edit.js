@@ -121,6 +121,7 @@ export default function Edit({ attributes, setAttributes }) {
 			<InspectorControls>
 				<PanelBody title={__('Settings')}>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Show labels')}
 						checked={showLabels}
 						onChange={() =>
@@ -128,6 +129,7 @@ export default function Edit({ attributes, setAttributes }) {
 						}
 					/>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Open links in new tab')}
 						checked={openInNewTab}
 						onChange={() =>
