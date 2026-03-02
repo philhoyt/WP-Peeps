@@ -13,35 +13,7 @@ import {
 } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
-import { paragraph, grid, tag } from '@wordpress/icons';
-
-// Allowed formats for the prefix field
-const ALLOWED_FORMATS = [
-	'core/bold',
-	'core/image',
-	'core/italic',
-	'core/link',
-	'core/strikethrough',
-	'core/text-color',
-];
-
-const HTML_TAGS = [
-	{
-		title: __('Paragraph', 'peeps-people-directory'),
-		value: 'p',
-		icon: paragraph,
-	},
-	{
-		title: __('Div', 'peeps-people-directory'),
-		value: 'div',
-		icon: grid,
-	},
-	{
-		title: __('Span', 'peeps-people-directory'),
-		value: 'span',
-		icon: tag,
-	},
-];
+import { ALLOWED_FORMATS, HTML_TAGS } from '../constants';
 
 /**
  * Email block edit function.
