@@ -57,7 +57,9 @@ function PersonDetailsPanel() {
 		[],
 	);
 
-	// Open Person Name panel by default on new posts
+	const firstNameRef = useRef(null);
+
+	// Open Person Name panel by default on new posts and focus the First Name field
 	useEffect(() => {
 		if (postType === 'ph_peeps_people' && isNewPost) {
 			// Ensure the document sidebar is open
@@ -66,6 +68,11 @@ function PersonDetailsPanel() {
 			// Open the panel on new posts (with a small delay to ensure state is ready)
 			const timer = setTimeout(() => {
 				toggleEditorPanelOpened('ph-peeps-name-panel');
+
+				// Focus the First Name field after the panel has opened
+				setTimeout(() => {
+					firstNameRef.current?.querySelector('input')?.focus();
+				}, 100);
 			}, 100);
 
 			return () => clearTimeout(timer);
@@ -152,6 +159,8 @@ function PersonDetailsPanel() {
 		validateAndLock();
 	}, [meta, validateAndLock]);
 
+	const titleSlugTimerRef = useRef(null);
+
 	useEffect(() => {
 		if (!meta) {
 			return;
@@ -161,15 +170,19 @@ function PersonDetailsPanel() {
 		const middleName = meta[NAME_FIELDS.MIDDLE_NAME]?.trim() || '';
 		const lastName = meta[NAME_FIELDS.LAST_NAME]?.trim() || '';
 
-		// Create the full name
 		const fullName = [firstName, middleName, lastName]
 			.filter(Boolean)
 			.join(' ');
 
-		// Update title and slug
-		setTitle(fullName);
-		editPost({ title: fullName });
-		setSlug(createSlug(fullName));
+		// Debounce title/slug updates to prevent layout shift on every keystroke
+		clearTimeout(titleSlugTimerRef.current);
+		titleSlugTimerRef.current = setTimeout(() => {
+			setTitle(fullName);
+			editPost({ title: fullName });
+			setSlug(createSlug(fullName));
+		}, 300);
+
+		return () => clearTimeout(titleSlugTimerRef.current);
 	}, [meta, setTitle, setSlug, editPost]);
 
 	if (postType !== 'ph_peeps_people') {
@@ -183,18 +196,20 @@ function PersonDetailsPanel() {
 				title={__('Person Name', 'peeps-people-directory')}
 				className="ph-peeps-name-panel"
 			>
-				<TextControl
-					__next40pxDefaultSize
-					label={__('First Name', 'peeps-people-directory') + ' *'}
-					value={meta?.[NAME_FIELDS.FIRST_NAME] || ''}
-					onChange={(value) =>
-						handleMetaChange(NAME_FIELDS.FIRST_NAME, value)
-					}
-					help={errors[NAME_FIELDS.FIRST_NAME] || ''}
-					className={
-						errors[NAME_FIELDS.FIRST_NAME] ? 'has-error' : ''
-					}
-				/>
+				<div ref={firstNameRef}>
+					<TextControl
+						__next40pxDefaultSize
+						label={__('First Name', 'peeps-people-directory') + ' *'}
+						value={meta?.[NAME_FIELDS.FIRST_NAME] || ''}
+						onChange={(value) =>
+							handleMetaChange(NAME_FIELDS.FIRST_NAME, value)
+						}
+						help={errors[NAME_FIELDS.FIRST_NAME] || ''}
+						className={
+							errors[NAME_FIELDS.FIRST_NAME] ? 'has-error' : ''
+						}
+					/>
+				</div>
 				<TextControl
 					__next40pxDefaultSize
 					label={__('Middle Name', 'peeps-people-directory')}
