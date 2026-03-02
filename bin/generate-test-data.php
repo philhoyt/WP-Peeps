@@ -189,10 +189,21 @@ try {
 		update_post_meta($post_id, 'ph_peeps_social_links', $social_links);
 
 		// Add featured image
-		$seed       = urlencode( $first_name . $last_name );
-		$bg_colors  = [ 'ffd6e0', 'c8e6c9', 'bbdefb', 'fff9c4', 'e1bee7', 'ffe0b2', 'b2dfdb', 'f8bbd0' ];
-		$bg_params  = implode( '&', array_map( fn( $c ) => "backgroundColor[]={$c}", $bg_colors ) );
-		$image_url  = "https://api.dicebear.com/9.x/lorelei/svg?seed={$seed}&flip=false&radius=50&earringsProbability=30&frecklesProbability=30&{$bg_params}";
+		$seed      = urlencode( $first_name . $last_name );
+		$bg_colors = [ 'ffd6e0', 'c8e6c9', 'bbdefb', 'fff9c4', 'e1bee7', 'ffe0b2', 'b2dfdb', 'f8bbd0' ];
+
+		$multi     = fn( $key, $vals ) => implode( '&', array_map( fn( $v ) => "{$key}[]={$v}", $vals ) );
+		$query     = implode( '&', [
+			"seed={$seed}",
+			'flip=false',
+			'radius=50',
+			'earringsProbability=30',
+			'frecklesProbability=30',
+			'glassesProbability=40',
+			'hairAccessoriesProbability=20',
+			$multi( 'backgroundColor', $bg_colors ),
+		] );
+		$image_url = "https://api.dicebear.com/9.x/lorelei/svg?{$query}";
 
 		WP_CLI::log( sprintf( "Downloading avatar from: %s", $image_url ) );
 		
