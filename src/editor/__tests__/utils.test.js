@@ -140,6 +140,52 @@ describe('detectPlatform', () => {
 		expect(detectPlatform('https://bsky.app/profile/user')).toBe('bluesky');
 	});
 
+	it('detects discord.gg invite link', () => {
+		expect(detectPlatform('https://discord.gg/invite123')).toBe('discord');
+	});
+
+	it('detects discord.com server link', () => {
+		expect(detectPlatform('https://discord.com/channels/123')).toBe(
+			'discord',
+		);
+	});
+
+	it('detects 500px.com as fivehundredpx', () => {
+		expect(detectPlatform('https://500px.com/p/user')).toBe('fivehundredpx');
+	});
+
+	it('detects RSS feed URL', () => {
+		expect(detectPlatform('https://example.com/feed')).toBe('feed');
+	});
+
+	it('detects .rss feed URL', () => {
+		expect(detectPlatform('https://example.com/posts.rss')).toBe('feed');
+	});
+
+	it('detects gravatar.com', () => {
+		expect(detectPlatform('https://gravatar.com/user')).toBe('gravatar');
+	});
+
+	it('detects mailto: link as mail', () => {
+		expect(detectPlatform('mailto:user@example.com')).toBe('mail');
+	});
+
+	it('detects patreon.com', () => {
+		expect(detectPlatform('https://patreon.com/user')).toBe('patreon');
+	});
+
+	it('detects threads.net', () => {
+		expect(detectPlatform('https://threads.net/@user')).toBe('threads');
+	});
+
+	it('detects tiktok.com', () => {
+		expect(detectPlatform('https://tiktok.com/@user')).toBe('tiktok');
+	});
+
+	it('detects vk.com', () => {
+		expect(detectPlatform('https://vk.com/user')).toBe('vk');
+	});
+
 	it('returns chain for unknown URL', () => {
 		expect(detectPlatform('https://mywebsite.example.com')).toBe('chain');
 	});
