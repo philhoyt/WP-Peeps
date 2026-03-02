@@ -2,7 +2,7 @@
 Contributors:      philhoyt
 Tags:              directory, people, staff, team, employees
 Tested up to:      7.0
-Stable tag:        2.1.0
+Stable tag:        2.2.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,17 @@ Yes, in People → Settings you can disable the "Make People Directory Public" o
 Go to People → Settings and update the "Phone Number Format" field. Use # symbols where you want digits to appear. For example: (###) ###-####
 
 == Changelog ==
+
+= 2.2.0 =
+* Added 9 missing social platform detections: Discord, TikTok, Threads, Patreon, VK, 500px, RSS/Atom feeds, Gravatar, and mailto links
+* Full Name block now prevents disabling the last active name part
+* Full Name block now shows an editor warning when no name parts are selected
+* Fixed email meta validation to trim whitespace before checking validity
+* Fixed redundant text alignment class being manually applied in phone and email blocks (now handled automatically by WordPress block supports)
+* Fixed brittle email block placeholder check (was comparing against a hardcoded string)
+* Centralized default values for phone format, CPT slug, and menu position into a single source of truth
+* Consolidated multiple useSelect calls in the editor panel into one
+* Removed duplicate constants and utility functions across block files
 
 = 2.1.0 =
 * People post type is now always available in the Query Loop block, regardless of the "Make People Directory Public" setting

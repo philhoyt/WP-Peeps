@@ -69,6 +69,10 @@ wp eval-file wp-content/plugins/peeps/bin/generate-test-data.php 20
 
 Avatars use the DiceBear Lorelei style (SVG). Requires the Safe SVG plugin to be active for featured image support.
 
+## Git Commits
+
+- Never include `Co-Authored-By: Claude` or any Claude/AI co-author lines in commit messages.
+
 ## Coding Standards
 
 Follow [WordPress Coding Standards](https://developer.wordpress.org/coding-standards/) throughout.

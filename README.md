@@ -1,6 +1,6 @@
 # Peeps
 
-[![Playground Demo Link](https://img.shields.io/badge/Playground_Demo-v2.1.0-blue?logo=wordpress&logoColor=%23fff&labelColor=%233858e9&color=%233858e9)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/philhoyt/WP-Peeps/main/_playground/blueprint.json)
+[![Playground Demo Link](https://img.shields.io/badge/Playground_Demo-v2.2.0-blue?logo=wordpress&logoColor=%23fff&labelColor=%233858e9&color=%233858e9)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/philhoyt/WP-Peeps/main/_playground/blueprint.json)
 
 A WordPress plugin for managing and displaying people profiles.
 
@@ -10,7 +10,7 @@ Peeps – People Directory is a WordPress plugin that helps you create and manag
 
 ### Requirements
 
--   WordPress 6.6 or higher
+-   WordPress 6.7 or higher
 -   PHP 8.0 or higher
 
 ### Features
@@ -70,6 +70,18 @@ wp eval-file wp-content/plugins/peeps/bin/generate-test-data.php 20
 This will create 20 test people profiles in your WordPress installation.
 
 ## Changelog
+
+### 2.2.0
+
+-   Added 9 missing social platform detections: Discord, TikTok, Threads, Patreon, VK, 500px, RSS/Atom feeds, Gravatar, and mailto links
+-   Full Name block now prevents disabling the last active name part
+-   Full Name block now shows an editor warning when no name parts are selected
+-   Fixed email meta validation to trim whitespace before checking validity
+-   Fixed redundant text alignment class being manually applied in phone and email blocks (now handled automatically by WordPress block supports)
+-   Fixed brittle email block placeholder check (was comparing against a hardcoded string)
+-   Centralized default values for phone format, CPT slug, and menu position into a single source of truth
+-   Consolidated multiple `useSelect` calls in the editor panel into one
+-   Removed duplicate constants and utility functions across block files
 
 ### 2.1.0
 
