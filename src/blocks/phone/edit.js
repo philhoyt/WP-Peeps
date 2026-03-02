@@ -32,12 +32,10 @@ export default function Edit({
 	isSelected,
 	context,
 }) {
-	const { tagName, makeLink, prefix, textAlign } = attributes;
+	const { tagName, makeLink, prefix } = attributes;
 	const { postType, postId } = context;
 
-	const blockProps = useBlockProps({
-		className: textAlign ? `has-text-align-${textAlign}` : undefined,
-	});
+	const blockProps = useBlockProps();
 
 	// Get post data from context
 	const post = useSelect(
