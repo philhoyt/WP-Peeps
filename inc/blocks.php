@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Registers the "People Directory" block category.
  *
- * @param array    $categories Array of block categories.
+ * @param array                   $categories Array of block categories.
  * @param WP_Block_Editor_Context $block_editor_context The current block editor context.
  * @return array Modified array of block categories.
  */

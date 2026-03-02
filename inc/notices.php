@@ -4,6 +4,7 @@
  *
  * @package PH_Peeps
  */
+
 namespace PH_Peeps\Inc;
 
 // Exit if accessed directly.
