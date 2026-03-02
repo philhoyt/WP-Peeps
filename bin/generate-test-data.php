@@ -189,9 +189,12 @@ try {
 		update_post_meta($post_id, 'ph_peeps_social_links', $social_links);
 
 		// Add featured image
-		$image_url = "https://avatar.iran.liara.run/public/{$gender}";
-		
-		WP_CLI::log( sprintf( "Downloading %s avatar from: %s", $gender, $image_url ) );
+		$seed       = urlencode( $first_name . $last_name );
+		$bg_colors  = [ 'ffd6e0', 'c8e6c9', 'bbdefb', 'fff9c4', 'e1bee7', 'ffe0b2', 'b2dfdb', 'f8bbd0' ];
+		$bg_params  = implode( '&', array_map( fn( $c ) => "backgroundColor[]={$c}", $bg_colors ) );
+		$image_url  = "https://api.dicebear.com/9.x/lorelei/svg?seed={$seed}&flip=false&radius=50&earringsProbability=30&frecklesProbability=30&{$bg_params}";
+
+		WP_CLI::log( sprintf( "Downloading avatar from: %s", $image_url ) );
 		
 		// Set up context options for file_get_contents
 		$context = stream_context_create([
@@ -218,7 +221,7 @@ try {
 			continue;
 		}
 
-		$filename = "person-{$post_id}-" . time() . ".png";
+		$filename = "person-{$post_id}-" . time() . ".svg";
 		$file = $upload_dir['path'] . '/' . $filename;
 		
 		if (!@file_put_contents($file, $image_data)) {
@@ -236,10 +239,9 @@ try {
 		require_once(ABSPATH . 'wp-admin/includes/media.php');
 
 		// Prepare file information
-		$wp_filetype = wp_check_filetype($filename, null);
 		$attachment = array(
 			'guid'           => $upload_dir['url'] . '/' . basename($file),
-			'post_mime_type' => $wp_filetype['type'],
+			'post_mime_type' => 'image/svg+xml',
 			'post_title'     => sanitize_file_name($filename),
 			'post_content'   => '',
 			'post_status'    => 'inherit'
@@ -270,13 +272,12 @@ try {
 		}
 
 		WP_CLI::success( sprintf(
-			"Created person %d: %s %s %s (%s) with %s avatar",
+			"Created person %d: %s %s %s (%s)",
 			$i + 1,
 			$first_name,
 			$middle_name,
 			$last_name,
-			$email,
-			$gender
+			$email
 		));
 	}
 
