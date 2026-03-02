@@ -9,7 +9,7 @@ import {
 	Icon,
 } from '@wordpress/components';
 import { useEffect, useRef, useState, useCallback, useMemo } from '@wordpress/element';
-import { dispatch, useSelect, useDispatch } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { store as coreStore, useEntityProp } from '@wordpress/core-data';
 import { store as editPostStore } from '@wordpress/edit-post';
 import { dragHandle } from '@wordpress/icons';
@@ -88,8 +88,7 @@ function PersonDetailsPanel() {
 	const [, setSlug] = useEntityProp('postType', 'ph_peeps_people', 'slug');
 	const [errors, setErrors] = useState({});
 
-	const { lockPostSaving, unlockPostSaving, editPost } =
-		dispatch('core/editor');
+	const { lockPostSaving, unlockPostSaving } = useDispatch('core/editor');
 
 	// Get phone format from settings
 	const phoneFormat = useSelect(
@@ -178,12 +177,11 @@ function PersonDetailsPanel() {
 		clearTimeout(titleSlugTimerRef.current);
 		titleSlugTimerRef.current = setTimeout(() => {
 			setTitle(fullName);
-			editPost({ title: fullName });
 			setSlug(createSlug(fullName));
 		}, 300);
 
 		return () => clearTimeout(titleSlugTimerRef.current);
-	}, [meta, setTitle, setSlug, editPost]);
+	}, [meta, setTitle, setSlug]);
 
 	if (postType !== 'ph_peeps_people') {
 		return null;

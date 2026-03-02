@@ -47,11 +47,11 @@ function ph_peeps_render_phone_block( $attributes, $block ) {
 	$prefix = ! empty( $attributes['prefix'] ) ? esc_html( wp_strip_all_tags( $attributes['prefix'] ) ) . ' ' : '';
 
 	// Format phone number.
-	$format = get_option( 'ph_peeps_phone_format', '(###) ###-####' );
+	$format          = get_option( 'ph_peeps_phone_format', '(###) ###-####' );
 	$formatted_phone = ph_peeps_format_phone_number( $phone, $format );
 
 	// Get extension.
-	$ext = sanitize_text_field( get_post_meta( $post_id, 'ph_peeps_phone_ext', true ) );
+	$ext        = sanitize_text_field( get_post_meta( $post_id, 'ph_peeps_phone_ext', true ) );
 	$ext_suffix = ! empty( $ext ) ? ' x' . esc_html( $ext ) : '';
 
 	// Get block wrapper attributes.
@@ -94,16 +94,17 @@ function ph_peeps_format_phone_number( $phone, $format ) {
 		return '';
 	}
 
-	$formatted_phone = $format;
-	$digits = preg_replace( '/[^0-9]/', '', $phone );
+	$formatted_phone   = $format;
+	$digits            = preg_replace( '/[^0-9]/', '', $phone );
 	$placeholder_count = substr_count( $format, '#' );
 
-	for ( $i = 0; $i < strlen( $digits ) && $i < $placeholder_count; $i++ ) {
+	$digits_length = strlen( $digits );
+	for ( $i = 0; $i < $digits_length && $i < $placeholder_count; $i++ ) {
 		$formatted_phone = preg_replace( '/#/', $digits[ $i ], $formatted_phone, 1 );
 	}
 
-	// If we have more digits than format placeholders, append them
-	if ( strlen( $digits ) > $placeholder_count ) {
+	// If we have more digits than format placeholders, append them.
+	if ( $digits_length > $placeholder_count ) {
 		$formatted_phone .= substr( $digits, $placeholder_count );
 	}
 
