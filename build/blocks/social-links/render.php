@@ -20,15 +20,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 const DEFAULT_SOCIAL_LINKS = [
 	[
 		'platform' => 'linkedin',
-		'url'     => '#',
+		'url'      => '#',
 	],
 	[
 		'platform' => 'github',
-		'url'     => '#',
+		'url'      => '#',
 	],
 	[
 		'platform' => 'facebook',
-		'url'     => '#',
+		'url'      => '#',
 	],
 ];
 
@@ -82,8 +82,8 @@ function ph_peeps_render_social_links_block( $attributes ) {
  */
 function ph_peeps_get_social_links() {
 	// Get social links from post meta.
-	$post_id = get_the_ID();
-	$social_links = get_post_meta( $post_id, 'ph_peeps_social_links', true );
+	$post_id          = get_the_ID();
+	$social_links     = get_post_meta( $post_id, 'ph_peeps_social_links', true );
 	$has_social_links = ! empty( $social_links ) && is_array( $social_links );
 
 	// Check if we're in the editor context.
@@ -111,17 +111,17 @@ function ph_peeps_get_social_links() {
  */
 function ph_peeps_get_social_block_attributes( $attributes ) {
 	return [
-		'size'          => sanitize_html_class( $attributes['size'] ?? 'has-normal-icon-size' ),
-		'iconColor'    => sanitize_hex_color( $attributes['iconColorValue'] ?? '' ),
+		'size'                => sanitize_html_class( $attributes['size'] ?? 'has-normal-icon-size' ),
+		'iconColor'           => sanitize_hex_color( $attributes['iconColorValue'] ?? '' ),
 		'iconBackgroundColor' => sanitize_hex_color( $attributes['iconBackgroundColorValue'] ?? '' ),
-		'orientation'   => sanitize_text_field( $attributes['layout']['orientation'] ?? 'horizontal' ),
-		'justify'       => sanitize_text_field( $attributes['layout']['justifyContent'] ?? '' ),
-		'verticalAlign' => sanitize_text_field( $attributes['layout']['verticalAlignment'] ?? '' ),
-		'gap'           => sanitize_text_field( $attributes['style']['spacing']['blockGap'] ?? '' ),
-		'className'    => sanitize_html_class( $attributes['className'] ?? '' ),
-		'showLabels'   => rest_sanitize_boolean( $attributes['showLabels'] ?? false ),
-		'openInNewTab' => rest_sanitize_boolean( $attributes['openInNewTab'] ?? false ),
-		'flexWrap'     => sanitize_text_field( $attributes['layout']['flexWrap'] ?? 'nowrap' ),
+		'orientation'         => sanitize_text_field( $attributes['layout']['orientation'] ?? 'horizontal' ),
+		'justify'             => sanitize_text_field( $attributes['layout']['justifyContent'] ?? '' ),
+		'verticalAlign'       => sanitize_text_field( $attributes['layout']['verticalAlignment'] ?? '' ),
+		'gap'                 => sanitize_text_field( $attributes['style']['spacing']['blockGap'] ?? '' ),
+		'className'           => sanitize_html_class( $attributes['className'] ?? '' ),
+		'showLabels'          => rest_sanitize_boolean( $attributes['showLabels'] ?? false ),
+		'openInNewTab'        => rest_sanitize_boolean( $attributes['openInNewTab'] ?? false ),
+		'flexWrap'            => sanitize_text_field( $attributes['layout']['flexWrap'] ?? 'nowrap' ),
 	];
 }
 
@@ -165,7 +165,7 @@ function ph_peeps_get_social_block_classes( $block_attrs ) {
 	// Add layout classes.
 	$classes[] = 'is-layout-flex';
 	$classes[] = 'wp-block-social-links-is-layout-flex';
-	$classes[] = sprintf( 'is-content-justification-%s', $block_attrs['justify'] ?: 'left' );
+	$classes[] = sprintf( 'is-content-justification-%s', ! empty( $block_attrs['justify'] ) ? $block_attrs['justify'] : 'left' );
 
 	return $classes;
 }
@@ -285,7 +285,7 @@ function ph_peeps_get_gap_style( $gap ) {
 
 	// Handle preset values.
 	if ( str_starts_with( $gap, 'var:preset|spacing|' ) ) {
-		$preset = str_replace( 'var:preset|spacing|', '', $gap );
+		$preset    = str_replace( 'var:preset|spacing|', '', $gap );
 		$gap_value = sprintf( 'var(--wp--preset--spacing--%s)', sanitize_html_class( $preset ) );
 	}
 
