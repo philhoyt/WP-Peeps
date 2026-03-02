@@ -24,6 +24,7 @@ define( 'PH_PEEPS_PLUGIN_FILE', __FILE__ );
 define( 'PH_PEEPS_PLUGIN_DIR', __DIR__ . '/' );
 
 // Core includes.
+require_once __DIR__ . '/inc/defaults.php';
 require_once __DIR__ . '/inc/cpt.php';
 require_once __DIR__ . '/inc/meta.php';
 require_once __DIR__ . '/inc/editor.php';

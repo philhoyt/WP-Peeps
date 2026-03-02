@@ -47,7 +47,7 @@ function ph_peeps_render_phone_block( $attributes, $block ) {
 	$prefix = ! empty( $attributes['prefix'] ) ? esc_html( wp_strip_all_tags( $attributes['prefix'] ) ) . ' ' : '';
 
 	// Format phone number.
-	$format          = get_option( 'ph_peeps_phone_format', '(###) ###-####' );
+	$format          = get_option( 'ph_peeps_phone_format', PH_PEEPS_DEFAULT_PHONE_FORMAT );
 	$formatted_phone = ph_peeps_format_phone_number( $phone, $format );
 
 	// Get extension.
