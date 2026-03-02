@@ -10,6 +10,7 @@ import {
 	TextControl,
 	ToolbarGroup,
 	ToolbarDropdownMenu,
+	Notice,
 } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
@@ -122,11 +123,10 @@ export default function Edit({ attributes, setAttributes, context }) {
 		showLast ? lastName : '',
 	].filter(Boolean);
 
-	// If no parts are selected, show a placeholder
-	const fullName =
-		nameParts.length > 0
-			? nameParts.join(' ')
-			: __('Select name parts to display', 'peeps-people-directory');
+	const fullName = nameParts.join(' ');
+
+	// Number of name parts currently enabled — used to prevent disabling the last one.
+	const activeCount = [showFirst, showMiddle, showLast].filter(Boolean).length;
 
 	const TagName = tagName;
 
@@ -156,6 +156,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 						__nextHasNoMarginBottom
 						label={__('Show First Name', 'peeps-people-directory')}
 						checked={showFirst}
+						disabled={showFirst && activeCount === 1}
 						onChange={() =>
 							setAttributes({ showFirst: !showFirst })
 						}
@@ -164,6 +165,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 						__nextHasNoMarginBottom
 						label={__('Show Middle Name', 'peeps-people-directory')}
 						checked={showMiddle}
+						disabled={showMiddle && activeCount === 1}
 						onChange={() =>
 							setAttributes({ showMiddle: !showMiddle })
 						}
@@ -172,6 +174,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 						__nextHasNoMarginBottom
 						label={__('Show Last Name', 'peeps-people-directory')}
 						checked={showLast}
+						disabled={showLast && activeCount === 1}
 						onChange={() => setAttributes({ showLast: !showLast })}
 					/>
 				</PanelBody>
@@ -216,7 +219,16 @@ export default function Edit({ attributes, setAttributes, context }) {
 					)}
 				</PanelBody>
 			</InspectorControls>
-			<TagName {...blockProps}>{fullName}</TagName>
+			{activeCount === 0 ? (
+				<Notice status="warning" isDismissible={false}>
+					{__(
+						'Select at least one name part to display.',
+						'peeps-people-directory',
+					)}
+				</Notice>
+			) : (
+				<TagName {...blockProps}>{fullName}</TagName>
+			)}
 		</>
 	);
 }
