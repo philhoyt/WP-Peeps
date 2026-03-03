@@ -62,7 +62,9 @@ export default function Edit({
 
 	const phoneNumber = post?.meta?.ph_peeps_phone;
 	const phoneExt = post?.meta?.ph_peeps_phone_ext;
-	const formattedPhone = formatPhoneNumber(phoneNumber || '', format);
+	const formattedPhone = phoneNumber
+		? formatPhoneNumber(phoneNumber, format)
+		: format;
 	const extSuffix = phoneExt ? ` x${phoneExt}` : '';
 
 	// Create content elements
