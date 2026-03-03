@@ -61,3 +61,93 @@
 		color: #135e96;
 	}
 }
+
+// Tabs
+.ph-peeps-tabs {
+	.components-tab-panel__tabs {
+		margin-bottom: 16px;
+	}
+}
+
+// Docs tab
+.ph-peeps-docs {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+
+	.ph-peeps-card + .ph-peeps-card {
+		margin-top: 0;
+	}
+}
+
+.ph-peeps-docs__intro {
+	margin: 0 0 16px;
+	color: #3c434a;
+}
+
+.ph-peeps-docs__table {
+	border-collapse: collapse;
+	font-size: 13px;
+
+	&--full {
+		width: 100%;
+	}
+
+	th,
+	td {
+		padding: 8px 12px;
+		text-align: left;
+		vertical-align: top;
+		border-bottom: 1px solid #f0f0f0;
+	}
+
+	thead th {
+		font-weight: 600;
+		color: #1e1e1e;
+		border-bottom: 2px solid #e2e4e7;
+		background: #f9f9f9;
+	}
+
+	tbody tr:last-child td {
+		border-bottom: none;
+	}
+
+	tbody tr:hover td {
+		background: #f9f9f9;
+	}
+
+	// Key-value layout (post type table)
+	th {
+		white-space: nowrap;
+		color: #3c434a;
+		font-weight: 600;
+		width: 22%;
+	}
+
+	// Constrain fixed columns so notes/description can expand
+	&--full {
+		td:first-child,
+		th:first-child {
+			width: 22%;
+		}
+
+		td:nth-child(2),
+		th:nth-child(2) {
+			width: 15%;
+		}
+
+		td:nth-child(3),
+		th:nth-child(3) {
+			width: 12%;
+		}
+	}
+
+	code {
+		font-family: Consolas, Monaco, monospace;
+		font-size: 12px;
+		background: #f0f0f0;
+		padding: 1px 5px;
+		border-radius: 3px;
+		white-space: nowrap;
+	}
+}
