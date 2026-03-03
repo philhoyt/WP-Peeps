@@ -1,6 +1,6 @@
 # Peeps
 
-[![Playground Demo Link](https://img.shields.io/badge/Playground_Demo-v2.2.0-blue?logo=wordpress&logoColor=%23fff&labelColor=%233858e9&color=%233858e9)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/philhoyt/WP-Peeps/main/_playground/blueprint.json)
+[![Playground Demo Link](https://img.shields.io/badge/Playground_Demo-v2.2.2-blue?logo=wordpress&logoColor=%23fff&labelColor=%233858e9&color=%233858e9)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/philhoyt/WP-Peeps/main/_playground/blueprint.json)
 
 A WordPress plugin for managing and displaying people profiles.
 
@@ -70,6 +70,11 @@ wp eval-file wp-content/plugins/peeps/bin/generate-test-data.php 20
 This will create 20 test people profiles in your WordPress installation.
 
 ## Changelog
+
+### 2.2.2
+
+-   Added Developer Docs tab to the settings page with reference tables for the post type key, meta keys, available blocks, and settings options
+-   Fixed phone block displaying empty in the editor when no phone number is set — now shows the configured format as a placeholder
 
 ### 2.2.0
 
