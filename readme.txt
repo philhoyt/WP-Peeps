@@ -2,7 +2,7 @@
 Contributors:      philhoyt
 Tags:              directory, people, staff, team, employees
 Tested up to:      7.0
-Stable tag:        2.2.0
+Stable tag:        2.2.2
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,10 @@ Yes, in People → Settings you can disable the "Make People Directory Public" o
 Go to People → Settings and update the "Phone Number Format" field. Use # symbols where you want digits to appear. For example: (###) ###-####
 
 == Changelog ==
+
+= 2.2.2 =
+* Added Developer Docs tab to the settings page with reference tables for the post type key, meta keys, available blocks, and settings options
+* Fixed phone block displaying empty in the editor when no phone number is set — now shows the configured format as a placeholder
 
 = 2.2.0 =
 * Added 9 missing social platform detections: Discord, TikTok, Threads, Patreon, VK, 500px, RSS/Atom feeds, Gravatar, and mailto links
