@@ -1,4 +1,5 @@
-import { render } from '@wordpress/element';
+import { createRoot } from '@wordpress/element';
 import SettingsPage from './settings';
 
-render(<SettingsPage />, document.getElementById('ph-peeps-settings-root'));
+const root = createRoot( document.getElementById( 'ph-peeps-settings-root' ) );
+root.render( <SettingsPage /> );

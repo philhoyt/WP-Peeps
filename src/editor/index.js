@@ -35,7 +35,6 @@ const NAME_FIELDS = {
 	FIRST_NAME: 'ph_peeps_first_name',
 	MIDDLE_NAME: 'ph_peeps_middle_name',
 	LAST_NAME: 'ph_peeps_last_name',
-	JOB_TITLE: 'ph_peeps_job_title',
 	PHONE: 'ph_peeps_phone',
 	PHONE_EXT: 'ph_peeps_phone_ext',
 	EMAIL: 'ph_peeps_email',

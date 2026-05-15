@@ -70,7 +70,7 @@ export default function Edit({
 					identifier="prefix"
 					allowedFormats={ALLOWED_FORMATS}
 					className="wp-block-ph-peeps-email__prefix"
-					aria-label={__('Prefix')}
+					aria-label={__('Prefix', 'peeps-people-directory')}
 					placeholder={__('Prefix', 'peeps-people-directory') + ' '}
 					value={prefix}
 					onChange={(value) => setAttributes({ prefix: value })}

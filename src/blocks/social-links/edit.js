@@ -30,19 +30,19 @@ import './editor.scss';
 
 const SIZES = [
 	{
-		name: __('Small'),
+		name: __('Small', 'peeps-people-directory'),
 		value: 'has-small-icon-size',
 	},
 	{
-		name: __('Normal'),
+		name: __('Normal', 'peeps-people-directory'),
 		value: 'has-normal-icon-size',
 	},
 	{
-		name: __('Large'),
+		name: __('Large', 'peeps-people-directory'),
 		value: 'has-large-icon-size',
 	},
 	{
-		name: __('Huge'),
+		name: __('Huge', 'peeps-people-directory'),
 		value: 'has-huge-icon-size',
 	},
 ];
@@ -85,7 +85,7 @@ export default function Edit({ attributes, setAttributes }) {
 				<ToolbarGroup>
 					<ToolbarButton
 						icon={layout}
-						label={__('Change layout')}
+						label={__('Change layout', 'peeps-people-directory')}
 						onClick={() => {
 							const orientation =
 								attributes.layout?.orientation === 'horizontal'
@@ -119,10 +119,10 @@ export default function Edit({ attributes, setAttributes }) {
 				/>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title={__('Settings')}>
+				<PanelBody title={__('Settings', 'peeps-people-directory')}>
 					<ToggleControl
 						__nextHasNoMarginBottom
-						label={__('Show labels')}
+						label={__('Show labels', 'peeps-people-directory')}
 						checked={showLabels}
 						onChange={() =>
 							setAttributes({ showLabels: !showLabels })
@@ -130,16 +130,16 @@ export default function Edit({ attributes, setAttributes }) {
 					/>
 					<ToggleControl
 						__nextHasNoMarginBottom
-						label={__('Open links in new tab')}
+						label={__('Open links in new tab', 'peeps-people-directory')}
 						checked={openInNewTab}
 						onChange={() =>
 							setAttributes({ openInNewTab: !openInNewTab })
 						}
 					/>
 				</PanelBody>
-				<PanelBody title={__('Styles')}>
+				<PanelBody title={__('Styles', 'peeps-people-directory')}>
 					<SelectControl
-						label={__('Size')}
+						label={__('Size', 'peeps-people-directory')}
 						value={size}
 						options={SIZES.map(({ name, value }) => ({
 							label: name,
@@ -149,7 +149,7 @@ export default function Edit({ attributes, setAttributes }) {
 					/>
 				</PanelBody>
 				<PanelColorSettings
-					title={__('Color settings')}
+					title={__('Color settings', 'peeps-people-directory')}
 					colorSettings={[
 						{
 							value: iconColorValue,
@@ -158,7 +158,7 @@ export default function Edit({ attributes, setAttributes }) {
 									iconColorValue: color,
 								});
 							},
-							label: __('Icon color'),
+							label: __('Icon color', 'peeps-people-directory'),
 						},
 						{
 							value: iconBackgroundColorValue,
@@ -167,7 +167,7 @@ export default function Edit({ attributes, setAttributes }) {
 									iconBackgroundColorValue: color,
 								});
 							},
-							label: __('Icon background'),
+							label: __('Icon background', 'peeps-people-directory'),
 						},
 					]}
 				/>
@@ -180,14 +180,15 @@ export default function Edit({ attributes, setAttributes }) {
 					EmptyResponsePlaceholder={() => (
 						<Placeholder
 							icon={share}
-							label={__('Social Links')}
+							label={__('Social Links', 'peeps-people-directory')}
 							instructions={__(
 								'Add social links in the Person settings to display them here.',
+								'peeps-people-directory',
 							)}
 						/>
 					)}
 					LoadingResponsePlaceholder={() => (
-						<Placeholder icon={share} label={__('Social Links')}>
+						<Placeholder icon={share} label={__('Social Links', 'peeps-people-directory')}>
 							<Spinner />
 						</Placeholder>
 					)}

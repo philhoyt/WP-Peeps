@@ -28,7 +28,6 @@ inc/                        # PHP includes
   admin.php                 # Admin area
   settings.php              # Plugin settings
   activation.php            # Activation hooks
-  notices.php               # Admin notices
   blocks.php                # Block registration
   templates.php             # Frontend templates
 src/                        # JS/CSS source (edit these)

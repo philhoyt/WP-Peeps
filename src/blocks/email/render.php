@@ -45,8 +45,19 @@ function ph_peeps_render_email_block( $attributes, $block ) {
 	// Get and sanitize attributes.
 	$tag_name = sanitize_key( $attributes['tagName'] ?? 'p' );
 
-	// Strip all HTML from prefix - only allow plain text.
-	$prefix = ! empty( $attributes['prefix'] ) ? esc_html( wp_strip_all_tags( $attributes['prefix'] ) ) . ' ' : '';
+	// Allow limited inline HTML in the prefix (bold, italic, links — matches RichText ALLOWED_FORMATS).
+	$allowed_prefix_html = array(
+		'strong' => array(),
+		'em'     => array(),
+		'a'      => array(
+			'href'   => array(),
+			'rel'    => array(),
+			'target' => array(),
+		),
+		's'      => array(),
+		'span'   => array( 'style' => array() ),
+	);
+	$prefix = ! empty( $attributes['prefix'] ) ? wp_kses( $attributes['prefix'], $allowed_prefix_html ) . ' ' : '';
 
 	// Get block wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes();

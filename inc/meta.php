@@ -283,7 +283,9 @@ function update_title_from_name( $meta_id, $post_id, $meta_key, $meta_value ) {
 		$full_name  = trim( implode( ' ', $name_parts ) );
 
 		if ( empty( $full_name ) ) {
-			error_log( sprintf( 'WP Peeps: Empty full name for post %d', $post_id ) );
+			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				error_log( sprintf( 'WP Peeps: Empty full name for post %d', $post_id ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			}
 			unset( $updating[ $post_id ] );
 			return;
 		}
@@ -310,7 +312,9 @@ function update_title_from_name( $meta_id, $post_id, $meta_key, $meta_value ) {
 		add_action( 'updated_post_meta', __NAMESPACE__ . '\update_title_from_name', 10, 4 );
 		add_action( 'added_post_meta', __NAMESPACE__ . '\update_title_from_name', 10, 4 );
 	} catch ( \Exception $e ) {
-		error_log( sprintf( 'WP Peeps: Error updating title for post %d: %s', $post_id, $e->getMessage() ) );
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			error_log( sprintf( 'WP Peeps: Error updating title for post %d: %s', $post_id, $e->getMessage() ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		}
 	} finally {
 		// Always unset the updating flag, even if an error occurred.
 		unset( $updating[ $post_id ] );
