@@ -2,7 +2,7 @@
 Contributors:      philhoyt
 Tags:              directory, people, staff, team, employees
 Tested up to:      7.0
-Stable tag:        2.2.2
+Stable tag:        2.3.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,18 @@ Yes, in People → Settings you can disable the "Make People Directory Public" o
 Go to People → Settings and update the "Phone Number Format" field. Use # symbols where you want digits to appear. For example: (###) ###-####
 
 == Changelog ==
+
+= 2.3.0 =
+* Fixed output escaping on plugin settings action link
+* Fixed linkRel attribute sanitization in full-name block
+* Fixed editor context detection in social-links block to use wp_is_block_editor()
+* Fixed prefix field HTML being stripped on the frontend — bold and italic formatting now renders correctly
+* Fixed missing text domain on translatable strings across all blocks
+* Fixed duplicate SCSS selector in admin styles
+* Upgraded @wordpress/scripts to v32 and migrated to ESLint flat config
+* Replaced deprecated render() with createRoot() in admin settings page
+* Added GitHub Actions workflow for WordPress.org SVN deployment
+* Removed dead job title taxonomy code
 
 = 2.2.2 =
 * Added Developer Docs tab to the settings page with reference tables for the post type key, meta keys, available blocks, and settings options
