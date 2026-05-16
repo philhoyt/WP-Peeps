@@ -30,8 +30,8 @@ jobs:
       - name: Deploy to WordPress.org SVN
         uses: 10up/action-wordpress-plugin-deploy@stable
         env:
-          WPORG_USERNAME: ${{ secrets.WPORG_USERNAME }}
-          WPORG_PASSWORD: ${{ secrets.WPORG_PASSWORD }}
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SLUG: peeps-people-directory
 
       - name: Create GitHub release
