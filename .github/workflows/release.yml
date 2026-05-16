@@ -27,6 +27,15 @@ jobs:
       - name: Build assets
         run: npm run build
 
+      - name: Extract changelog
+        id: changelog
+        run: |
+          VERSION="${GITHUB_REF_NAME}"
+          CHANGELOG=$(awk "/^= ${VERSION} =/{found=1; next} found && /^= [0-9]/{exit} found{print}" readme.txt)
+          echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Deploy to WordPress.org SVN
         uses: 10up/action-wordpress-plugin-deploy@stable
         env:
@@ -38,4 +47,4 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: readme.txt
-          generate_release_notes: true
+          body: ${{ steps.changelog.outputs.CHANGELOG }}
