@@ -39,7 +39,6 @@ dist/
 .vscode
 .editorconfig
 composer.lock
-package-lock.json
 .DS_Store
 .eslintrc
 .prettierrc
