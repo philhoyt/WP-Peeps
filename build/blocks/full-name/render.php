@@ -75,10 +75,11 @@ function ph_peeps_render_full_name_block( $attributes, $block ) {
 		if ( ! empty( $attributes['openInNewTab'] ) ) {
 			$link_attrs['target'] = '_blank';
 			// Add rel="noopener" for security when target="_blank" is used.
-			$link_rel          = ! empty( $attributes['linkRel'] ) ? $attributes['linkRel'] . ' noopener' : 'noopener';
+			$raw_rel           = ! empty( $attributes['linkRel'] ) ? sanitize_text_field( $attributes['linkRel'] ) : '';
+			$link_rel          = ! empty( $raw_rel ) ? $raw_rel . ' noopener' : 'noopener';
 			$link_attrs['rel'] = trim( $link_rel );
 		} elseif ( ! empty( $attributes['linkRel'] ) ) {
-			$link_attrs['rel'] = esc_attr( $attributes['linkRel'] );
+			$link_attrs['rel'] = sanitize_text_field( $attributes['linkRel'] );
 		}
 
 		// Build link attributes string.

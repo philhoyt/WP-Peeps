@@ -15,6 +15,6 @@ paths:
 - Text domain: `peeps-people-directory`
 - PHP minimum: 8.0
 - WP minimum: 6.7
-- Distribution: GitHub (releases)
+- Distribution: WordPress.org (SVN deploy via GitHub Actions on bare version tags)
 - Main file: `peeps-people-directory.php`
 - Version constant: none (version in plugin header only)
