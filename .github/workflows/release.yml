@@ -27,6 +27,9 @@ jobs:
       - name: Build assets
         run: npm run build
 
+      - name: Create plugin zip
+        run: npm run plugin-zip
+
       - name: Extract changelog
         run: |
           VERSION="${GITHUB_REF_NAME}"
@@ -42,5 +45,7 @@ jobs:
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
         with:
-          files: readme.txt
+          files: |
+            peeps-people-directory.zip
+            readme.txt
           body_path: changelog_body.txt

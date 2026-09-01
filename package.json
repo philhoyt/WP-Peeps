@@ -1,6 +1,6 @@
 {
 	"name": "peeps-people-directory",
-	"version": "2.3.0",
+	"version": "2.3.1",
 	"description": "A directory of people for your WordPress site.",
 	"author": "Phil Hoyt",
 	"license": "GPL-2.0-or-later",
@@ -19,8 +19,7 @@
 	"files": [
 		"build",
 		"inc",
-		"peeps-people-directory.php",
-		"src"
+		"peeps-people-directory.php"
 	],
 	"devDependencies": {
 		"@eslint/eslintrc": "^3.3.5",
