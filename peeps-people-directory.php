@@ -3,7 +3,7 @@
  * Plugin Name:       Peeps – People Directory
  * Plugin URI:        https://github.com/philhoyt/WP-Peeps
  * Description:       A directory of people for your WordPress site.
- * Requires at least: 6.7
+ * Requires at least: 6.7.2
  * Requires PHP:      8.0
  * Version:           2.4.0
  * Author:            Phil Hoyt

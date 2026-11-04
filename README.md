@@ -10,7 +10,7 @@ Peeps – People Directory is a WordPress plugin that helps you create and manag
 
 ### Requirements
 
--   WordPress 6.7 or higher
+-   WordPress 6.7.2 or higher
 -   PHP 8.0 or higher
 
 ### Features

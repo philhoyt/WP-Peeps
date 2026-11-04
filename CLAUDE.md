@@ -7,7 +7,7 @@ A WordPress plugin that provides a people directory via a custom post type, bloc
 - **Plugin file:** `peeps-people-directory.php`
 - **Package:** `PH_Peeps`
 - **Text domain:** `peeps-people-directory`
-- **Requires:** WordPress 6.7+, PHP 8.0+
+- **Requires:** WordPress 6.7.2+, PHP 8.0+
 
 ## Key Identifiers
 

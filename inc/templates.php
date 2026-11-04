@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return void
  */
 function register_block_templates() {
-	// Check if register_block_template function exists (WordPress 6.7+).
+	// Check if register_block_template function exists (WordPress 6.7.2+; 6.7.0 and 6.7.1 reject the underscore in the template names).
 	if ( ! function_exists( 'register_block_template' ) ) {
 		return;
 	}
