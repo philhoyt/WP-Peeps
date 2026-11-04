@@ -23,7 +23,7 @@ Features:
 == Installation ==
 
 1. Download the latest release from GitHub
-2. Upload the plugin files to the `/wp-content/plugins/peeps` directory
+2. Upload the plugin files to the `/wp-content/plugins/peeps-people-directory` directory
 3. Activate the plugin through the 'Plugins' screen in WordPress
 4. Go to People → Settings to configure the plugin options
 
@@ -49,6 +49,9 @@ Yes, in People → Settings you can disable the "Make People Directory Public" o
 Go to People → Settings and update the "Phone Number Format" field. Use # symbols where you want digits to appear. For example: (###) ###-####
 
 == Changelog ==
+
+= 2.4.0 =
+* Change: Updates are now delivered from GitHub releases instead of the WordPress.org directory. The plugin checks GitHub for new versions and offers them on the Plugins screen.
 
 = 2.3.2 =
 * Fix: Person pages and the people archive showed a fatal error on the front end in 2.3.0 and 2.3.1. The social links block called a function that does not exist in WordPress.

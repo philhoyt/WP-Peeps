@@ -19,6 +19,7 @@
 	"files": [
 		"build",
 		"inc",
+		"lib",
 		"peeps-people-directory.php"
 	],
 	"devDependencies": {

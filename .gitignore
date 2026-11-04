@@ -38,7 +38,6 @@ dist/
 # VS Code settings
 .vscode
 .editorconfig
-composer.lock
 .DS_Store
 .eslintrc
 .prettierrc

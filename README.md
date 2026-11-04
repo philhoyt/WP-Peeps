@@ -28,7 +28,7 @@ Peeps – People Directory is a WordPress plugin that helps you create and manag
 ## Installation
 
 1. Download the latest release from GitHub
-2. Upload the plugin files to the `/wp-content/plugins/peeps` directory
+2. Upload the plugin files to the `/wp-content/plugins/peeps-people-directory` directory
 3. Activate the plugin through the 'Plugins' screen in WordPress
 4. Go to People → Settings to configure the plugin options
 
@@ -64,7 +64,7 @@ Peeps – People Directory is a WordPress plugin that helps you create and manag
 To generate test data for development:
 
 ```bash
-wp eval-file wp-content/plugins/peeps/bin/generate-test-data.php 20
+wp eval-file wp-content/plugins/peeps-people-directory/bin/generate-test-data.php 20
 ```
 
 This will create 20 test people profiles in your WordPress installation.
