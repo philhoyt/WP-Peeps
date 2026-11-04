@@ -1,22 +1,37 @@
 {
 	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"meta": {
+		"title": "Peeps – People Directory",
+		"description": "A directory of people for your WordPress site: a people post type, editor sidebar fields, and blocks for name, phone, email and social links.",
+		"author": "philhoyt",
+		"categories": [
+			"blocks"
+		]
+	},
+	"preferredVersions": {
+		"php": "8.3",
+		"wp": "latest"
+	},
 	"features": {
 		"networking": true
 	},
-	"landingPage": "/wp-admin/edit.php?post_type=ph_peeps_people",
 	"login": true,
+	"landingPage": "/wp-admin/edit.php?post_type=ph_peeps_people",
 	"steps": [
-		{
-			"step": "setSiteOptions",
-			"options": {
-				"blogname": "WP Peeps"
-			}
-		},
 		{
 			"step": "installPlugin",
 			"pluginData": {
 				"resource": "url",
-				"url": "https://github-proxy.com/proxy/?repo=philhoyt/WP-Peeps&branch=main"
+				"url": "https://github.com/philhoyt/WP-Peeps/releases/latest/download/peeps-people-directory.zip"
+			},
+			"options": {
+				"activate": true
+			}
+		},
+		{
+			"step": "setSiteOptions",
+			"options": {
+				"blogname": "Peeps – People Directory Demo"
 			}
 		},
 		{
