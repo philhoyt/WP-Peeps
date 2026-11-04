@@ -13,9 +13,9 @@ Previous audit (2026-05-15) is backed up at `/private/tmp/claude-501/-Users-phil
 
 | Severity | Count |
 |----------|-------|
-| Critical | 2 (both fixed 2026-11-04) |
-| Warning  | 13 |
-| Info     | 6 |
+| Critical | 0 (2 fixed 2026-11-04) |
+| Warning  | 0 (13 fixed 2026-11-04) |
+| Info     | 0 (6 fixed 2026-11-04) |
 
 ---
 
@@ -25,22 +25,22 @@ Previous audit (2026-05-15) is backed up at `/private/tmp/claude-501/-Users-phil
 |----|-------|--------|
 | BUG-01 | `wp_is_block_editor()` does not exist — fatal on every front-end social-links render | ✅ Fixed 2026-11-04 (`wp_is_serving_rest_request()` via `ph_peeps_is_editor_request()`) |
 | BUG-02 | Meta sanitize callbacks return `WP_Error`, which gets stored and later fatals the phone/email blocks | ✅ Fixed 2026-11-04 (callbacks return `''`/`array()`, sidebar validates phone, render files guard with `is_string()`) |
-| PRIV-01 | "Make People Directory Public" off still exposes all people, emails and phones via REST | open |
-| DOC-01 | readme FAQ says private directory is visible to logged-in users; code 404s everyone | open |
-| STD-01 | `__experimentalSelector` in social-links block.json should be `selectors.root` | open |
+| PRIV-01 | "Make People Directory Public" off still exposes all people, emails and phones via REST | ✅ Fixed 2026-11-04 (re-scoped: the toggle was never access control; renamed "Enable Individual Profile Pages", people excluded from sitemap and search when off, PR #18) |
+| DOC-01 | readme FAQ says private directory is visible to logged-in users; code 404s everyone | ✅ Fixed 2026-11-04 (readme FAQ rewritten; profiles 404 for everyone by design, PR #18) |
+| STD-01 | `__experimentalSelector` in social-links block.json should be `selectors.root` | ✅ Fixed 2026-11-04 (`selectors.root`, PR #19) |
 | STD-02 | No `wp_set_script_translations()` for editor and admin scripts | ✅ Fixed 2026-11-04 (`wp_set_script_translations()` for both handles, `languages/` with .pot) |
 | STD-03 | Template prefix strings "Phone:" / "Email:" are not translatable | ✅ Fixed 2026-11-04 (prefixes built with `wp_json_encode( __() )`) |
 | STD-04 | 8 phpcs warnings (unguarded `error_log`, alignment, unused params, `is_writable`) | ✅ Fixed 2026-11-04 (0 errors / 0 warnings) |
 | STD-05 | `get_current_screen()` not null-checked in `enqueue_editor_assets()` | ✅ Fixed 2026-11-04 (null-checked, Yoda comparisons) |
-| BLK-01 | `className` collapsed by `sanitize_html_class()`; `is-style-default` hard-coded | open |
-| BLK-02 | Social-links block ignores block context (`postId`) and declares no `usesContext` | open |
-| BLK-03 | Render callbacks defined three ways: block.json `render`, `render_callback` override, `require_once` | open |
-| BLK-04 | block.json declares style files that do not exist in `build/` | open |
-| BLK-05 | `tagName` attribute not allow-listed in three render.php files | open |
+| BLK-01 | `className` collapsed by `sanitize_html_class()`; `is-style-default` hard-coded | ✅ Fixed 2026-11-04 (classes sanitized token by token; `is-style-default` only without another style, PR #19) |
+| BLK-02 | Social-links block ignores block context (`postId`) and declares no `usesContext` | ✅ Fixed 2026-11-04 (`usesContext`, `$block->context['postId']`, PR #19) |
+| BLK-03 | Render callbacks defined three ways: block.json `render`, `render_callback` override, `require_once` | ✅ Fixed 2026-11-04 (render functions in `inc/block-render.php` loaded once; block.json `render` is the only registration path, PR #19) |
+| BLK-04 | block.json declares style files that do not exist in `build/` | ✅ Fixed 2026-11-04 (stale email `style` and phone `editorStyle` removed, PR #19) |
+| BLK-05 | `tagName` attribute not allow-listed in three render.php files | ✅ Fixed 2026-11-04 (`ph_peeps_validate_tag_name()` allow-lists per block, PR #19) |
 | ADM-01 | Settings page render callback has no capability re-check | ✅ Fixed 2026-11-04 (`current_user_can()` + `wp_die()` in `render_admin_page()`) |
-| TST-01 | No PHPUnit suite; sanitize callbacks and render.php untested | open |
-| DEP-01 | 10 npm packages one or more majors behind; runtime `dependencies` are unused by the build | open |
-| DEP-02 | Composer dev tools behind (phpcs 4.x, composer-installer 1.x, WPCS 3.4) | open |
+| TST-01 | No PHPUnit suite; sanitize callbacks and render.php untested | ✅ Fixed 2026-11-04 (CI with lint, two wp-env smoke jobs and PHPUnit; 10 PHP tests for sanitizers and the social-links block, PRs #17 and #19) |
+| DEP-01 | 10 npm packages one or more majors behind; runtime `dependencies` are unused by the build | ✅ Fixed 2026-11-04 (wp-scripts 37.1, eslint-plugin 28.1, runtime `dependencies` moved to devDependencies, PR #21) |
+| DEP-02 | Composer dev tools behind (phpcs 4.x, composer-installer 1.x, WPCS 3.4) | ✅ Fixed 2026-11-04 (phpcs 3.13.6, WPCS 3.4.1, composer-installer 1.2.1; `composer audit` clean. phpcs stays on 3.x because WPCS 3.4.1 requires it, PR #21) |
 | INF-01 | No `uninstall.php`; options persist after deletion | ✅ Fixed 2026-11-04 (`uninstall.php` deletes the five options; posts and meta kept) |
 | INF-02 | `Tested up to: 7.0` while 7.1.4 is stable | ✅ Fixed 2026-11-04 (`Tested up to: 7.1`; CI latest-WordPress job) |
 | INF-03 | `AUDIT.md` and `composer.lock` are gitignored | ✅ Fixed 2026-11-04 (`AUDIT.md` tracked; `composer.lock` was already tracked) |
@@ -259,9 +259,7 @@ The `@wordpress/*` entries under `dependencies` are externalised by wp-scripts t
 
 ## Quick Wins
 
-1. **Fix BUG-01 now.** Two one-line replacements in `src/blocks/social-links/render.php` (`wp_is_serving_rest_request()`), `npm run build`, and the directory renders again. This is the 2.3.2 release on its own.
-2. **Fix BUG-02 in the same release.** Make the three sanitize callbacks return `''` / `array()` instead of `WP_Error`, add the phone-length check to `validateFields()` in `src/editor/index.js`, and add `is_string()` guards in the phone and email render files.
-3. **Close the privacy gap (PRIV-01 + DOC-01).** Gate the REST routes when the directory is private and make the single-page 404 honour logged-in users (or fix the FAQ). Then STD-04's phpcs warnings are a five-minute `phpcbf` + annotation pass.
+All quick wins resolved as of 2026-11-04.
 
 ---
 
@@ -273,3 +271,11 @@ The `@wordpress/*` entries under `dependencies` are externalised by wp-scripts t
 - **Blocks:** all four use `apiVersion: 3`, `$schema`, `"html": false`, `get_block_wrapper_attributes()`, dynamic rendering with no JS `save()`, no `__experimental*` component imports in JS, and block scripts are registered via block.json (no manual enqueues).
 - **Admin UI:** React via `@wordpress/element` with `createRoot()`, settings saved through `core-data` `saveEntityRecord` (no `wp_localize_script` nonces, no AJAX).
 - **Previously resolved (May 2026 audit):** SEC-01 settings link escaping, SEC-02 `linkRel` sanitization, WCS-02 text domains, WCS-03 prefix RichText HTML, WCS-04/INFO-08 ESLint flat config, CSS-01 SCSS duplicate selector, INFO-01 `error_log` guards, INFO-02 CLAUDE.md cleanup, INFO-07 `createRoot()`. Still deferred from that report: WCS-01/INFO-06 job-title remnants (now removed per the 2.3.0 changelog), INFO-03 `add_settings_link` living in `activation.php`, INFO-04 no PHP tests (now TST-01).
+
+---
+
+## Revision Log
+
+| Date | Changes |
+|------|---------|
+| 2026-11-04 | Re-checked 11 open findings after PRs #17, #18, #19, #21 and #22 and releases 2.3.2 through 2.6.0: 11 fixed, 0 still open, 0 deployment tasks. Report moved from the project root to `plans/AUDIT.md`. |
