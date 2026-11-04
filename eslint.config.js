@@ -8,7 +8,7 @@ const compat = new FlatCompat( {
 
 module.exports = [
 	{
-		ignores: [ 'build/**', 'vendor/**', 'node_modules/**' ],
+		ignores: [ 'build/**', 'lib/**', 'vendor/**', 'node_modules/**' ],
 	},
 	...compat.extends( 'plugin:@wordpress/eslint-plugin/recommended' ),
 	{
