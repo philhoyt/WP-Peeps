@@ -77,10 +77,10 @@ const HTML_TAGS = [
 /**
  * Full Name block edit component.
  *
- * @param {Object}   props               Block props.
- * @param {Object}   props.attributes    Block attributes.
- * @param {Function} props.setAttributes Function to set block attributes.
- * @param {Object}   props.context       Block context.
+ * @param {Object}                  props               Block props.
+ * @param {Object}                  props.attributes    Block attributes.
+ * @param {(attrs: Object) => void} props.setAttributes Function to set block attributes.
+ * @param {Object}                  props.context       Block context.
  * @return {Element}              The edit component.
  */
 export default function Edit({ attributes, setAttributes, context }) {

@@ -17,11 +17,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Registers the "People Directory" block category.
  *
- * @param array                   $categories Array of block categories.
- * @param WP_Block_Editor_Context $block_editor_context The current block editor context.
+ * @param array $categories Array of block categories.
  * @return array Modified array of block categories.
  */
-function register_block_category( $categories, $block_editor_context ) {
+function register_block_category( $categories ) {
 	// Check if category already exists.
 	$category_exists = false;
 	foreach ( $categories as $category ) {
@@ -47,7 +46,7 @@ function register_block_category( $categories, $block_editor_context ) {
 
 	return $categories;
 }
-add_filter( 'block_categories_all', __NAMESPACE__ . '\register_block_category', 10, 2 );
+add_filter( 'block_categories_all', __NAMESPACE__ . '\register_block_category' );
 
 /**
  * Initialize blocks

@@ -16,6 +16,7 @@
 		"lint:js": "wp-scripts lint-js",
 		"packages-update": "wp-scripts packages-update",
 		"plugin-zip": "wp-scripts plugin-zip",
+		"pot": "wp i18n make-pot . languages/peeps-people-directory.pot --slug=peeps-people-directory --domain=peeps-people-directory '--exclude=build,lib,vendor,node_modules,tests,bin,.claude,_playground' '--headers={\"Report-Msgid-Bugs-To\":\"https://github.com/philhoyt/WP-Peeps/issues\"}'",
 		"test": "wp-scripts test-unit-jest",
 		"test:watch": "wp-scripts test-unit-jest --watch",
 		"test:php": "wp-env run tests-cli --env-cwd=\"wp-content/plugins/$(basename \"$PWD\")\" -- vendor/bin/phpunit",
@@ -24,8 +25,10 @@
 	"files": [
 		"build",
 		"inc",
+		"languages",
 		"lib",
-		"peeps-people-directory.php"
+		"peeps-people-directory.php",
+		"uninstall.php"
 	],
 	"devDependencies": {
 		"@babel/core": "^7.29.13",

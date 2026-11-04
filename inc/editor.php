@@ -29,8 +29,8 @@ function enqueue_editor_assets() {
 	}
 
 	// Check the current post type.
-	$current_post_type = get_current_screen()->post_type;
-	if ( $current_post_type !== 'ph_peeps_people' ) {
+	$screen = get_current_screen();
+	if ( ! $screen || 'ph_peeps_people' !== $screen->post_type ) {
 		return;
 	}
 
@@ -43,6 +43,7 @@ function enqueue_editor_assets() {
 		$asset_file['version'],
 		true
 	);
+	wp_set_script_translations( 'ph-peeps-editor', 'peeps-people-directory', PH_PEEPS_PLUGIN_DIR . 'languages' );
 
 	// Load styles inside the editor canvas iframe (e.g. post title override).
 	add_theme_support( 'editor-styles' );
@@ -67,7 +68,7 @@ function enqueue_editor_ui_styles() {
 	}
 
 	$screen = get_current_screen();
-	if ( ! $screen || $screen->post_type !== 'ph_peeps_people' ) {
+	if ( ! $screen || 'ph_peeps_people' !== $screen->post_type ) {
 		return;
 	}
 
