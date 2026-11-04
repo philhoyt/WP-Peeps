@@ -2,7 +2,7 @@
 Contributors:      philhoyt
 Tags:              directory, people, staff, team, employees
 Tested up to:      7.0
-Stable tag:        2.3.1
+Stable tag:        2.3.2
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,11 @@ Yes, in People → Settings you can disable the "Make People Directory Public" o
 Go to People → Settings and update the "Phone Number Format" field. Use # symbols where you want digits to appear. For example: (###) ###-####
 
 == Changelog ==
+
+= 2.3.2 =
+* Fix: Person pages and the people archive showed a fatal error on the front end in 2.3.0 and 2.3.1. The social links block called a function that does not exist in WordPress.
+* Fix: Saving a phone number with fewer than 10 or more than 15 digits stored an error object instead of the number, which then broke the phone block on the front end. Invalid numbers are now rejected in the editor and never stored.
+* Fix: The phone and email blocks no longer break the page if a stored value is not text.
 
 = 2.3.1 =
 * Fix: The installable plugin zip is attached to the GitHub release again — it was missing from the 2.3.0 release.
