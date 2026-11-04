@@ -1,85 +1,21 @@
 <?php
 /**
- * Email Block Render Template
+ * Render template for the Email block.
  *
- * This file provides the rendering logic for the Email block in the WP Peeps plugin.
- * It handles retrieving and displaying email information for a specific post.
+ * Core requires this file on every render of the block (block.json "render"),
+ * so it declares nothing: it only echoes the output of the render function in
+ * inc/block-render.php, which is loaded once by the plugin.
  *
  * @package PH_Peeps
- * @subpackage Blocks
+ *
+ * @var array    $attributes Block attributes.
+ * @var string   $content    Block default content.
+ * @var WP_Block $block      Block instance.
  */
-
-namespace PH_Peeps\Blocks;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/**
- * Render the Email block.
- *
- * @param array    $attributes The block attributes containing email-related settings.
- * @param WP_Block $block      Block instance.
- * @return string             The rendered HTML for the email block.
- */
-function ph_peeps_render_email_block( $attributes, $block ) {
-	$post_id = isset( $block->context['postId'] ) ? $block->context['postId'] : get_the_ID();
-
-	// Bail early if no post ID.
-	if ( empty( $post_id ) ) {
-		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			error_log( 'WP Peeps: Email block - No post ID available' );
-		}
-		return '';
-	}
-
-	// Get email from post meta.
-	$email = get_post_meta( $post_id, 'ph_peeps_email', true );
-
-	// Return early if no email exists. Guard against non-string meta so a bad
-	// stored value degrades to empty output instead of a fatal error.
-	if ( empty( $email ) || ! is_string( $email ) ) {
-		return '';
-	}
-
-	// Get and sanitize attributes.
-	$tag_name = sanitize_key( $attributes['tagName'] ?? 'p' );
-
-	// Allow limited inline HTML in the prefix (bold, italic, links — matches RichText ALLOWED_FORMATS).
-	$allowed_prefix_html = array(
-		'strong' => array(),
-		'em'     => array(),
-		'a'      => array(
-			'href'   => array(),
-			'rel'    => array(),
-			'target' => array(),
-		),
-		's'      => array(),
-		'span'   => array( 'style' => array() ),
-	);
-	$prefix = ! empty( $attributes['prefix'] ) ? wp_kses( $attributes['prefix'], $allowed_prefix_html ) . ' ' : '';
-
-	// Get block wrapper attributes.
-	$wrapper_attributes = get_block_wrapper_attributes();
-
-	// Build email content.
-	if ( ! empty( $attributes['makeLink'] ) ) {
-		$email_content = sprintf(
-			'%1$s<a href="mailto:%2$s">%3$s</a>',
-			$prefix,
-			esc_attr( $email ),
-			esc_html( $email )
-		);
-	} else {
-		$email_content = $prefix . esc_html( $email );
-	}
-
-	// Return the email wrapped in its HTML tag.
-	return sprintf(
-		'<%1$s %2$s>%3$s</%1$s>',
-		tag_escape( $tag_name ),
-		$wrapper_attributes,
-		$email_content
-	);
-}
+echo \PH_Peeps\Blocks\ph_peeps_render_email_block( $attributes, $content, $block ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped by the render function.
