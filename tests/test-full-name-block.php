@@ -135,7 +135,7 @@ class Test_Full_Name_Block extends WP_UnitTestCase {
 	}
 
 	/**
-	 * makeLink wraps the name in a link to the person's permalink.
+	 * The makeLink attribute wraps the name in a link to the person's permalink.
 	 *
 	 * @return void
 	 */
@@ -150,7 +150,7 @@ class Test_Full_Name_Block extends WP_UnitTestCase {
 	}
 
 	/**
-	 * openInNewTab adds target="_blank" and a rel that always carries noopener,
+	 * The openInNewTab attribute adds target="_blank" and a rel that always carries noopener,
 	 * merged with any linkRel the block set.
 	 *
 	 * @return void
@@ -182,7 +182,7 @@ class Test_Full_Name_Block extends WP_UnitTestCase {
 	}
 
 	/**
-	 * linkRel on its own is passed through without a target.
+	 * A linkRel on its own is passed through without a target.
 	 *
 	 * @return void
 	 */

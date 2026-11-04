@@ -105,7 +105,7 @@ class Test_Phone_Block extends WP_UnitTestCase {
 	}
 
 	/**
-	 * makeLink wraps the number in a tel: link.
+	 * The makeLink attribute wraps the number in a tel: link.
 	 *
 	 * @return void
 	 */

@@ -56,7 +56,7 @@ class Test_Email_Block extends WP_UnitTestCase {
 	}
 
 	/**
-	 * makeLink wraps the address in a mailto: link inside a p tag.
+	 * The makeLink attribute wraps the address in a mailto: link inside a p tag.
 	 *
 	 * @return void
 	 */
