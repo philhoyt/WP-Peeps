@@ -93,8 +93,10 @@ check_url() {
 		printf '%s\n' "${errors}"
 	fi
 
+	# A plain substring test, not "grep -q": with pipefail, grep quitting at
+	# an early match can kill printf with SIGPIPE and fail a page that matched.
 	for needle in "$@"; do
-		if ! printf '%s' "${body}" | grep -qF -- "${needle}"; then
+		if [[ "${body}" != *"${needle}"* ]]; then
 			fail "${url} is missing expected output: ${needle}"
 			echo "Lines mentioning '${needle%% *}' on that page:"
 			printf '%s' "${body}" | grep -F -- "${needle%% *}" | head -n 10 || true
