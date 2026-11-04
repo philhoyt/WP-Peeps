@@ -63,7 +63,7 @@ Always run `npm run build` after editing any file in `src/`.
 Generate test people via WP-CLI:
 
 ```bash
-wp eval-file wp-content/plugins/peeps/bin/generate-test-data.php 20
+wp eval-file wp-content/plugins/peeps-people-directory/bin/generate-test-data.php 20
 ```
 
 Avatars use the DiceBear Lorelei style (SVG). Requires the Safe SVG plugin to be active for featured image support.
