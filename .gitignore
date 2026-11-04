@@ -41,7 +41,6 @@ dist/
 .DS_Store
 .eslintrc
 .prettierrc
-AUDIT.md
 
 # PHPUnit
 .phpunit.result.cache

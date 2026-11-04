@@ -50,9 +50,9 @@ const SIZES = [
 /**
  * Edit component for the social links block.
  *
- * @param {Object}   props               Block props.
- * @param {Object}   props.attributes    Block attributes.
- * @param {Function} props.setAttributes Function to set block attributes.
+ * @param {Object}                  props               Block props.
+ * @param {Object}                  props.attributes    Block attributes.
+ * @param {(attrs: Object) => void} props.setAttributes Function to set block attributes.
  * @return {Element} Element to render.
  */
 export default function Edit({ attributes, setAttributes }) {

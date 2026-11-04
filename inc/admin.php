@@ -35,6 +35,10 @@ add_action( 'admin_menu', __NAMESPACE__ . '\register_admin_page' );
  * @return void
  */
 function render_admin_page() {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_die( esc_html__( 'You do not have permission to access this page.', 'peeps-people-directory' ) );
+	}
+
 	echo '<div id="ph-peeps-settings-root"></div>';
 }
 
@@ -68,6 +72,7 @@ function enqueue_admin_scripts( $hook ) {
 		$asset_file['version'],
 		true
 	);
+	wp_set_script_translations( 'ph-peeps-admin', 'peeps-people-directory', PH_PEEPS_PLUGIN_DIR . 'languages' );
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\enqueue_admin_scripts' );
 

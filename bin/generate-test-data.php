@@ -25,7 +25,7 @@ if ( $upload_dir['error'] ) {
 }
 
 // Check if upload directory is writable.
-if ( ! is_writable( $upload_dir['path'] ) ) {
+if ( ! wp_is_writable( $upload_dir['path'] ) ) {
 	WP_CLI::error( sprintf( 'Upload directory is not writable: %s', $upload_dir['path'] ) );
 	exit;
 }

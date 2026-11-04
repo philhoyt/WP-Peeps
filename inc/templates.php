@@ -43,9 +43,9 @@ function register_block_templates() {
 				<!-- /wp:group -->
 				
 				<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|20"}},"layout":{"type":"constrained"}} -->
-				<div class="wp-block-group"><!-- wp:ph-peeps/phone {"makeLink":true,"prefix":"<strong>Phone:</strong> "} /-->
+				<div class="wp-block-group">' . sprintf( '<!-- wp:ph-peeps/phone {"makeLink":true,"prefix":%s} /-->', wp_json_encode( '<strong>' . __( 'Phone:', 'peeps-people-directory' ) . '</strong> ' ) ) . '
 				
-				<!-- wp:ph-peeps/email {"makeLink":true,"prefix":"<strong>Email:</strong> "} /--></div>
+				' . sprintf( '<!-- wp:ph-peeps/email {"makeLink":true,"prefix":%s} /-->', wp_json_encode( '<strong>' . __( 'Email:', 'peeps-people-directory' ) . '</strong> ' ) ) . '</div>
 				<!-- /wp:group -->
 				
 				<!-- wp:ph-peeps/social-links {"style":{"spacing":{"blockGap":"var:preset|spacing|20"}},"className":"is-style-default","openInNewTab":true,"layout":{"type":"flex","orientation":"horizontal","verticalAlignment":"center","justifyContent":"left"}} /-->

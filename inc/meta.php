@@ -231,13 +231,12 @@ add_action( 'init', __NAMESPACE__ . '\register_people_meta' );
 /**
  * Update post title when meta is saved
  *
- * @param int    $meta_id    ID of updated metadata entry.
- * @param int    $post_id    Post ID.
- * @param string $meta_key   Metadata key.
- * @param mixed  $meta_value Metadata value.
+ * @param int    $meta_id  ID of updated metadata entry.
+ * @param int    $post_id  Post ID.
+ * @param string $meta_key Metadata key.
  * @return void
  */
-function update_title_from_name( $meta_id, $post_id, $meta_key, $meta_value ) {
+function update_title_from_name( $meta_id, $post_id, $meta_key ) {
 	// Only proceed if we're updating first, middle, or last name.
 	if ( ! in_array( $meta_key, array( 'ph_peeps_first_name', 'ph_peeps_middle_name', 'ph_peeps_last_name' ), true ) ) {
 		return;
@@ -308,8 +307,8 @@ function update_title_from_name( $meta_id, $post_id, $meta_key, $meta_value ) {
 		);
 
 		// Re-add our hooks.
-		add_action( 'updated_post_meta', __NAMESPACE__ . '\update_title_from_name', 10, 4 );
-		add_action( 'added_post_meta', __NAMESPACE__ . '\update_title_from_name', 10, 4 );
+		add_action( 'updated_post_meta', __NAMESPACE__ . '\update_title_from_name', 10, 3 );
+		add_action( 'added_post_meta', __NAMESPACE__ . '\update_title_from_name', 10, 3 );
 	} catch ( \Exception $e ) {
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			error_log( sprintf( 'WP Peeps: Error updating title for post %d: %s', $post_id, $e->getMessage() ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
@@ -319,5 +318,5 @@ function update_title_from_name( $meta_id, $post_id, $meta_key, $meta_value ) {
 		unset( $updating[ $post_id ] );
 	}
 }
-add_action( 'updated_post_meta', __NAMESPACE__ . '\update_title_from_name', 10, 4 );
-add_action( 'added_post_meta', __NAMESPACE__ . '\update_title_from_name', 10, 4 );
+add_action( 'updated_post_meta', __NAMESPACE__ . '\update_title_from_name', 10, 3 );
+add_action( 'added_post_meta', __NAMESPACE__ . '\update_title_from_name', 10, 3 );

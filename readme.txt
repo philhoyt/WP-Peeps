@@ -3,7 +3,7 @@ Contributors:      philhoyt
 Tags:              directory, people, staff, team, employees
 Requires at least: 6.7.2
 Requires PHP:      8.0
-Tested up to:      7.0
+Tested up to:      7.1
 Stable tag:        2.5.1
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -51,6 +51,12 @@ Yes. In People → Settings, turn off "Enable Individual Profile Pages". People 
 Go to People → Settings and update the "Phone Number Format" field. Use # symbols where you want digits to appear. For example: (###) ###-####
 
 == Changelog ==
+
+= 2.6.0 =
+* New: Translations can now be loaded for the editor sidebar and the settings page. A `languages/peeps-people-directory.pot` template ships with the plugin.
+* Change: The "Phone:" and "Email:" labels in the default single person template are now translatable.
+* Change: Deleting the plugin removes its five settings from the database. People and their details are kept.
+* Change: Tested with WordPress 7.1.
 
 = 2.5.1 =
 * Fix: The Social Links block kept both the Default and Logos Only style classes when Logos Only was selected, and merged a custom class with the style class into one unusable name. Each class is now kept separately and only the chosen style is applied.
