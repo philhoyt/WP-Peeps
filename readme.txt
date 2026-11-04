@@ -4,7 +4,7 @@ Tags:              directory, people, staff, team, employees
 Requires at least: 6.7.2
 Requires PHP:      8.0
 Tested up to:      7.0
-Stable tag:        2.4.0
+Stable tag:        2.5.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,7 @@ Go to People → Settings and update the "Phone Number Format" field. Use # symb
 = 2.5.0 =
 * Change: The "Make People Directory Public" setting is now "Enable Individual Profile Pages". It was never an access-control feature: people remain listable and queryable either way, and the setting only decides whether each person has a page of their own. The stored option key is unchanged, so existing sites keep their value.
 * Change: When profile pages are off, people are left out of the core sitemap and site search, the Full Name block renders without a link even when "Make a Link" is on, and the "View" row action is hidden on the People list.
+* Change: Requires WordPress 6.7.2 or newer. Versions 6.7.0 and 6.7.1 could not register the plugin's single and archive templates.
 
 = 2.4.0 =
 * Change: Updates are now delivered from GitHub releases instead of the WordPress.org directory. The plugin checks GitHub for new versions and offers them on the Plugins screen.
