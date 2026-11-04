@@ -23,7 +23,7 @@ import { ALLOWED_FORMATS, HTML_TAGS } from '../constants';
  * @param {Function} props.setAttributes Function to set block attributes.
  * @param {boolean}  props.isSelected    Whether block is selected.
  * @param {Object}   props.context       Block context.
- * @return {JSX.Element}              The edit component.
+ * @return {Element}              The edit component.
  */
 export default function Edit({
 	attributes,

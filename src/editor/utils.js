@@ -87,7 +87,7 @@ export const isValidUrl = (url) => {
 	try {
 		const urlObj = new URL(url);
 		return urlObj.protocol === 'http:' || urlObj.protocol === 'https:';
-	} catch (e) {
+	} catch {
 		return false;
 	}
 };
@@ -137,7 +137,7 @@ export const detectPlatform = (url) => {
 		}
 
 		return 'chain';
-	} catch (e) {
+	} catch {
 		return 'chain';
 	}
 };

@@ -1,16 +1,16 @@
-const { FlatCompat } = require( '@eslint/eslintrc' );
-const path = require( 'path' );
-
-const compat = new FlatCompat( {
-	baseDirectory: __dirname,
-	resolvePluginsRelativeTo: path.resolve( __dirname, 'node_modules' ),
-} );
+const wpPlugin = require( '@wordpress/eslint-plugin' );
 
 module.exports = [
 	{
-		ignores: [ 'build/**', 'lib/**', 'vendor/**', 'node_modules/**' ],
+		ignores: [
+			'build/**',
+			'lib/**',
+			'vendor/**',
+			'node_modules/**',
+			'.claude/**',
+		],
 	},
-	...compat.extends( 'plugin:@wordpress/eslint-plugin/recommended' ),
+	...wpPlugin.configs.recommended,
 	{
 		rules: {
 			'prettier/prettier': 'off',
