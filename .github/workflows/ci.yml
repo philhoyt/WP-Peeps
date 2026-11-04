@@ -1,0 +1,115 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint and JS unit tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer
+          coverage: none
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Lint PHP (phpcs)
+        run: composer lint
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install JS dependencies
+        run: npm ci
+
+      - name: Lint JS
+        run: npm run lint:js
+
+      - name: Lint CSS
+        run: npm run lint:css
+
+      - name: JS unit tests
+        run: npm test
+
+  smoke:
+    name: Front end (WP ${{ matrix.wp }}, PHP ${{ matrix.php }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Oldest supported pair ("Requires at least" / "Requires PHP").
+          - wp: '6.7'
+            core: 'https://wordpress.org/wordpress-6.7.zip'
+            php: '8.0'
+          # Newest pair: whatever wp-env resolves as the latest release.
+          - wp: 'latest'
+            core: ''
+            php: '8.4'
+
+    env:
+      WP_ENV_CORE: ${{ matrix.core }}
+      WP_ENV_PHP_VERSION: ${{ matrix.php }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install JS dependencies
+        run: npm ci
+
+      - name: Build blocks
+        run: npm run build
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer
+          coverage: none
+
+      # PHPUnit and the Polyfills run inside the wp-env tests container from vendor/.
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --prefer-dist --no-scripts
+
+      - name: Start wp-env
+        run: npm run env:start
+
+      # Boots WordPress with the plugin active, publishes one person, renders
+      # the home page, the people archive and the single person page with
+      # WP_DEBUG on, and fails on any PHP error in the body or in debug.log.
+      - name: Front-end smoke test
+        run: npm run test:smoke
+
+      - name: PHPUnit
+        run: npm run test:php
+
+      - name: wp-env logs
+        if: failure()
+        run: npx wp-env logs --no-watch || true

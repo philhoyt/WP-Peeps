@@ -7,6 +7,9 @@
 	"main": "build/index.js",
 	"scripts": {
 		"build": "wp-scripts build",
+		"env": "wp-env",
+		"env:start": "wp-env start",
+		"env:stop": "wp-env stop",
 		"start": "wp-scripts start",
 		"format": "wp-scripts format",
 		"lint:css": "wp-scripts lint-style",
@@ -14,7 +17,9 @@
 		"packages-update": "wp-scripts packages-update",
 		"plugin-zip": "wp-scripts plugin-zip",
 		"test": "wp-scripts test-unit-js",
-		"test:watch": "wp-scripts test-unit-js --watch"
+		"test:watch": "wp-scripts test-unit-js --watch",
+		"test:php": "wp-env run tests-cli --env-cwd=\"wp-content/plugins/$(basename \"$PWD\")\" -- vendor/bin/phpunit",
+		"test:smoke": "bin/smoke-test.sh"
 	},
 	"files": [
 		"build",
@@ -24,6 +29,7 @@
 	],
 	"devDependencies": {
 		"@eslint/eslintrc": "^3.3.5",
+		"@wordpress/env": "^12.1.0",
 		"@wordpress/eslint-plugin": "^21.4.0",
 		"@wordpress/scripts": "^32.2.0",
 		"@wordpress/stylelint-config": "^23.3.0",
