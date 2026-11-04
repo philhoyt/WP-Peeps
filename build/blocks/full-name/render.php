@@ -39,6 +39,11 @@ function ph_peeps_render_full_name_block( $attributes, $block ) {
 	$tag_name    = sanitize_key( $attributes['tagName'] ?? 'h2' );
 	$make_link   = ! empty( $attributes['makeLink'] );
 
+	// Never link when individual profile pages are disabled: the link would 404.
+	if ( $make_link && ! filter_var( get_option( 'ph_peeps_public_cpt', true ), FILTER_VALIDATE_BOOLEAN ) ) {
+		$make_link = false;
+	}
+
 	// Get name parts from meta.
 	$first_name  = get_post_meta( $post_id, 'ph_peeps_first_name', true );
 	$middle_name = get_post_meta( $post_id, 'ph_peeps_middle_name', true );

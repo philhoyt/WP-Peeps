@@ -45,26 +45,27 @@ function register_people_post_type() {
 	);
 
 	$args = array(
-		'labels'             => $labels,
-		'public'             => $is_public,
-		'publicly_queryable' => true,
-		'show_ui'            => true,
-		'show_in_menu'       => true,
-		'query_var'          => true,
-		'rewrite'            => array( 'slug' => $slug ),
-		'capability_type'    => 'post',
-		'has_archive'        => $has_archive,
-		'hierarchical'       => false,
-		'menu_position'      => (int) $menu_position,
-		'menu_icon'          => 'dashicons-groups',
-		'supports'           => array(
+		'labels'              => $labels,
+		'public'              => $is_public,
+		'publicly_queryable'  => true,
+		'exclude_from_search' => ! $is_public,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'query_var'           => true,
+		'rewrite'             => array( 'slug' => $slug ),
+		'capability_type'     => 'post',
+		'has_archive'         => $has_archive,
+		'hierarchical'        => false,
+		'menu_position'       => (int) $menu_position,
+		'menu_icon'           => 'dashicons-groups',
+		'supports'            => array(
 			'title',
 			'editor',
 			'thumbnail',
 			'excerpt',
 			'custom-fields',
 		),
-		'show_in_rest'       => true,
+		'show_in_rest'        => true,
 	);
 
 	register_post_type( 'ph_peeps_people', $args );
@@ -72,13 +73,27 @@ function register_people_post_type() {
 add_action( 'init', __NAMESPACE__ . '\register_people_post_type' );
 
 /**
- * Block access to single person profiles when the CPT is not public.
+ * Whether individual profile pages are enabled.
+ *
+ * Reads the "Enable Individual Profile Pages" setting (option key
+ * ph_peeps_public_cpt). This is not access control: people are always
+ * queryable and listable; the toggle only decides whether each person
+ * has a page of their own.
+ *
+ * @return bool
+ */
+function profile_pages_enabled() {
+	return filter_var( get_option( 'ph_peeps_public_cpt', true ), FILTER_VALIDATE_BOOLEAN );
+}
+
+/**
+ * Return a 404 for single person profiles when profile pages are disabled.
  *
  * The CPT is always registered with publicly_queryable: true so it remains
- * available in the Query Loop block regardless of the public setting. This
- * function enforces the "Make People Directory Public" toggle by returning
- * a 404 for any direct request to a single person profile when the toggle
- * is off.
+ * available in the Query Loop block regardless of the setting. This
+ * function enforces the "Enable Individual Profile Pages" toggle by
+ * returning a 404 for any direct request to a single person profile when
+ * the toggle is off, for all visitors.
  *
  * @return void
  */
@@ -87,9 +102,7 @@ function block_single_profile_access() {
 		return;
 	}
 
-	$is_public = filter_var( get_option( 'ph_peeps_public_cpt', true ), FILTER_VALIDATE_BOOLEAN );
-
-	if ( $is_public ) {
+	if ( profile_pages_enabled() ) {
 		return;
 	}
 
@@ -99,3 +112,20 @@ function block_single_profile_access() {
 	nocache_headers();
 }
 add_action( 'template_redirect', __NAMESPACE__ . '\block_single_profile_access' );
+
+/**
+ * Exclude people from core sitemaps when profile pages are disabled.
+ *
+ * Without a page of their own, people have nothing to list in the sitemap.
+ *
+ * @param WP_Post_Type[] $post_types Post types included in the sitemap, keyed by name.
+ * @return WP_Post_Type[]
+ */
+function exclude_people_from_sitemaps( $post_types ) {
+	if ( ! profile_pages_enabled() ) {
+		unset( $post_types['ph_peeps_people'] );
+	}
+
+	return $post_types;
+}
+add_filter( 'wp_sitemaps_post_types', __NAMESPACE__ . '\exclude_people_from_sitemaps' );

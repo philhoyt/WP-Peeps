@@ -70,3 +70,21 @@ function enqueue_admin_scripts( $hook ) {
 	);
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\enqueue_admin_scripts' );
+
+/**
+ * Hide the "View" row action for people when profile pages are disabled.
+ *
+ * The link would only lead to a 404.
+ *
+ * @param string[] $actions Row action links.
+ * @param WP_Post  $post    The current post.
+ * @return string[]
+ */
+function hide_view_row_action( $actions, $post ) {
+	if ( 'ph_peeps_people' === $post->post_type && ! profile_pages_enabled() ) {
+		unset( $actions['view'] );
+	}
+
+	return $actions;
+}
+add_filter( 'post_row_actions', __NAMESPACE__ . '\hide_view_row_action', 10, 2 );
