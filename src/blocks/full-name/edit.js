@@ -81,7 +81,7 @@ const HTML_TAGS = [
  * @param {Object}   props.attributes    Block attributes.
  * @param {Function} props.setAttributes Function to set block attributes.
  * @param {Object}   props.context       Block context.
- * @return {JSX.Element}              The edit component.
+ * @return {Element}              The edit component.
  */
 export default function Edit({ attributes, setAttributes, context }) {
 	const {
