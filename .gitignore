@@ -41,7 +41,6 @@ dist/
 .DS_Store
 .eslintrc
 .prettierrc
-.stylelintrc
 AUDIT.md
 
 # PHPUnit
