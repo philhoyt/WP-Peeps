@@ -58,9 +58,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # Oldest supported pair ("Requires at least" / "Requires PHP").
-          - wp: '6.7'
-            core: 'https://wordpress.org/wordpress-6.7.zip'
+          # Oldest pair the plugin works on. 6.7.0 and 6.7.1 reject the
+          # underscores in "single-ph_peeps_people" when registering block
+          # templates (WP_Block_Templates_Registry); 6.7.2 allows them.
+          - wp: '6.7.2'
+            core: 'https://wordpress.org/wordpress-6.7.2.zip'
             php: '8.0'
           # Newest pair: whatever wp-env resolves as the latest release.
           - wp: 'latest'

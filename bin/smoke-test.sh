@@ -96,6 +96,8 @@ check_url() {
 	for needle in "$@"; do
 		if ! printf '%s' "${body}" | grep -qF -- "${needle}"; then
 			fail "${url} is missing expected output: ${needle}"
+			echo "Lines mentioning '${needle%% *}' on that page:"
+			printf '%s' "${body}" | grep -F -- "${needle%% *}" | head -n 10 || true
 		fi
 	done
 }
