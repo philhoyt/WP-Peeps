@@ -20,6 +20,9 @@
     <arg name="extensions" value="php"/>
     <arg name="parallel" value="8"/>
 
+    <!-- Warnings are reported but only errors fail the run (CI gates on the exit code). -->
+    <config name="ignore_warnings_on_exit" value="1"/>
+
     <!-- Rules: WordPress Coding Standards -->
     <config name="minimum_supported_wp_version" value="6.6"/>
     

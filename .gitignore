@@ -41,5 +41,10 @@ dist/
 .DS_Store
 .eslintrc
 .prettierrc
-.stylelintrc
 AUDIT.md
+
+# PHPUnit
+.phpunit.result.cache
+
+# wp-env local overrides
+.wp-env.override.json
