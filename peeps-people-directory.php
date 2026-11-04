@@ -34,6 +34,26 @@ require_once __DIR__ . '/inc/activation.php';
 require_once __DIR__ . '/inc/blocks.php';
 require_once __DIR__ . '/inc/templates.php';
 
+// Updates are delivered from GitHub releases via Plugin Update Checker.
+// The library is copied into lib/ by Composer (see composer.json copy-puc);
+// a source checkout without it simply gets no update checks.
+$ph_peeps_puc_file = PH_PEEPS_PLUGIN_DIR . 'lib/plugin-update-checker/plugin-update-checker.php';
+if ( file_exists( $ph_peeps_puc_file ) ) {
+	require_once $ph_peeps_puc_file;
+
+	$ph_peeps_update_checker = \YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
+		'https://github.com/philhoyt/WP-Peeps/',
+		__FILE__,
+		'peeps-people-directory'
+	);
+
+	// Only ever install the zip the release workflow attaches. Without
+	// REQUIRE_RELEASE_ASSETS a release missing its asset would fall back to
+	// GitHub's source archive, which extracts to WP-Peeps-x.y.z/.
+	$ph_peeps_update_api = $ph_peeps_update_checker->getVcsApi();
+	$ph_peeps_update_api->enableReleaseAssets( '/\.zip$/', $ph_peeps_update_api::REQUIRE_RELEASE_ASSETS );
+}
+
 // Block render callbacks.
 require_once __DIR__ . '/build/blocks/full-name/render.php';
 require_once __DIR__ . '/build/blocks/phone/render.php';
