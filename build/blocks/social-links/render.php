@@ -43,8 +43,7 @@ function ph_peeps_render_social_links_block( $attributes ) {
 	$social_links = ph_peeps_get_social_links();
 
 	// Only return empty on frontend when no social links exist.
-	$is_editor = wp_is_block_editor();
-	if ( empty( $social_links ) && ! $is_editor ) {
+	if ( empty( $social_links ) && ! ph_peeps_is_editor_request() ) {
 		return '';
 	}
 
@@ -76,6 +75,18 @@ function ph_peeps_render_social_links_block( $attributes ) {
 }
 
 /**
+ * Whether the block is being rendered for the editor.
+ *
+ * The editor previews this block through the block-renderer REST endpoint
+ * (ServerSideRender), so a REST request is the editor context.
+ *
+ * @return bool True when serving a REST request.
+ */
+function ph_peeps_is_editor_request() {
+	return wp_is_serving_rest_request();
+}
+
+/**
  * Get social links based on context.
  *
  * @return array|null Array of social links or null if no links exist on frontend.
@@ -86,16 +97,13 @@ function ph_peeps_get_social_links() {
 	$social_links     = get_post_meta( $post_id, 'ph_peeps_social_links', true );
 	$has_social_links = ! empty( $social_links ) && is_array( $social_links );
 
-	// Check if we're in the editor context.
-	$is_editor = wp_is_block_editor();
-
 	// If we have social links, return them regardless of context.
 	if ( $has_social_links ) {
 		return $social_links;
 	}
 
 	// If we're in editor and don't have social links, return defaults.
-	if ( $is_editor ) {
+	if ( ph_peeps_is_editor_request() ) {
 		return DEFAULT_SOCIAL_LINKS;
 	}
 

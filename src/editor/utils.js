@@ -63,6 +63,21 @@ export const isValidEmail = (email) => {
 };
 
 /**
+ * Validates a phone number: empty, or 10–15 digits once formatting is stripped.
+ * Mirrors validate_phone() in inc/meta.php.
+ *
+ * @param {string} phone The phone number to validate.
+ * @return {boolean} Whether the phone number is valid.
+ */
+export const isValidPhone = (phone) => {
+	if (!phone) {
+		return true;
+	}
+	const digits = phone.replace(/\D/g, '');
+	return digits.length >= 10 && digits.length <= 15;
+};
+
+/**
  * Validates a URL.
  *
  * @param {string} url The URL to validate.

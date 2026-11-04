@@ -1,5 +1,6 @@
 import {
 	isValidEmail,
+	isValidPhone,
 	isValidUrl,
 	formatPhoneNumber,
 	detectPlatform,
@@ -33,6 +34,34 @@ describe('isValidEmail', () => {
 
 	it('rejects email with spaces', () => {
 		expect(isValidEmail('user @example.com')).toBe(false);
+	});
+});
+
+describe('isValidPhone', () => {
+	it('accepts an empty value', () => {
+		expect(isValidPhone('')).toBe(true);
+		expect(isValidPhone(undefined)).toBe(true);
+	});
+
+	it('accepts a 10-digit number', () => {
+		expect(isValidPhone('5551234567')).toBe(true);
+	});
+
+	it('accepts a formatted number', () => {
+		expect(isValidPhone('(555) 123-4567')).toBe(true);
+	});
+
+	it('accepts a 15-digit number', () => {
+		expect(isValidPhone('123456789012345')).toBe(true);
+	});
+
+	it('rejects fewer than 10 digits', () => {
+		expect(isValidPhone('123')).toBe(false);
+		expect(isValidPhone('555-123-456')).toBe(false);
+	});
+
+	it('rejects more than 15 digits', () => {
+		expect(isValidPhone('1234567890123456')).toBe(false);
 	});
 });
 

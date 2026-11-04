@@ -37,8 +37,9 @@ function ph_peeps_render_email_block( $attributes, $block ) {
 	// Get email from post meta.
 	$email = get_post_meta( $post_id, 'ph_peeps_email', true );
 
-	// Return early if no email exists.
-	if ( empty( $email ) ) {
+	// Return early if no email exists. Guard against non-string meta so a bad
+	// stored value degrades to empty output instead of a fatal error.
+	if ( empty( $email ) || ! is_string( $email ) ) {
 		return '';
 	}
 

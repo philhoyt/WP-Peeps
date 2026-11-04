@@ -34,9 +34,10 @@ function ph_peeps_render_phone_block( $attributes, $block ) {
 		return '';
 	}
 
-	// Get and sanitize phone number.
+	// Get and sanitize phone number. Guard against non-string meta so a bad
+	// stored value degrades to empty output instead of a fatal error.
 	$phone = get_post_meta( $post_id, 'ph_peeps_phone', true );
-	if ( empty( $phone ) ) {
+	if ( empty( $phone ) || ! is_string( $phone ) ) {
 		return '';
 	}
 
@@ -62,7 +63,8 @@ function ph_peeps_render_phone_block( $attributes, $block ) {
 	$formatted_phone = ph_peeps_format_phone_number( $phone, $format );
 
 	// Get extension.
-	$ext        = sanitize_text_field( get_post_meta( $post_id, 'ph_peeps_phone_ext', true ) );
+	$ext        = get_post_meta( $post_id, 'ph_peeps_phone_ext', true );
+	$ext        = is_string( $ext ) ? sanitize_text_field( $ext ) : '';
 	$ext_suffix = ! empty( $ext ) ? ' x' . esc_html( $ext ) : '';
 
 	// Get block wrapper attributes.

@@ -13,71 +13,70 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Validate phone number
+ * Sanitize phone number
  *
- * @param string $phone Phone number to validate.
- * @return string|WP_Error
+ * A meta sanitize_callback must return a storable value: WordPress writes
+ * whatever it returns straight to the database, so returning a WP_Error here
+ * would store a serialized error object. Invalid numbers are stored as an
+ * empty string instead; the editor sidebar reports the validation error.
+ *
+ * @param mixed $phone Phone number to sanitize.
+ * @return string Digits only, or an empty string when invalid.
  */
 function validate_phone( $phone ) {
-	// Allow empty values.
-	if ( empty( $phone ) ) {
+	// Allow empty and non-string values.
+	if ( empty( $phone ) || ! is_scalar( $phone ) ) {
 		return '';
 	}
 
 	// Should already be digits only, but sanitize just in case.
-	$digits = preg_replace( '/[^0-9]/', '', $phone );
+	$digits = preg_replace( '/[^0-9]/', '', (string) $phone );
 
-	// Check if we have between 10 and 15 digits.
+	// Must contain between 10 and 15 digits.
 	$length = strlen( $digits );
 	if ( $length < 10 || $length > 15 ) {
-		return new \WP_Error(
-			'invalid_phone',
-			__( 'Phone number must be empty or contain between 10 and 15 digits.', 'peeps-people-directory' )
-		);
+		return '';
 	}
 
 	return $digits;
 }
 
 /**
- * Validate email address
+ * Sanitize email address
  *
- * @param string $email Email to validate.
- * @return string|WP_Error
+ * Returns an empty string for invalid addresses rather than a WP_Error, since
+ * the return value is stored as-is (see validate_phone()).
+ *
+ * @param mixed $email Email to sanitize.
+ * @return string Sanitized email, or an empty string when invalid.
  */
 function validate_email( $email ) {
-	$email = trim( $email );
-
-	// Allow empty values.
-	if ( empty( $email ) ) {
+	if ( ! is_scalar( $email ) ) {
 		return '';
 	}
 
-	if ( ! is_email( $email ) ) {
-		return new \WP_Error(
-			'invalid_email',
-			__( 'Please enter a valid email address or leave empty.', 'peeps-people-directory' )
-		);
+	$email = trim( (string) $email );
+
+	// Allow empty values.
+	if ( empty( $email ) || ! is_email( $email ) ) {
+		return '';
 	}
+
 	return sanitize_email( $email );
 }
 
 /**
- * Validate social links array
+ * Sanitize social links array
  *
- * @param array $links Array of social links.
- * @return array|WP_Error
+ * Returns an empty array for non-array input rather than a WP_Error, since
+ * the return value is stored as-is (see validate_phone()).
+ *
+ * @param mixed $links Array of social links.
+ * @return array Sanitized list of { platform, url } pairs.
  */
 function validate_social_links( $links ) {
-	if ( empty( $links ) ) {
+	if ( empty( $links ) || ! is_array( $links ) ) {
 		return array();
-	}
-
-	if ( ! is_array( $links ) ) {
-		return new \WP_Error(
-			'invalid_social_links',
-			__( 'Social links must be an array.', 'peeps-people-directory' )
-		);
 	}
 
 	$valid_links = array();

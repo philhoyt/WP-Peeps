@@ -15,6 +15,7 @@ import { store as editPostStore } from '@wordpress/edit-post';
 import { dragHandle } from '@wordpress/icons';
 import {
 	isValidEmail,
+	isValidPhone,
 	isValidUrl,
 	formatPhoneNumber,
 	detectPlatform,
@@ -30,6 +31,10 @@ import './style.scss';
 
 const REQUIRED_FIELD_ERROR = __('This field is required', 'peeps-people-directory');
 const EMAIL_VALIDATION_ERROR = __('Please enter a valid email address', 'peeps-people-directory');
+const PHONE_VALIDATION_ERROR = __(
+	'Phone number must be empty or contain between 10 and 15 digits',
+	'peeps-people-directory',
+);
 const URL_VALIDATION_ERROR = __('Please enter a valid URL', 'peeps-people-directory');
 const NAME_FIELDS = {
 	FIRST_NAME: 'ph_peeps_first_name',
@@ -124,6 +129,12 @@ function PersonDetailsPanel() {
 			!isValidEmail(meta[NAME_FIELDS.EMAIL])
 		) {
 			newErrors[NAME_FIELDS.EMAIL] = EMAIL_VALIDATION_ERROR;
+		}
+
+		// Phone validation — the server stores an invalid number as empty,
+		// so block saving here rather than silently dropping it.
+		if (!isValidPhone(meta?.[NAME_FIELDS.PHONE])) {
+			newErrors[NAME_FIELDS.PHONE] = PHONE_VALIDATION_ERROR;
 		}
 
 		setErrors(newErrors);
@@ -239,10 +250,14 @@ function PersonDetailsPanel() {
 					onChange={(value) =>
 						handleMetaChange(NAME_FIELDS.PHONE, value)
 					}
-					help={__(
-						'Enter between 10–15 digit phone number',
-						'peeps-people-directory',
-					)}
+					help={
+						errors[NAME_FIELDS.PHONE] ||
+						__(
+							'Enter between 10–15 digit phone number',
+							'peeps-people-directory',
+						)
+					}
+					className={errors[NAME_FIELDS.PHONE] ? 'has-error' : ''}
 					type="tel"
 				/>
 				<TextControl
