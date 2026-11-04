@@ -20,7 +20,7 @@ Features:
 * Block templates for single person posts and archive pages
 * Configurable phone number formatting
 * Custom URL structure for people profiles
-* Public/private directory option
+* Optional individual profile pages (people can be listed and queried without having a page of their own)
 
 == Installation ==
 
@@ -42,15 +42,19 @@ Features:
 
 Go to People → Settings and update the "Directory Slug" field. After saving, visit the WordPress Permalinks page and click "Save Changes" to update your URLs.
 
-= Can I make the directory private? =
+= Can I show people without giving each one a page? =
 
-Yes, in People → Settings you can disable the "Make People Directory Public" option to make the directory visible only to logged-in users.
+Yes. In People → Settings, turn off "Enable Individual Profile Pages". People can still be listed and queried (Query Loop, taxonomies, modals, REST), but no person has a page of their own: their URLs return 404 for everyone, they are left out of the sitemap and site search, and the Full Name block renders without a link. This is not an access-control feature; it is for sites that want a staff grid without per-person pages, often for SEO reasons.
 
 = How do I format phone numbers? =
 
 Go to People → Settings and update the "Phone Number Format" field. Use # symbols where you want digits to appear. For example: (###) ###-####
 
 == Changelog ==
+
+= 2.5.0 =
+* Change: The "Make People Directory Public" setting is now "Enable Individual Profile Pages". It was never an access-control feature: people remain listable and queryable either way, and the setting only decides whether each person has a page of their own. The stored option key is unchanged, so existing sites keep their value.
+* Change: When profile pages are off, people are left out of the core sitemap and site search, the Full Name block renders without a link even when "Make a Link" is on, and the "View" row action is hidden on the People list.
 
 = 2.4.0 =
 * Change: Updates are now delivered from GitHub releases instead of the WordPress.org directory. The plugin checks GitHub for new versions and offers them on the Plugins screen.

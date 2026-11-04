@@ -94,7 +94,7 @@ function register_plugin_settings() {
 					'default' => true,
 				),
 			),
-			'description'       => __( 'Whether the People CPT is public', 'peeps-people-directory' ),
+			'description'       => __( 'Whether each person has an individual profile page. When off, people can still be listed and queried but their URLs return 404.', 'peeps-people-directory' ),
 			'sanitize_callback' => __NAMESPACE__ . '\sanitize_boolean',
 		)
 	);

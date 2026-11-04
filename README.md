@@ -19,7 +19,7 @@ Peeps – People Directory is a WordPress plugin that helps you create and manag
 -   Block templates for single person posts and archive pages
 -   Configurable phone number formatting
 -   Custom URL structure for people profiles
--   Public/private directory option
+-   Optional individual profile pages (people can be listed and queried without having a page of their own)
 -   Full Name block
 -   Phone Number block
 -   Email Address block

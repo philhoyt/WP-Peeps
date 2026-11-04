@@ -111,6 +111,14 @@ export default function Edit({ attributes, setAttributes, context }) {
 		[postId, postType],
 	);
 
+	// Whether individual profile pages are enabled (site setting).
+	const profilePagesEnabled = useSelect(
+		(select) =>
+			select(coreStore).getEntityRecord('root', 'site')
+				?.ph_peeps_public_cpt ?? true,
+		[],
+	);
+
 	// Get meta values either from context post or current post
 	const firstName = post?.meta?.ph_peeps_first_name || 'First';
 	const middleName = post?.meta?.ph_peeps_middle_name || 'Middle';
@@ -132,6 +140,17 @@ export default function Edit({ attributes, setAttributes, context }) {
 
 	// Get current tag info
 	const currentTag = HTML_TAGS.find((tag) => tag.value === tagName);
+
+	// Help text for the "Make a Link" control.
+	let linkHelp = makeLink
+		? __('Name will be clickable', 'peeps-people-directory')
+		: __('Name will be plain text', 'peeps-people-directory');
+	if (!profilePagesEnabled) {
+		linkHelp = __(
+			'Links are disabled while individual profile pages are off in People → Settings.',
+			'peeps-people-directory',
+		);
+	}
 
 	return (
 		<>
@@ -184,11 +203,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 						label={__('Make a Link', 'peeps-people-directory')}
 						checked={makeLink}
 						onChange={() => setAttributes({ makeLink: !makeLink })}
-						help={
-							makeLink
-								? __('Name will be clickable', 'peeps-people-directory')
-								: __('Name will be plain text', 'peeps-people-directory')
-						}
+						help={linkHelp}
 					/>
 					{makeLink && (
 						<>

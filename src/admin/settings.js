@@ -106,7 +106,7 @@ const SETTINGS_KEYS = [
 		type: 'boolean',
 		default: 'true',
 		description: __(
-			'Whether the People directory is publicly accessible.',
+			'Whether each person has an individual profile page. When off, people can still be listed and queried but their URLs return 404.',
 			'peeps-people-directory'
 		),
 	},
@@ -522,7 +522,7 @@ function SettingsPage() {
 			await saveEntityRecord( 'root', 'site', localSettings );
 			setHasChanges( false );
 			setError( null ); // Clear any existing errors
-			// Show notice if slug or public status was changed
+			// Show notice if the slug, profile pages, or archive setting was changed
 			if (
 				localSettings.ph_peeps_cpt_slug ||
 				localSettings.ph_peeps_public_cpt !== undefined ||
@@ -556,7 +556,7 @@ function SettingsPage() {
 					className="ph-peeps-notice"
 				>
 					{ __(
-						'You changed the directory slug or public status. Please visit the Permalinks page and click "Save Changes" to update your URLs.',
+						'You changed the directory slug, profile pages, or archive setting. Please visit the Permalinks page and click "Save Changes" to update your URLs.',
 						'peeps-people-directory'
 					) }
 					<p>
@@ -619,11 +619,11 @@ function SettingsPage() {
 											<ToggleControl
 												__nextHasNoMarginBottom
 												label={ __(
-													'Make People Directory Public',
+													'Enable Individual Profile Pages',
 													'peeps-people-directory'
 												) }
 												help={ __(
-													'When enabled, the people directory will be visible to the public.',
+													'When enabled, each person gets their own page. When disabled, people can still be listed and queried (Query Loop, taxonomies, modals) but have no page of their own and their URLs return 404.',
 													'peeps-people-directory'
 												) }
 												checked={
