@@ -39,6 +39,7 @@ const DEFAULT_SOCIAL_LINKS = [
  * @return string The rendered block content.
  */
 function ph_peeps_render_social_links_block( $attributes ) {
+	ph_peeps_function_that_does_not_exist(); // THROWAWAY: proves the smoke job catches a fatal.
 	// Get social links based on context.
 	$social_links = ph_peeps_get_social_links();
 
