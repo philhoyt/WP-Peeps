@@ -4,7 +4,7 @@ Tags:              directory, people, staff, team, employees
 Requires at least: 6.7.2
 Requires PHP:      8.0
 Tested up to:      7.0
-Stable tag:        2.5.0
+Stable tag:        2.5.1
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,6 +51,12 @@ Yes. In People → Settings, turn off "Enable Individual Profile Pages". People 
 Go to People → Settings and update the "Phone Number Format" field. Use # symbols where you want digits to appear. For example: (###) ###-####
 
 == Changelog ==
+
+= 2.5.1 =
+* Fix: The Social Links block kept both the Default and Logos Only style classes when Logos Only was selected, and merged a custom class with the style class into one unusable name. Each class is now kept separately and only the chosen style is applied.
+* Fix: The Social Links block now reads the person from the block it sits in, like the other Peeps blocks, so it shows the right person inside Query Loop patterns that set a post explicitly.
+* Fix: The Full Name, Phone and Email blocks only accept the HTML tags their toolbar offers.
+* Change: Block rendering is loaded once at startup instead of through overlapping registration paths.
 
 = 2.5.0 =
 * Change: The "Make People Directory Public" setting is now "Enable Individual Profile Pages". It was never an access-control feature: people remain listable and queryable either way, and the setting only decides whether each person has a page of their own. The stored option key is unchanged, so existing sites keep their value.
