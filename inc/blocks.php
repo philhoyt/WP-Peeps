@@ -52,41 +52,20 @@ add_filter( 'block_categories_all', __NAMESPACE__ . '\register_block_category', 
 /**
  * Initialize blocks
  *
- * Register block types and any related functionality.
+ * Registers each block from its build/blocks/<name>/block.json. The
+ * "render": "file:./render.php" entry there is the only render wiring: core
+ * requires that template on every render of the block, and the template
+ * echoes the output of its render function from inc/block-render.php. No
+ * render_callback is passed here, so the file-based entry is never overridden,
+ * and the templates declare nothing, so requiring one repeatedly cannot fatal.
  *
  * @return void
  */
 function register_blocks() {
-	// Register the full name block.
-	register_block_type(
-		PH_PEEPS_PLUGIN_DIR . 'build/blocks/full-name',
-		array(
-			'render_callback' => 'PH_Peeps\Blocks\ph_peeps_render_full_name_block',
-		)
-	);
+	$blocks = array( 'full-name', 'phone', 'social-links', 'email' );
 
-	// Register the phone block.
-	register_block_type(
-		PH_PEEPS_PLUGIN_DIR . 'build/blocks/phone',
-		array(
-			'render_callback' => 'PH_Peeps\Blocks\ph_peeps_render_phone_block',
-		)
-	);
-
-	// Register the social links block.
-	register_block_type(
-		PH_PEEPS_PLUGIN_DIR . 'build/blocks/social-links',
-		array(
-			'render_callback' => 'PH_Peeps\Blocks\ph_peeps_render_social_links_block',
-		)
-	);
-
-	// Register the email block.
-	register_block_type(
-		PH_PEEPS_PLUGIN_DIR . 'build/blocks/email',
-		array(
-			'render_callback' => 'PH_Peeps\Blocks\ph_peeps_render_email_block',
-		)
-	);
+	foreach ( $blocks as $block ) {
+		register_block_type( PH_PEEPS_PLUGIN_DIR . 'build/blocks/' . $block );
+	}
 }
 add_action( 'init', __NAMESPACE__ . '\register_blocks' );

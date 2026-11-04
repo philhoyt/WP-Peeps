@@ -31,6 +31,7 @@ require_once __DIR__ . '/inc/editor.php';
 require_once __DIR__ . '/inc/admin.php';
 require_once __DIR__ . '/inc/settings.php';
 require_once __DIR__ . '/inc/activation.php';
+require_once __DIR__ . '/inc/block-render.php';
 require_once __DIR__ . '/inc/blocks.php';
 require_once __DIR__ . '/inc/templates.php';
 
@@ -53,9 +54,3 @@ if ( file_exists( $ph_peeps_puc_file ) ) {
 	$ph_peeps_update_api = $ph_peeps_update_checker->getVcsApi();
 	$ph_peeps_update_api->enableReleaseAssets( '/\.zip$/', $ph_peeps_update_api::REQUIRE_RELEASE_ASSETS );
 }
-
-// Block render callbacks.
-require_once __DIR__ . '/build/blocks/full-name/render.php';
-require_once __DIR__ . '/build/blocks/phone/render.php';
-require_once __DIR__ . '/build/blocks/social-links/render.php';
-require_once __DIR__ . '/build/blocks/email/render.php';

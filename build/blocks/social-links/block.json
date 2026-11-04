@@ -33,8 +33,10 @@
         "orientation": "horizontal",
         "justifyContent": "left"
       }
-    },
-    "__experimentalSelector": ".wp-block-ph-peeps-social-links"
+    }
+  },
+  "selectors": {
+    "root": ".wp-block-ph-peeps-social-links"
   },
   "attributes": {
     "iconColorValue": {
@@ -72,6 +74,10 @@
       "name": "logos-only",
       "label": "Logos Only"
     }
+  ],
+  "usesContext": [
+    "postId",
+    "postType"
   ],
   "textdomain": "peeps-people-directory",
   "editorScript": "file:./index.js",
