@@ -15,7 +15,7 @@ A WordPress plugin that provides a people directory via a custom post type, bloc
 - **Constants:** `PH_PEEPS_PLUGIN_FILE`, `PH_PEEPS_PLUGIN_DIR`
 - **Post type:** `ph_peeps_people`
 - **CSS class prefix:** `ph-peeps-` (BEM, e.g. `.ph-peeps-name-panel`)
-- **Meta keys:** `ph_peeps_first_name`, `ph_peeps_middle_name`, `ph_peeps_last_name`, `ph_peeps_job_title`, `ph_peeps_phone`, `ph_peeps_phone_ext`, `ph_peeps_email`, `ph_peeps_social_links`
+- **Meta keys:** `ph_peeps_first_name`, `ph_peeps_middle_name`, `ph_peeps_last_name`, `ph_peeps_phone`, `ph_peeps_phone_ext`, `ph_peeps_email`, `ph_peeps_social_links`
 
 ## Project Structure
 

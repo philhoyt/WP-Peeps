@@ -58,7 +58,6 @@ echo "Person post ID: ${POST_ID}"
 wpcli post meta update "${POST_ID}" ph_peeps_first_name 'Ada'
 wpcli post meta update "${POST_ID}" ph_peeps_middle_name 'King'
 wpcli post meta update "${POST_ID}" ph_peeps_last_name 'Lovelace'
-wpcli post meta update "${POST_ID}" ph_peeps_job_title 'Analyst'
 wpcli post meta update "${POST_ID}" ph_peeps_phone '5551234567'
 wpcli post meta update "${POST_ID}" ph_peeps_phone_ext '12'
 wpcli post meta update "${POST_ID}" ph_peeps_email 'ada@example.com'
